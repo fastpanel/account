@@ -37,7 +37,7 @@
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
     "@types/mongoose": "^5.3.1",
-    "@types/node": "^10.11.7",
+    "@types/node": "^10.12.10",
     "@types/passport": "^0.4.7",
     "@types/passport-http-bearer": "^1.0.33",
     "@types/passport-local": "^1.0.33",
@@ -51,7 +51,7 @@
     "mocha": "^5.2.0",
     "ts-node": "^7.0.1",
     "typedoc": "^0.13.0",
-    "typescript": "^3.1.2"
+    "typescript": "^3.2.1"
   },
   "license": "MIT"
 }
