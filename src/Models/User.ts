@@ -12,21 +12,129 @@ import Mongoose from 'mongoose';
  * 
  */
 export interface IUser extends Mongoose.Document {
-  /* ----------------------------------------------------------------------- */
-  createdAt?: Date;
-  updatedAt?: Date;
-  version?: number;
-  /* ----------------------------------------------------------------------- */
+  /**
+   * User full name fields.
+   */
+  name: {
+    /**
+     * 
+     */
+    given?: string,
+
+    /**
+     * 
+     */
+    middle?: string,
+
+    /**
+     * 
+     */
+    family?: string,
+
+    /**
+     * 
+     */
+    prefix?: string,
+
+    /**
+     * 
+     */
+    suffix?: string,
+
+    /**
+     * 
+     */
+    displayName: string,
+
+    /**
+     * 
+     */
+    phonetic?: {
+      /**
+       * 
+       */
+      given?: string,
+
+      /**
+       * 
+       */
+      middle?: string,
+
+      /**
+       * 
+       */
+      family?: string
+    }
+  };
+  
+  /**
+   * 
+   */
+  nickname?: string;
+
+  /**
+   * Password for login.
+   */
+  password: string;
+
+  /**
+   * 
+   */
+  notes?: string;
+  
+  /**
+   * A user who is directly or indirectly related to this account.
+   */
+  parent?: IUser;
+
+  /**
+   * Status of the enabled record.
+   */
   enabled?: boolean;
+
+  /**
+   * 
+   */
+  createdAt?: Date;
+
+  /**
+   * 
+   */
+  updatedAt?: Date;
+
+  /**
+   * Current version of the record.
+   */
+  version?: number;
 };
 
 /**
  * 
  */
 export const UserSchema = new Mongoose.Schema({
-  /* Status of the enabled record. */
+  nickname: {
+    type: Mongoose.Schema.Types.String,
+    sparse: true,
+    unique: true,
+    uniqueCaseInsensitive: true
+  },
+  password: {
+    type: Mongoose.Schema.Types.String, 
+    required: true, 
+    bcrypt: true,
+    hide: true
+  },
+  notes: {
+    type: Mongoose.Schema.Types.String,
+    default: ''
+  },
+  parent: {
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Account.User',
+    autopopulate: true
+  },
   enabled: {
-    type: Boolean,
+    type: Mongoose.Schema.Types.Boolean,
     default: true
   }
 }, {
@@ -47,6 +155,15 @@ export const UserSchema = new Mongoose.Schema({
   toJSON: {
     getters: true,
     virtuals: true
+  }
+});
+
+UserSchema.plugin(require('mongoose-bcrypt'), { 
+  rounds: 10
+});
+UserSchema.plugin(require('mongoose-hidden')(), {
+  hidden: {
+    version: false
   }
 });
 

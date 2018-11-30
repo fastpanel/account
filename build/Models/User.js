@@ -16,9 +16,29 @@ const mongoose_1 = __importDefault(require("mongoose"));
  *
  */
 exports.UserSchema = new mongoose_1.default.Schema({
-    /* Status of the enabled record. */
+    nickname: {
+        type: mongoose_1.default.Schema.Types.String,
+        sparse: true,
+        unique: true,
+        uniqueCaseInsensitive: true
+    },
+    password: {
+        type: mongoose_1.default.Schema.Types.String,
+        required: true,
+        bcrypt: true,
+        hide: true
+    },
+    notes: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: ''
+    },
+    parent: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'Account.User',
+        autopopulate: true
+    },
     enabled: {
-        type: Boolean,
+        type: mongoose_1.default.Schema.Types.Boolean,
         default: true
     }
 }, {
@@ -39,6 +59,14 @@ exports.UserSchema = new mongoose_1.default.Schema({
     toJSON: {
         getters: true,
         virtuals: true
+    }
+});
+exports.UserSchema.plugin(require('mongoose-bcrypt'), {
+    rounds: 10
+});
+exports.UserSchema.plugin(require('mongoose-hidden')(), {
+    hidden: {
+        version: false
     }
 });
 /**
