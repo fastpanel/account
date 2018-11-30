@@ -15,7 +15,32 @@ const mongoose_1 = __importDefault(require("mongoose"));
 /**
  *
  */
-exports.GroupSchema = new mongoose_1.default.Schema({});
+exports.GroupSchema = new mongoose_1.default.Schema({
+    /* Status of the enabled record. */
+    enabled: {
+        type: Boolean,
+        default: true
+    }
+}, {
+    /* Set (collection) table name. */
+    collection: 'accountGroup',
+    /* Logger date. */
+    timestamps: {
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    },
+    /* Current version of the record. */
+    versionKey: 'version',
+    /* Converts the mongoose document into a plain javascript object. */
+    toObject: {
+        getters: true,
+        virtuals: true
+    },
+    toJSON: {
+        getters: true,
+        virtuals: true
+    }
+});
 /**
  *
  */

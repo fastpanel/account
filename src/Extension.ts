@@ -28,7 +28,9 @@ export class Extension extends Extensions.ExtensionDefines {
   async register () : Promise<any> {
     this.events.once('cli:getCommands', (cli: Vorpal) => {});
     /* --------------------------------------------------------------------- */
-    this.events.once('db:getModels', (db: MongoSE.Connection) => {});
+    this.events.once('db:getModels', (db: MongoSE.Connection) => {
+      require('./Models/');
+    });
     /* --------------------------------------------------------------------- */
     this.events.once('web:getMiddleware', (web: Express.Application) => {});
     this.events.once('web:getRoutes', (web: Express.Application) => {});

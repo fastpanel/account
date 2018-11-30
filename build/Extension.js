@@ -22,7 +22,9 @@ class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
     async register() {
         this.events.once('cli:getCommands', (cli) => { });
         /* --------------------------------------------------------------------- */
-        this.events.once('db:getModels', (db) => { });
+        this.events.once('db:getModels', (db) => {
+            require('./Models/');
+        });
         /* --------------------------------------------------------------------- */
         this.events.once('web:getMiddleware', (web) => { });
         this.events.once('web:getRoutes', (web) => { });

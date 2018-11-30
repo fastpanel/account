@@ -10,6 +10,10 @@ import Mongoose from 'mongoose';
  *
  */
 export interface IUser extends Mongoose.Document {
+    createdAt?: Date;
+    updatedAt?: Date;
+    version?: number;
+    enabled?: boolean;
 }
 /**
  *

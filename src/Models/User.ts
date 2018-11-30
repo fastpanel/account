@@ -11,12 +11,44 @@ import Mongoose from 'mongoose';
 /**
  * 
  */
-export interface IUser extends Mongoose.Document {};
+export interface IUser extends Mongoose.Document {
+  /* ----------------------------------------------------------------------- */
+  createdAt?: Date;
+  updatedAt?: Date;
+  version?: number;
+  /* ----------------------------------------------------------------------- */
+  enabled?: boolean;
+};
 
 /**
  * 
  */
-export const UserSchema = new Mongoose.Schema({});
+export const UserSchema = new Mongoose.Schema({
+  /* Status of the enabled record. */
+  enabled: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  /* Set (collection) table name. */
+  collection: 'accountUser',
+  /* Logger date. */
+  timestamps: { 
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  },
+  /* Current version of the record. */
+  versionKey: 'version',
+  /* Converts the mongoose document into a plain javascript object. */
+  toObject: {
+    getters: true,
+    virtuals: true
+  },
+  toJSON: {
+    getters: true,
+    virtuals: true
+  }
+});
 
 /**
  * 
