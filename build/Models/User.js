@@ -16,6 +16,55 @@ const mongoose_1 = __importDefault(require("mongoose"));
  *
  */
 exports.UserSchema = new mongoose_1.default.Schema({
+    name: {
+        given: {
+            type: mongoose_1.default.Schema.Types.String,
+            trim: true,
+            default: ''
+        },
+        middle: {
+            type: mongoose_1.default.Schema.Types.String,
+            trim: true,
+            default: ''
+        },
+        family: {
+            type: mongoose_1.default.Schema.Types.String,
+            trim: true,
+            default: ''
+        },
+        prefix: {
+            type: mongoose_1.default.Schema.Types.String,
+            trim: true,
+            default: ''
+        },
+        suffix: {
+            type: mongoose_1.default.Schema.Types.String,
+            trim: true,
+            default: ''
+        },
+        displayName: {
+            type: mongoose_1.default.Schema.Types.String,
+            required: true,
+            trim: true
+        },
+        phonetic: {
+            given: {
+                type: mongoose_1.default.Schema.Types.String,
+                trim: true,
+                default: ''
+            },
+            middle: {
+                type: mongoose_1.default.Schema.Types.String,
+                trim: true,
+                default: ''
+            },
+            family: {
+                type: mongoose_1.default.Schema.Types.String,
+                trim: true,
+                default: ''
+            }
+        }
+    },
     nickname: {
         type: mongoose_1.default.Schema.Types.String,
         sparse: true,
@@ -61,6 +110,7 @@ exports.UserSchema = new mongoose_1.default.Schema({
         virtuals: true
     }
 });
+exports.UserSchema.plugin(require('mongoose-autopopulate'));
 exports.UserSchema.plugin(require('mongoose-bcrypt'), {
     rounds: 10
 });

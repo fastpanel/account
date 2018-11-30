@@ -112,6 +112,55 @@ export interface IUser extends Mongoose.Document {
  * 
  */
 export const UserSchema = new Mongoose.Schema({
+  name: {
+    given: {
+      type: Mongoose.Schema.Types.String,
+      trim: true,
+      default: ''
+    },
+    middle: {
+      type: Mongoose.Schema.Types.String,
+      trim: true,
+      default: ''
+    },
+    family: {
+      type: Mongoose.Schema.Types.String,
+      trim: true,
+      default: ''
+    },
+    prefix: {
+      type: Mongoose.Schema.Types.String,
+      trim: true,
+      default: ''
+    },
+    suffix: {
+      type: Mongoose.Schema.Types.String,
+      trim: true,
+      default: ''
+    },
+    displayName: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+      trim: true
+    },
+    phonetic: {
+      given: {
+        type: Mongoose.Schema.Types.String,
+        trim: true,
+        default: ''
+      },
+      middle: {
+        type: Mongoose.Schema.Types.String,
+        trim: true,
+        default: ''
+      },
+      family: {
+        type: Mongoose.Schema.Types.String,
+        trim: true,
+        default: ''
+      }
+    }
+  },
   nickname: {
     type: Mongoose.Schema.Types.String,
     sparse: true,
@@ -158,6 +207,7 @@ export const UserSchema = new Mongoose.Schema({
   }
 });
 
+UserSchema.plugin(require('mongoose-autopopulate'));
 UserSchema.plugin(require('mongoose-bcrypt'), { 
   rounds: 10
 });
