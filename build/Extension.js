@@ -20,17 +20,18 @@ class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
      * Registers a service provider.
      */
     async register() {
-        this.events.once('cli:getCommands', (cli) => { });
+        this.events.once('app:setup', async (app) => { });
+        this.events.once('cli:getCommands', async (cli) => { });
         /* --------------------------------------------------------------------- */
-        this.events.once('db:getModels', (db) => {
+        this.events.once('db:getModels', async (db) => {
             require('./Models/');
         });
         /* --------------------------------------------------------------------- */
-        this.events.once('web:getMiddleware', (web) => { });
-        this.events.once('web:getRoutes', (web) => { });
+        this.events.once('web:getMiddleware', async (web) => { });
+        this.events.once('web:getRoutes', async (web) => { });
         /* --------------------------------------------------------------------- */
-        this.events.once('socket:getMiddleware', (socket) => { });
-        this.events.once('socket:getActions', (socket) => { });
+        this.events.once('socket:getMiddleware', async (socket) => { });
+        this.events.once('socket:getActions', async (socket) => { });
         /* --------------------------------------------------------------------- */
     }
     /**
