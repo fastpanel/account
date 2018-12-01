@@ -63,7 +63,7 @@ export interface IUser extends Mongoose.Document {
     /**
      * Password for login.
      */
-    password: string;
+    password?: string;
     /**
      *
      */
