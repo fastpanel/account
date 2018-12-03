@@ -6,14 +6,51 @@
  * @license   MIT
  */
 import Mongoose from 'mongoose';
+import { IUser } from './User';
+/**
+ * A set of token type definitions.
+ */
+export declare enum TokenType {
+    APPLICATION = "APPLICATION",
+    DEVICE = "DEVICE",
+    USER = "USER"
+}
 /**
  *
  */
 export interface IToken extends Mongoose.Document {
-    createdAt?: Date;
-    updatedAt?: Date;
-    version?: number;
+    /**
+     *
+     */
+    name?: string;
+    /**
+     * The type of token for whom it was issued.
+     */
+    type?: TokenType;
+    /**
+     * The owner of the token.
+     */
+    user: IUser;
+    /**
+     * The token expiration time.
+     */
+    expiresAt: Date;
+    /**
+     * Status of the enabled record.
+     */
     enabled?: boolean;
+    /**
+     *
+     */
+    createdAt?: Date;
+    /**
+     *
+     */
+    updatedAt?: Date;
+    /**
+     * Current version of the record.
+     */
+    version?: number;
 }
 /**
  *

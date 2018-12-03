@@ -83,14 +83,16 @@ export interface IUser extends Mongoose.Document {
   notes?: string;
   
   /**
-   * A user who is directly or indirectly related to this account.
+   * A users who is directly or indirectly related to this account.
    */
-  parent?: IUser;
+  parents?: Array<IUser>;
 
   /**
    * Status of the enabled record.
    */
   enabled?: boolean;
+
+  /* ----------------------------------------------------------------------- */
 
   /**
    * 
@@ -112,6 +114,9 @@ export interface IUser extends Mongoose.Document {
  * 
  */
 export const UserSchema = new Mongoose.Schema({
+  /**
+   * User full name fields.
+   */
   name: {
     given: {
       type: Mongoose.Schema.Types.String,
@@ -161,27 +166,49 @@ export const UserSchema = new Mongoose.Schema({
       }
     }
   },
+
+  /**
+   * 
+   */
   nickname: {
     type: Mongoose.Schema.Types.String,
     sparse: true,
     unique: true,
     uniqueCaseInsensitive: true
   },
+  
+  /**
+   * Password for login.
+   */
   password: {
     type: Mongoose.Schema.Types.String, 
     required: true, 
     bcrypt: true,
     hide: true
   },
+  
+  /**
+   * 
+   */
   notes: {
     type: Mongoose.Schema.Types.String,
     default: ''
   },
-  parent: {
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.User',
-    autopopulate: true
-  },
+  
+  /**
+   * A users who is directly or indirectly related to this account.
+   */
+  parents: [
+    {
+      type: Mongoose.Schema.Types.ObjectId,
+      ref: 'Account.User',
+      autopopulate: true
+    }
+  ],
+  
+  /**
+   * Status of the enabled record.
+   */
   enabled: {
     type: Mongoose.Schema.Types.Boolean,
     default: true

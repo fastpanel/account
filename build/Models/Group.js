@@ -16,9 +16,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
  *
  */
 exports.GroupSchema = new mongoose_1.default.Schema({
-    /* Status of the enabled record. */
+    /**
+     * Status of the enabled record.
+     */
     enabled: {
-        type: Boolean,
+        type: mongoose_1.default.Schema.Types.Boolean,
         default: true
     }
 }, {

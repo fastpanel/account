@@ -909,6 +909,9 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
+		<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+			<a href="../enums/_models_token_.tokentype.html" class="tsd-kind-icon">Token<wbr>Type</a>
+		</li>
 		<li class="current tsd-kind-interface tsd-parent-kind-external-module">
 			<a href="_models_token_.itoken.html" class="tsd-kind-icon">IToken</a>
 			<ul>
@@ -936,17 +939,29 @@ img { max-width: 100%; }
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="_models_token_.itoken.html#enabled" class="tsd-kind-icon">enabled</a>
 				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="_models_token_.itoken.html#expiresat" class="tsd-kind-icon">expires<wbr>At</a>
+				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="_models_token_.itoken.html#id" class="tsd-kind-icon">id</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="_models_token_.itoken.html#modelname" class="tsd-kind-icon">model<wbr>Name</a>
 				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="_models_token_.itoken.html#name" class="tsd-kind-icon">name</a>
+				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a href="_models_token_.itoken.html#schema" class="tsd-kind-icon">schema</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="_models_token_.itoken.html#type" class="tsd-kind-icon">type</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="_models_token_.itoken.html#updatedat" class="tsd-kind-icon">updated<wbr>At</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="_models_token_.itoken.html#user" class="tsd-kind-icon">user</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="_models_token_.itoken.html#version" class="tsd-kind-icon">version</a>
@@ -1051,10 +1066,14 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_models_token_.itoken.html#db" class="tsd-kind-icon">db</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_models_token_.itoken.html#discriminators" class="tsd-kind-icon">discriminators</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#enabled" class="tsd-kind-icon">enabled</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#expiresat" class="tsd-kind-icon">expires<wbr>At</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_models_token_.itoken.html#id" class="tsd-kind-icon">id</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_models_token_.itoken.html#modelname" class="tsd-kind-icon">model<wbr>Name</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#name" class="tsd-kind-icon">name</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_models_token_.itoken.html#schema" class="tsd-kind-icon">schema</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#type" class="tsd-kind-icon">type</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#updatedat" class="tsd-kind-icon">updated<wbr>At</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#user" class="tsd-kind-icon">user</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_models_token_.itoken.html#version" class="tsd-kind-icon">version</a></li>
 						</ul>
 					</section>
@@ -1160,7 +1179,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in Models/Token.ts:16</li>
+						<li>Defined in Models/Token.ts:55</li>
 					</ul>
 				</aside>
 			</section>
@@ -1202,9 +1221,29 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">enabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in Models/Token.ts:20</li>
+						<li>Defined in Models/Token.ts:48</li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Status of the enabled record.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="expiresat" class="tsd-anchor"></a>
+				<h3>expires<wbr>At</h3>
+				<div class="tsd-signature tsd-kind-icon">expires<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in Models/Token.ts:43</li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The token expiration time.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="id" class="tsd-anchor"></a>
@@ -1241,6 +1280,16 @@ img { max-width: 100%; }
 					</div>
 				</div>
 			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="name" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
+				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in Models/Token.ts:28</li>
+					</ul>
+				</aside>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 				<a name="schema" class="tsd-anchor"></a>
 				<h3>schema</h3>
@@ -1258,14 +1307,44 @@ img { max-width: 100%; }
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="type" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> type</h3>
+				<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/_models_token_.tokentype.html" class="tsd-signature-type">TokenType</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in Models/Token.ts:33</li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The type of token for whom it was issued.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="updatedat" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> updated<wbr>At</h3>
 				<div class="tsd-signature tsd-kind-icon">updated<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in Models/Token.ts:17</li>
+						<li>Defined in Models/Token.ts:60</li>
 					</ul>
 				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="user" class="tsd-anchor"></a>
+				<h3>user</h3>
+				<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="_models_user_.iuser.html" class="tsd-signature-type">IUser</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in Models/Token.ts:38</li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The owner of the token.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="version" class="tsd-anchor"></a>
@@ -1273,9 +1352,14 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in Models/Token.ts:18</li>
+						<li>Defined in Models/Token.ts:65</li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Current version of the record.</p>
+					</div>
+				</div>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group tsd-is-inherited">

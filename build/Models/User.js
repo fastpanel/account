@@ -16,6 +16,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
  *
  */
 exports.UserSchema = new mongoose_1.default.Schema({
+    /**
+     * User full name fields.
+     */
     name: {
         given: {
             type: mongoose_1.default.Schema.Types.String,
@@ -65,27 +68,44 @@ exports.UserSchema = new mongoose_1.default.Schema({
             }
         }
     },
+    /**
+     *
+     */
     nickname: {
         type: mongoose_1.default.Schema.Types.String,
         sparse: true,
         unique: true,
         uniqueCaseInsensitive: true
     },
+    /**
+     * Password for login.
+     */
     password: {
         type: mongoose_1.default.Schema.Types.String,
         required: true,
         bcrypt: true,
         hide: true
     },
+    /**
+     *
+     */
     notes: {
         type: mongoose_1.default.Schema.Types.String,
         default: ''
     },
-    parent: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.User',
-        autopopulate: true
-    },
+    /**
+     * A users who is directly or indirectly related to this account.
+     */
+    parents: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: 'Account.User',
+            autopopulate: true
+        }
+    ],
+    /**
+     * Status of the enabled record.
+     */
     enabled: {
         type: mongoose_1.default.Schema.Types.Boolean,
         default: true

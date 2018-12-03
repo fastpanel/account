@@ -69,9 +69,9 @@ export interface IUser extends Mongoose.Document {
      */
     notes?: string;
     /**
-     * A user who is directly or indirectly related to this account.
+     * A users who is directly or indirectly related to this account.
      */
-    parent?: IUser;
+    parents?: Array<IUser>;
     /**
      * Status of the enabled record.
      */

@@ -10,10 +10,22 @@ import Mongoose from 'mongoose';
  *
  */
 export interface IGroup extends Mongoose.Document {
-    createdAt?: Date;
-    updatedAt?: Date;
-    version?: number;
+    /**
+     * Status of the enabled record.
+     */
     enabled?: boolean;
+    /**
+     *
+     */
+    createdAt?: Date;
+    /**
+     *
+     */
+    updatedAt?: Date;
+    /**
+     * Current version of the record.
+     */
+    version?: number;
 }
 /**
  *

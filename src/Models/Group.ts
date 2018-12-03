@@ -12,21 +12,39 @@ import Mongoose from 'mongoose';
  * 
  */
 export interface IGroup extends Mongoose.Document {
-  /* ----------------------------------------------------------------------- */
-  createdAt?: Date;
-  updatedAt?: Date;
-  version?: number;
-  /* ----------------------------------------------------------------------- */
+  
+  /**
+   * Status of the enabled record.
+   */
   enabled?: boolean;
+
+  /* ----------------------------------------------------------------------- */
+
+  /**
+   * 
+   */
+  createdAt?: Date;
+
+  /**
+   * 
+   */
+  updatedAt?: Date;
+
+  /**
+   * Current version of the record.
+   */
+  version?: number;
 };
 
 /**
  * 
  */
 export const GroupSchema = new Mongoose.Schema({
-  /* Status of the enabled record. */
+  /**
+   * Status of the enabled record.
+   */
   enabled: {
-    type: Boolean,
+    type: Mongoose.Schema.Types.Boolean,
     default: true
   }
 }, {
