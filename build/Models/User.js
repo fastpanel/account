@@ -17,6 +17,14 @@ const mongoose_1 = __importDefault(require("mongoose"));
  */
 exports.UserSchema = new mongoose_1.default.Schema({
     /**
+     *
+     */
+    group: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'Account.Group',
+        autopopulate: true
+    },
+    /**
      * User full name fields.
      */
     name: {

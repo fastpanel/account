@@ -17,6 +17,22 @@ const mongoose_1 = __importDefault(require("mongoose"));
  */
 exports.GroupSchema = new mongoose_1.default.Schema({
     /**
+     *
+     */
+    alias: {
+        type: mongoose_1.default.Schema.Types.String,
+        sparse: true,
+        unique: true,
+        uniqueCaseInsensitive: true
+    },
+    /**
+     *
+     */
+    label: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: ''
+    },
+    /**
      * Status of the enabled record.
      */
     enabled: {
@@ -43,6 +59,7 @@ exports.GroupSchema = new mongoose_1.default.Schema({
         virtuals: true
     }
 });
+exports.GroupSchema.plugin(require('mongoose-autopopulate'));
 /**
  *
  */

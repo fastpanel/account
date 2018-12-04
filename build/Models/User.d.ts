@@ -6,10 +6,15 @@
  * @license   MIT
  */
 import Mongoose from 'mongoose';
+import { IGroup } from './Group';
 /**
  *
  */
 export interface IUser extends Mongoose.Document {
+    /**
+     *
+     */
+    group: IGroup;
     /**
      * User full name fields.
      */

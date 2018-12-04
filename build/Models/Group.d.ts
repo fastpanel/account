@@ -11,6 +11,14 @@ import Mongoose from 'mongoose';
  */
 export interface IGroup extends Mongoose.Document {
     /**
+     *
+     */
+    alias: string;
+    /**
+     *
+     */
+    label: string;
+    /**
      * Status of the enabled record.
      */
     enabled?: boolean;

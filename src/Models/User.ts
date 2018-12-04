@@ -7,11 +7,17 @@
  */
 
 import Mongoose from 'mongoose';
+import { IGroup } from './Group';
 
 /**
  * 
  */
 export interface IUser extends Mongoose.Document {
+  /**
+   * 
+   */
+  group: IGroup;
+  
   /**
    * User full name fields.
    */
@@ -114,6 +120,15 @@ export interface IUser extends Mongoose.Document {
  * 
  */
 export const UserSchema = new Mongoose.Schema({
+  /**
+   * 
+   */
+  group: {
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Account.Group',
+    autopopulate: true
+  },
+
   /**
    * User full name fields.
    */

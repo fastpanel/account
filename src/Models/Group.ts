@@ -12,7 +12,16 @@ import Mongoose from 'mongoose';
  * 
  */
 export interface IGroup extends Mongoose.Document {
-  
+  /**
+   * 
+   */
+  alias: string;
+
+  /**
+   * 
+   */
+  label: string;
+
   /**
    * Status of the enabled record.
    */
@@ -41,6 +50,24 @@ export interface IGroup extends Mongoose.Document {
  */
 export const GroupSchema = new Mongoose.Schema({
   /**
+   * 
+   */
+  alias: {
+    type: Mongoose.Schema.Types.String,
+    sparse: true,
+    unique: true,
+    uniqueCaseInsensitive: true
+  },
+
+  /**
+   * 
+   */
+  label: {
+    type: Mongoose.Schema.Types.String,
+    default: ''
+  },
+
+  /**
    * Status of the enabled record.
    */
   enabled: {
@@ -67,6 +94,8 @@ export const GroupSchema = new Mongoose.Schema({
     virtuals: true
   }
 });
+
+GroupSchema.plugin(require('mongoose-autopopulate'));
 
 /**
  * 
