@@ -117,18 +117,46 @@ export class Extension extends Extensions.ExtensionDefines {
     this.events.once('db:getModels', async (db: Mongoose.Connection) => {
       require('./Models/');
     });
-    this.events.once('db:seeds', async (db: Mongoose.Connection) => {
-      const GroupModel = Mongoose.model<IGroup>('Account.Group');
-      const UserModel = Mongoose.model<IUser>('Account.User');
-      const TokenModel = Mongoose.model<IToken>('Account.Token');
+    this.events.once('db:getSeedsTasks', async (db: Mongoose.Connection, list: Array<Promise<any>>) => {
+      list.push(new Promise(async (resolve, reject) => {
+        const GroupModel = Mongoose.model<IGroup>('Account.Group');
+        const UserModel = Mongoose.model<IUser>('Account.User');
+        const TokenModel = Mongoose.model<IToken>('Account.Token');
+        
+        /* ----------------------------------------------------------------- */
+        
+        let adminGroup = new GroupModel({
+          _id: '5c06a2c04d894609880d06aa',
+          alias: 'admin',
+          label: 'Administrators'
+        });
+        await adminGroup.save();
 
-      let adminGroup = new GroupModel({
-        alias: 'admin',
-        label: 'Administrators'
-      });
-      await adminGroup.save();
+        let managerGroup = new GroupModel({
+          alias: 'manager',
+          label: 'Managers'
+        });
+        await managerGroup.save();
+
+        let terminalGroup = new GroupModel({
+          alias: 'terminal',
+          label: 'Terminals'
+        });
+        await terminalGroup.save();
+
+        let clientGroup = new GroupModel({
+          alias: 'client',
+          label: 'Clients'
+        });
+        await clientGroup.save();
+
+        /* ----------------------------------------------------------------- */
 
 
+        /* ----------------------------------------------------------------- */
+
+        resolve();
+      }));
     });
     /* --------------------------------------------------------------------- */
     this.events.once('web:getMiddleware', async (web: Express.Application) => {

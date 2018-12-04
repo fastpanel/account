@@ -110,15 +110,37 @@ class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
         this.events.once('db:getModels', async (db) => {
             require('./Models/');
         });
-        this.events.once('db:seeds', async (db) => {
-            const GroupModel = mongoose_1.default.model('Account.Group');
-            const UserModel = mongoose_1.default.model('Account.User');
-            const TokenModel = mongoose_1.default.model('Account.Token');
-            let adminGroup = new GroupModel({
-                alias: 'admin',
-                label: 'Administrators'
-            });
-            await adminGroup.save();
+        this.events.once('db:getSeedsTasks', async (db, list) => {
+            list.push(new Promise(async (resolve, reject) => {
+                const GroupModel = mongoose_1.default.model('Account.Group');
+                const UserModel = mongoose_1.default.model('Account.User');
+                const TokenModel = mongoose_1.default.model('Account.Token');
+                /* ----------------------------------------------------------------- */
+                let adminGroup = new GroupModel({
+                    _id: '5c06a2c04d894609880d06aa',
+                    alias: 'admin',
+                    label: 'Administrators'
+                });
+                await adminGroup.save();
+                let managerGroup = new GroupModel({
+                    alias: 'manager',
+                    label: 'Managers'
+                });
+                await managerGroup.save();
+                let terminalGroup = new GroupModel({
+                    alias: 'terminal',
+                    label: 'Terminals'
+                });
+                await terminalGroup.save();
+                let clientGroup = new GroupModel({
+                    alias: 'client',
+                    label: 'Clients'
+                });
+                await clientGroup.save();
+                /* ----------------------------------------------------------------- */
+                /* ----------------------------------------------------------------- */
+                resolve();
+            }));
         });
         /* --------------------------------------------------------------------- */
         this.events.once('web:getMiddleware', async (web) => {
