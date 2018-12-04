@@ -110,7 +110,7 @@ class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
         this.events.once('db:getModels', async (db) => {
             require('./Models/');
         });
-        this.events.once('db:getSeedsTasks', async (db, list) => {
+        this.events.on('db:getSeedsTasks', async (db, list) => {
             list.push(new Promise(async (resolve, reject) => {
                 const GroupModel = mongoose_1.default.model('Account.Group');
                 const UserModel = mongoose_1.default.model('Account.User');
