@@ -110,7 +110,16 @@ class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
         this.events.once('db:getModels', async (db) => {
             require('./Models/');
         });
-        this.events.once('db:seeds', async (db) => { });
+        this.events.once('db:seeds', async (db) => {
+            const GroupModel = mongoose_1.default.model('Account.Group');
+            const UserModel = mongoose_1.default.model('Account.User');
+            const TokenModel = mongoose_1.default.model('Account.Token');
+            let adminGroup = new GroupModel({
+                alias: 'admin',
+                label: 'Administrators'
+            });
+            await adminGroup.save();
+        });
         /* --------------------------------------------------------------------- */
         this.events.once('web:getMiddleware', async (web) => {
             web.use(passport_1.default.initialize());

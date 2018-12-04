@@ -13,7 +13,7 @@ import Passport from 'passport';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
 import { Extensions, Application } from 'fastpanel-core';
-import { IUser, IToken } from './Models';
+import { IUser, IToken, IGroup } from './Models';
 
 /**
  * Class Extension
@@ -117,7 +117,19 @@ export class Extension extends Extensions.ExtensionDefines {
     this.events.once('db:getModels', async (db: Mongoose.Connection) => {
       require('./Models/');
     });
-    this.events.once('db:seeds', async (db: Mongoose.Connection) => {});
+    this.events.once('db:seeds', async (db: Mongoose.Connection) => {
+      const GroupModel = Mongoose.model<IGroup>('Account.Group');
+      const UserModel = Mongoose.model<IUser>('Account.User');
+      const TokenModel = Mongoose.model<IToken>('Account.Token');
+
+      let adminGroup = new GroupModel({
+        alias: 'admin',
+        label: 'Administrators'
+      });
+      await adminGroup.save();
+
+
+    });
     /* --------------------------------------------------------------------- */
     this.events.once('web:getMiddleware', async (web: Express.Application) => {
       web.use(Passport.initialize());
