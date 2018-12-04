@@ -123,37 +123,44 @@ export class Extension extends Extensions.ExtensionDefines {
         const UserModel = Mongoose.model<IUser>('Account.User');
         const TokenModel = Mongoose.model<IToken>('Account.Token');
         
-        /* ----------------------------------------------------------------- */
-        
-        let adminGroup = new GroupModel({
-          _id: '5c06a2c04d894609880d06aa',
-          alias: 'admin',
-          label: 'Administrators'
-        });
-        await adminGroup.save();
+        try {
+          let adminGroup = new GroupModel({
+            _id: '5c06a2c04d894609880d06aa',
+            alias: 'admin',
+            label: 'Administrators'
+          });
+          await adminGroup.save();
 
-        let managerGroup = new GroupModel({
-          alias: 'manager',
-          label: 'Managers'
-        });
-        await managerGroup.save();
+          let managerGroup = new GroupModel({
+            _id: '5c06d26f400c790964b698ef',
+            alias: 'manager',
+            label: 'Managers'
+          });
+          await managerGroup.save();
 
-        let terminalGroup = new GroupModel({
-          alias: 'terminal',
-          label: 'Terminals'
-        });
-        await terminalGroup.save();
+          let terminalGroup = new GroupModel({
+            _id: '5c06d26f400c790964b698f0',
+            alias: 'terminal',
+            label: 'Terminals'
+          });
+          await terminalGroup.save();
 
-        let clientGroup = new GroupModel({
-          alias: 'client',
-          label: 'Clients'
-        });
-        await clientGroup.save();
+          let clientGroup = new GroupModel({
+            _id: '5c06d26f400c790964b698f1',
+            alias: 'client',
+            label: 'Clients'
+          });
+          await clientGroup.save();
 
-        /* ----------------------------------------------------------------- */
+          /* --------------------------------------------------------------- */
 
+          
 
-        /* ----------------------------------------------------------------- */
+          /* --------------------------------------------------------------- */
+
+        } catch (error) {
+          reject(error);
+        }
 
         resolve();
       }));
