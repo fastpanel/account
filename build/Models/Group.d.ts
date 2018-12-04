@@ -6,6 +6,7 @@
  * @license   MIT
  */
 import Mongoose from 'mongoose';
+import { IUser } from './User';
 /**
  *
  */
@@ -22,6 +23,10 @@ export interface IGroup extends Mongoose.Document {
      * Status of the enabled record.
      */
     enabled?: boolean;
+    /**
+     *
+     */
+    readonly users: Array<IUser>;
     /**
      *
      */

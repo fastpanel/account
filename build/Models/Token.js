@@ -86,6 +86,7 @@ exports.TokenSchema = new mongoose_1.default.Schema({
         virtuals: true
     }
 });
+/* Init plugins. */
 exports.TokenSchema.plugin(require('mongoose-autopopulate'));
 /**
  *

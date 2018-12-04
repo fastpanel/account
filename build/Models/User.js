@@ -138,6 +138,7 @@ exports.UserSchema = new mongoose_1.default.Schema({
         virtuals: true
     }
 });
+/* Init plugins. */
 exports.UserSchema.plugin(require('mongoose-autopopulate'));
 exports.UserSchema.plugin(require('mongoose-bcrypt'), {
     rounds: 10

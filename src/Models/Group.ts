@@ -7,6 +7,7 @@
  */
 
 import Mongoose from 'mongoose';
+import { IUser } from './User';
 
 /**
  * 
@@ -26,6 +27,11 @@ export interface IGroup extends Mongoose.Document {
    * Status of the enabled record.
    */
   enabled?: boolean;
+
+  /**
+   * 
+   */
+  readonly users: Array<IUser>;
 
   /* ----------------------------------------------------------------------- */
 
@@ -95,6 +101,17 @@ export const GroupSchema = new Mongoose.Schema({
   }
 });
 
+/**
+ * 
+ */
+GroupSchema.virtual('users', {
+  ref: 'Account.User',
+  localField: '_id',
+  foreignField: 'group',
+  autopopulate: true
+});
+
+/* Init plugins. */
 GroupSchema.plugin(require('mongoose-autopopulate'));
 
 /**

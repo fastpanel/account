@@ -135,6 +135,7 @@ export const TokenSchema = new Mongoose.Schema({
   }
 });
 
+/* Init plugins. */
 TokenSchema.plugin(require('mongoose-autopopulate'));
 
 /**

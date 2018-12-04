@@ -17,7 +17,7 @@ export interface IUser extends Mongoose.Document {
    * 
    */
   group: IGroup;
-  
+
   /**
    * User full name fields.
    */
@@ -114,6 +114,23 @@ export interface IUser extends Mongoose.Document {
    * Current version of the record.
    */
   version?: number;
+
+  /* ----------------------------------------------------------------------- */
+  
+  /**
+   * Async password verification function.
+   * 
+   * @param password Password in clear text.
+   */
+  verifyPassword(password: string): Promise<boolean>;
+
+  /**
+   * Sync password verification function.
+   * 
+   * @param password Password in clear text.
+   */
+  verifyPasswordSync(password: string): boolean;
+
 };
 
 /**
@@ -249,6 +266,7 @@ export const UserSchema = new Mongoose.Schema({
   }
 });
 
+/* Init plugins. */
 UserSchema.plugin(require('mongoose-autopopulate'));
 UserSchema.plugin(require('mongoose-bcrypt'), { 
   rounds: 10

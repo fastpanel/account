@@ -59,6 +59,16 @@ exports.GroupSchema = new mongoose_1.default.Schema({
         virtuals: true
     }
 });
+/**
+ *
+ */
+exports.GroupSchema.virtual('users', {
+    ref: 'Account.User',
+    localField: '_id',
+    foreignField: 'group',
+    autopopulate: true
+});
+/* Init plugins. */
 exports.GroupSchema.plugin(require('mongoose-autopopulate'));
 /**
  *
