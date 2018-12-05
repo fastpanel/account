@@ -14,7 +14,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = require("passport-local");
 const passport_http_bearer_1 = require("passport-http-bearer");
-const fastpanel_core_1 = require("fastpanel-core");
+const core_1 = require("@fastpanel/core");
 /**
  * Class Extension
  *
@@ -22,7 +22,7 @@ const fastpanel_core_1 = require("fastpanel-core");
  *
  * @version 1.0.0
  */
-class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
+class Extension extends core_1.Extensions.ExtensionDefines {
     /**
      * Registers a service provider.
      */
@@ -104,7 +104,9 @@ class Extension extends fastpanel_core_1.Extensions.ExtensionDefines {
             });
         });
         /* --------------------------------------------------------------------- */
-        this.events.once('app:setup', async (app) => { });
+        /* Install and configure the basic components of the system. */
+        this.events.on('app:getSetupTasks', async (list) => { });
+        /* Registered cli commands. */
         this.events.once('cli:getCommands', async (cli) => { });
         /* --------------------------------------------------------------------- */
         this.events.once('db:getModels', async (db) => {

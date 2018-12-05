@@ -34,9 +34,10 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.6",
+    "@fastpanel/core": "github:desionlab/fastpanel-core#develop",
+    "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
-    "@types/mongoose": "^5.3.2",
+    "@types/mongoose": "^5.3.3",
     "@types/node": "^10.12.12",
     "@types/passport": "^0.4.7",
     "@types/passport-http-bearer": "^1.0.33",
@@ -44,7 +45,6 @@
     "@types/socket.io": "^2.1.0",
     "@types/vorpal": "^1.11.0",
     "chai": "^4.2.0",
-    "fastpanel-core": "github:desionlab/fastpanel-core#develop",
     "fastpanel-extension-httpx": "github:desionlab/fastpanel-extension-httpx#develop",
     "fastpanel-extension-mongodb": "github:desionlab/fastpanel-extension-mongodb#develop",
     "fastpanel-extension-socket.io": "github:desionlab/fastpanel-extension-socket.io#develop",

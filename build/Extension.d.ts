@@ -5,7 +5,7 @@
  * @copyright 2014 - 2018 Desionlab
  * @license   MIT
  */
-import { Extensions } from 'fastpanel-core';
+import { Extensions } from '@fastpanel/core';
 /**
  * Class Extension
  *

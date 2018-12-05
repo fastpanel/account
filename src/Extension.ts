@@ -12,8 +12,9 @@ import Mongoose from 'mongoose';
 import Passport from 'passport';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
-import { Extensions, Application } from 'fastpanel-core';
 import { IUser, IToken, IGroup } from './Models';
+import { Extensions } from '@fastpanel/core';
+import { SetupTaskDefinesMethod } from '@fastpanel/core/build/Commands';
 
 /**
  * Class Extension
@@ -111,12 +112,19 @@ export class Extension extends Extensions.ExtensionDefines {
     });
 
     /* --------------------------------------------------------------------- */
-    this.events.once('app:setup', async (app: Application) => {});
+    
+    /* Install and configure the basic components of the system. */
+    this.events.on('app:getSetupTasks', async (list: Array<SetupTaskDefinesMethod>) => {});
+    
+    /* Registered cli commands. */
     this.events.once('cli:getCommands', async (cli: Vorpal) => {});
+
     /* --------------------------------------------------------------------- */
+
     this.events.once('db:getModels', async (db: Mongoose.Connection) => {
       require('./Models/');
     });
+
     this.events.on('db:getSeedsTasks', async (db: Mongoose.Connection, list: Array<Promise<any>>) => {
       list.push(new Promise(async (resolve, reject) => {
         const GroupModel = Mongoose.model<IGroup>('Account.Group');
@@ -165,14 +173,20 @@ export class Extension extends Extensions.ExtensionDefines {
         resolve();
       }));
     });
+
     /* --------------------------------------------------------------------- */
+
     this.events.once('web:getMiddleware', async (web: Express.Application) => {
       web.use(Passport.initialize());
       web.use(Passport.session());
     });
+
     this.events.once('web:getRoutes', async (web: Express.Application) => {});
+
     /* --------------------------------------------------------------------- */
+
     this.events.once('socket:getMiddleware', async (socket: SocketIO.Server) => {});
+
     this.events.once('socket:getActions', async (socket: SocketIO.Server) => {});
   }
   
