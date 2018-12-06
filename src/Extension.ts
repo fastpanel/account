@@ -129,35 +129,31 @@ export class Extension extends Extensions.ExtensionDefines {
         const UserModel = Mongoose.model<IUser>('Account.User');
         const TokenModel = Mongoose.model<IToken>('Account.Token');
         
-        await TokenModel.remove({});
-        await UserModel.remove({});
-        await GroupModel.remove({});
+        await TokenModel.deleteMany({});
+        await UserModel.deleteMany({});
+        await GroupModel.deleteMany({});
 
         try {
           
           let adminGroup = new GroupModel({
-            _id: '5c06a2c04d894609880d06aa',
             alias: 'admin',
             label: 'Administrators'
           });
           await adminGroup.save();
 
           let managerGroup = new GroupModel({
-            _id: '5c06d26f400c790964b698ef',
             alias: 'manager',
             label: 'Managers'
           });
           await managerGroup.save();
 
           let terminalGroup = new GroupModel({
-            _id: '5c06d26f400c790964b698f0',
             alias: 'terminal',
             label: 'Terminals'
           });
           await terminalGroup.save();
 
           let clientGroup = new GroupModel({
-            _id: '5c06d26f400c790964b698f1',
             alias: 'client',
             label: 'Clients'
           });
@@ -200,7 +196,10 @@ export class Extension extends Extensions.ExtensionDefines {
       web.use(Passport.session());
     });
 
-    this.events.once('web:getRoutes', async (web: Express.Application) => {});
+    this.events.once('web:getRoutes', async (web: Express.Application) => {
+      const { Auth } = require('./Routes/Api/Auth');
+      await (new Auth(this.di)).initialize();
+    });
 
     /* --------------------------------------------------------------------- */
 

@@ -6,9 +6,6 @@
  * @license   MIT
  */
 
-import * as Middleware from './Middleware';
-
-export { Middleware };
-export * from './Extension';
+export * from './Auth';
 
 /* End of file index.ts */

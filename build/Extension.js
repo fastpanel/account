@@ -116,30 +116,26 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 const GroupModel = mongoose_1.default.model('Account.Group');
                 const UserModel = mongoose_1.default.model('Account.User');
                 const TokenModel = mongoose_1.default.model('Account.Token');
-                await TokenModel.remove({});
-                await UserModel.remove({});
-                await GroupModel.remove({});
+                await TokenModel.deleteMany({});
+                await UserModel.deleteMany({});
+                await GroupModel.deleteMany({});
                 try {
                     let adminGroup = new GroupModel({
-                        _id: '5c06a2c04d894609880d06aa',
                         alias: 'admin',
                         label: 'Administrators'
                     });
                     await adminGroup.save();
                     let managerGroup = new GroupModel({
-                        _id: '5c06d26f400c790964b698ef',
                         alias: 'manager',
                         label: 'Managers'
                     });
                     await managerGroup.save();
                     let terminalGroup = new GroupModel({
-                        _id: '5c06d26f400c790964b698f0',
                         alias: 'terminal',
                         label: 'Terminals'
                     });
                     await terminalGroup.save();
                     let clientGroup = new GroupModel({
-                        _id: '5c06d26f400c790964b698f1',
                         alias: 'client',
                         label: 'Clients'
                     });
@@ -174,7 +170,10 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             web.use(passport_1.default.initialize());
             web.use(passport_1.default.session());
         });
-        this.events.once('web:getRoutes', async (web) => { });
+        this.events.once('web:getRoutes', async (web) => {
+            const { Auth } = require('./Routes/Api/Auth');
+            await (new Auth(this.di)).initialize();
+        });
         /* --------------------------------------------------------------------- */
         this.events.once('socket:getMiddleware', async (socket) => { });
         this.events.once('socket:getActions', async (socket) => { });
