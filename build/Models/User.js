@@ -140,13 +140,13 @@ exports.UserSchema = new mongoose_1.default.Schema({
 });
 /* Init plugins. */
 exports.UserSchema.plugin(require('mongoose-autopopulate'));
-exports.UserSchema.plugin(require('mongoose-bcrypt'), {
-    rounds: 10
-});
 exports.UserSchema.plugin(require('mongoose-hidden')(), {
     hidden: {
         version: false
     }
+});
+exports.UserSchema.plugin(require('mongoose-bcrypt'), {
+    rounds: 10
 });
 /**
  *

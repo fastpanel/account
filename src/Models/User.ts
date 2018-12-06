@@ -268,13 +268,13 @@ export const UserSchema = new Mongoose.Schema({
 
 /* Init plugins. */
 UserSchema.plugin(require('mongoose-autopopulate'));
-UserSchema.plugin(require('mongoose-bcrypt'), { 
-  rounds: 10
-});
 UserSchema.plugin(require('mongoose-hidden')(), {
   hidden: {
     version: false
   }
+});
+UserSchema.plugin(require('mongoose-bcrypt'), { 
+  rounds: 10
 });
 
 /**

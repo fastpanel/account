@@ -69,6 +69,11 @@ exports.GroupSchema.virtual('users', {
 });
 /* Init plugins. */
 exports.GroupSchema.plugin(require('mongoose-autopopulate'));
+exports.GroupSchema.plugin(require('mongoose-hidden')(), {
+    hidden: {
+        version: false
+    }
+});
 /**
  *
  */

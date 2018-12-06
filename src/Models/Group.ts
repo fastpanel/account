@@ -112,6 +112,11 @@ GroupSchema.virtual('users', {
 
 /* Init plugins. */
 GroupSchema.plugin(require('mongoose-autopopulate'));
+GroupSchema.plugin(require('mongoose-hidden')(), {
+  hidden: {
+    version: false
+  }
+});
 
 /**
  * 
