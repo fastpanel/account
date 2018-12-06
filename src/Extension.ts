@@ -125,7 +125,7 @@ export class Extension extends Extensions.ExtensionDefines {
       require('./Models/');
     });
 
-    this.events.on('db:getSeedsTasks', async (db: Mongoose.Connection, list: Array<Promise<any>>) => {
+    this.events.on('db:getSeedsTasks', async (list: Array<Promise<any>>) => {
       list.push(new Promise(async (resolve, reject) => {
         const GroupModel = Mongoose.model<IGroup>('Account.Group');
         const UserModel = Mongoose.model<IUser>('Account.User');
