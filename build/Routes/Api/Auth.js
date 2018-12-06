@@ -143,8 +143,8 @@ class Auth extends http_1.RoutDefines {
                     code: 201,
                     message: 'Created',
                     data: {
-                        user: user.toJSON(),
-                        token: token.id
+                        token: token.id,
+                        user: user.toJSON()
                     }
                 });
             });

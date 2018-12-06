@@ -107,8 +107,7 @@ export const GroupSchema = new Mongoose.Schema({
 GroupSchema.virtual('users', {
   ref: 'Account.User',
   localField: '_id',
-  foreignField: 'group',
-  autopopulate: true
+  foreignField: 'group'
 });
 
 /* Init plugins. */

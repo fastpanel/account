@@ -148,8 +148,8 @@ export class Auth extends RoutDefines {
           code: 201,
           message: 'Created',
           data: {
-            user: user.toJSON(),
-            token: token.id
+            token: token.id,
+            user: user.toJSON()
           }
         });
       });
