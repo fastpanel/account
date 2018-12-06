@@ -12,7 +12,7 @@ import Mongoose from 'mongoose';
 import Passport from 'passport';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
-import { IUser, IToken, IGroup } from './Models';
+import { IUser, IToken, IGroup, TokenType } from './Models';
 import { Extensions } from '@fastpanel/core';
 import { SetupTaskDefinesMethod } from '@fastpanel/core/build/Commands';
 
@@ -113,10 +113,8 @@ export class Extension extends Extensions.ExtensionDefines {
 
     /* --------------------------------------------------------------------- */
     
-    /* Install and configure the basic components of the system. */
     this.events.on('app:getSetupTasks', async (list: Array<SetupTaskDefinesMethod>) => {});
     
-    /* Registered cli commands. */
     this.events.once('cli:getCommands', async (cli: Vorpal) => {});
 
     /* --------------------------------------------------------------------- */
@@ -131,7 +129,12 @@ export class Extension extends Extensions.ExtensionDefines {
         const UserModel = Mongoose.model<IUser>('Account.User');
         const TokenModel = Mongoose.model<IToken>('Account.Token');
         
+        await TokenModel.remove({});
+        await UserModel.remove({});
+        await GroupModel.remove({});
+
         try {
+          
           let adminGroup = new GroupModel({
             _id: '5c06a2c04d894609880d06aa',
             alias: 'admin',
@@ -162,9 +165,25 @@ export class Extension extends Extensions.ExtensionDefines {
 
           /* --------------------------------------------------------------- */
 
-          
+          let adminUser = new UserModel({
+            group: adminGroup,
+            name: {
+              displayName: 'Administrator'
+            },
+            nickname: 'admin',
+            password: 'Qwerty123456'
+          });
+          await adminUser.save();
 
           /* --------------------------------------------------------------- */
+          
+          let postmenToken = new TokenModel({
+            _id: '5b6ac09242f5024d308a6bd9',
+            name: 'Postman develop',
+            type: TokenType.APPLICATION,
+            user: adminUser
+          });
+          await postmenToken.save();
 
         } catch (error) {
           reject(error);

@@ -14,6 +14,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = require("passport-local");
 const passport_http_bearer_1 = require("passport-http-bearer");
+const Models_1 = require("./Models");
 const core_1 = require("@fastpanel/core");
 /**
  * Class Extension
@@ -104,9 +105,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             });
         });
         /* --------------------------------------------------------------------- */
-        /* Install and configure the basic components of the system. */
         this.events.on('app:getSetupTasks', async (list) => { });
-        /* Registered cli commands. */
         this.events.once('cli:getCommands', async (cli) => { });
         /* --------------------------------------------------------------------- */
         this.events.once('db:getModels', async (db) => {
@@ -117,6 +116,9 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 const GroupModel = mongoose_1.default.model('Account.Group');
                 const UserModel = mongoose_1.default.model('Account.User');
                 const TokenModel = mongoose_1.default.model('Account.Token');
+                await TokenModel.remove({});
+                await UserModel.remove({});
+                await GroupModel.remove({});
                 try {
                     let adminGroup = new GroupModel({
                         _id: '5c06a2c04d894609880d06aa',
@@ -143,7 +145,23 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                     });
                     await clientGroup.save();
                     /* --------------------------------------------------------------- */
+                    let adminUser = new UserModel({
+                        group: adminGroup,
+                        name: {
+                            displayName: 'Administrator'
+                        },
+                        nickname: 'admin',
+                        password: 'Qwerty123456'
+                    });
+                    await adminUser.save();
                     /* --------------------------------------------------------------- */
+                    let postmenToken = new TokenModel({
+                        _id: '5b6ac09242f5024d308a6bd9',
+                        name: 'Postman develop',
+                        type: Models_1.TokenType.APPLICATION,
+                        user: adminUser
+                    });
+                    await postmenToken.save();
                 }
                 catch (error) {
                     reject(error);
