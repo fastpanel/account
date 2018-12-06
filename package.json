@@ -1,5 +1,5 @@
 {
-  "name": "fastpanel-extension-account",
+  "name": "@fastpanel/account",
   "version": "0.0.1",
   "description": "Add-on to work with users of the system.",
   "author": "Desionlab <fenixphp@gmail.com>",
@@ -35,6 +35,9 @@
   },
   "devDependencies": {
     "@fastpanel/core": "github:desionlab/fastpanel-core#develop",
+    "@fastpanel/http": "github:desionlab/fastpanel-extension-httpx#develop",
+    "@fastpanel/mongodb": "github:desionlab/fastpanel-extension-mongodb#develop",
+    "@fastpanel/socket.io": "github:desionlab/fastpanel-extension-socket.io#develop",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "@types/mongoose": "^5.3.3",
@@ -45,9 +48,6 @@
     "@types/socket.io": "^2.1.0",
     "@types/vorpal": "^1.11.0",
     "chai": "^4.2.0",
-    "fastpanel-extension-httpx": "github:desionlab/fastpanel-extension-httpx#develop",
-    "fastpanel-extension-mongodb": "github:desionlab/fastpanel-extension-mongodb#develop",
-    "fastpanel-extension-socket.io": "github:desionlab/fastpanel-extension-socket.io#develop",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.1",
     "typedoc": "^0.13.0",
