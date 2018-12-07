@@ -159,10 +159,13 @@ class Auth extends http_1.RoutDefines {
         const TokenModel = mongoose_1.default.model('Account.Token');
         let token = request.headers.authorization.split(' ')[1];
         try {
-            await TokenModel.findOneAndRemove({
+            await TokenModel.findOneAndDelete({
                 _id: token,
                 type: {
-                    $ne: 'app'
+                    $nin: [
+                        Models_1.TokenType.APPLICATION,
+                        Models_1.TokenType.DEVICE
+                    ]
                 }
             }).exec();
             /* Send success data. */

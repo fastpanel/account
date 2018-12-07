@@ -167,10 +167,13 @@ export class Auth extends RoutDefines {
     let token = request.headers.authorization.split(' ')[1];
     
     try {
-      await TokenModel.findOneAndRemove({
+      await TokenModel.findOneAndDelete({
         _id: token,
         type: {
-          $ne: 'app'
+          $nin: [
+            TokenType.APPLICATION,
+            TokenType.DEVICE
+          ]
         }
       }).exec();
 
