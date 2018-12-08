@@ -63,10 +63,7 @@ export class Auth extends RoutDefines {
    */
   async logInStatus (request: Request, response: Response) : Promise<any> {
     if (request.isAuthenticated()) {
-      /* Get token. */
-      let token = request.headers.authorization.split(' ')[1];
-
-      /* Send data. */
+      /* Send success data. */
       return response
       .status(200)
       .json({
@@ -74,12 +71,12 @@ export class Auth extends RoutDefines {
         code: 200,
         message: 'Ok',
         data: {
-          token: token,
+          token: request.headers.authorization.split(' ')[1],
           user: request.user.toJSON()
         }
       });
     } else {
-      /* Send data. */
+      /* Send failed data. */
       return response
       .status(401)
       .json({
@@ -98,7 +95,6 @@ export class Auth extends RoutDefines {
    */
   async logInAction (request: Request, response: Response, next: NextFunction) : Promise<any> {
     Passport.authenticate('local', { session: false }, (error, user, info) => {
-      /* Forward error. */
       if (error) { return next(error); }
 
       if (!user) {
@@ -127,7 +123,7 @@ export class Auth extends RoutDefines {
 
       const TokenModel = Mongoose.model<IToken>('Account.Token');
 
-      let expiresAt = (new Date((new Date().getTime() + this.config.get('Services/Web.session.token.expires', (1000 * 60 * 60 * 24 * 15)))));
+      let expiresAt = (new Date((new Date().getTime() + this.config.get('Extensions/Http.session.expires', (1000 * 60 * 60 * 24 * 15)))));
 
       let token = new TokenModel({
         name: 'session',
@@ -137,10 +133,12 @@ export class Auth extends RoutDefines {
         enabled: true
       });
       token.save((error, token) => {
-        /* Forward error. */
         if (error) return next(error);
+        
+        /* Fire event. */
+        this.events.emit('account:login', user);
 
-        /* Send data. */
+        /* Send success data. */
         return response
         .status(201)
         .json({
@@ -164,27 +162,44 @@ export class Auth extends RoutDefines {
   async logOutAction (request: Request, response: Response) : Promise<any> {
     const TokenModel = Mongoose.model<IToken>('Account.Token');
 
-    let token = request.headers.authorization.split(' ')[1];
-    
     try {
-      await TokenModel.findOneAndDelete({
-        _id: token,
+      let token: IToken = await TokenModel.findOne({
+        _id: request.headers.authorization.split(' ')[1],
         type: {
           $nin: [
             TokenType.APPLICATION,
             TokenType.DEVICE
           ]
         }
-      }).exec();
+      })
+      .populate('user')
+      .exec();
 
-      /* Send success data. */
-      return response
-      .status(200)
-      .json({
-        status: 'success',
-        code: 200,
-        message: 'Ok'
-      });
+      if (token) {
+        /* Fire event. */
+        this.events.emit('account:logout', token.user);
+
+        /* Delete token. */
+        await token.remove();
+
+        /* Send success data. */
+        return response
+        .status(200)
+        .json({
+          status: 'success',
+          code: 200,
+          message: 'Ok'
+        });
+      } else {
+        /* Send failed data. */
+        return response
+        .status(400)
+        .json({
+          status: 'failed',
+          code: 400,
+          message: 'Bad Request'
+        });
+      }
     } catch (error) {
       /* Send failed data. */
       return response

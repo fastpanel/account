@@ -52,7 +52,7 @@ export class Extension extends Extensions.ExtensionDefines {
         if (!user.verifyPasswordSync(password)) {
           return done(null, false, { message: 'Incorrect username or password.' });
         }
-
+        
         /* Auth success. */
         return done(null, user);
       });

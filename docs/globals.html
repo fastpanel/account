@@ -917,6 +917,12 @@ img { max-width: 100%; }
 			<h1 id="fastpanel-account-">fastPanel Account.</h1>
 			<p>Add-on to work with users of the system.</p>
 			<hr>
+			<h2 id="events">Events</h2>
+			<h3 id="account-login">account:login</h3>
+			<pre><code class="language-typescript">  <span class="hljs-keyword">this</span>.events.on(<span class="hljs-string">'account:login'</span>, <span class="hljs-keyword">async</span> (user: IUser) =&gt; {});</code></pre>
+			<h3 id="account-logout">account:logout</h3>
+			<pre><code class="language-typescript">  <span class="hljs-keyword">this</span>.events.on(<span class="hljs-string">'account:logout'</span>, <span class="hljs-keyword">async</span> (user: IUser) =&gt; {});</code></pre>
+			<hr>
 			<h2 id="license">License</h2>
 			<p>The MIT License (MIT)</p>
 			<hr>

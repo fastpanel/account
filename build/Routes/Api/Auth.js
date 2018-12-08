@@ -63,9 +63,7 @@ class Auth extends http_1.RoutDefines {
      */
     async logInStatus(request, response) {
         if (request.isAuthenticated()) {
-            /* Get token. */
-            let token = request.headers.authorization.split(' ')[1];
-            /* Send data. */
+            /* Send success data. */
             return response
                 .status(200)
                 .json({
@@ -73,13 +71,13 @@ class Auth extends http_1.RoutDefines {
                 code: 200,
                 message: 'Ok',
                 data: {
-                    token: token,
+                    token: request.headers.authorization.split(' ')[1],
                     user: request.user.toJSON()
                 }
             });
         }
         else {
-            /* Send data. */
+            /* Send failed data. */
             return response
                 .status(401)
                 .json({
@@ -97,7 +95,6 @@ class Auth extends http_1.RoutDefines {
      */
     async logInAction(request, response, next) {
         passport_1.default.authenticate('local', { session: false }, (error, user, info) => {
-            /* Forward error. */
             if (error) {
                 return next(error);
             }
@@ -123,7 +120,7 @@ class Auth extends http_1.RoutDefines {
             }
             /* ------------------------------------------------------------------- */
             const TokenModel = mongoose_1.default.model('Account.Token');
-            let expiresAt = (new Date((new Date().getTime() + this.config.get('Services/Web.session.token.expires', (1000 * 60 * 60 * 24 * 15)))));
+            let expiresAt = (new Date((new Date().getTime() + this.config.get('Extensions/Http.session.expires', (1000 * 60 * 60 * 24 * 15)))));
             let token = new TokenModel({
                 name: 'session',
                 type: Models_1.TokenType.USER,
@@ -132,10 +129,11 @@ class Auth extends http_1.RoutDefines {
                 enabled: true
             });
             token.save((error, token) => {
-                /* Forward error. */
                 if (error)
                     return next(error);
-                /* Send data. */
+                /* Fire event. */
+                this.events.emit('account:login', user);
+                /* Send success data. */
                 return response
                     .status(201)
                     .json({
@@ -157,25 +155,42 @@ class Auth extends http_1.RoutDefines {
      */
     async logOutAction(request, response) {
         const TokenModel = mongoose_1.default.model('Account.Token');
-        let token = request.headers.authorization.split(' ')[1];
         try {
-            await TokenModel.findOneAndDelete({
-                _id: token,
+            let token = await TokenModel.findOne({
+                _id: request.headers.authorization.split(' ')[1],
                 type: {
                     $nin: [
                         Models_1.TokenType.APPLICATION,
                         Models_1.TokenType.DEVICE
                     ]
                 }
-            }).exec();
-            /* Send success data. */
-            return response
-                .status(200)
-                .json({
-                status: 'success',
-                code: 200,
-                message: 'Ok'
-            });
+            })
+                .populate('user')
+                .exec();
+            if (token) {
+                /* Fire event. */
+                this.events.emit('account:logout', token.user);
+                /* Delete token. */
+                await token.remove();
+                /* Send success data. */
+                return response
+                    .status(200)
+                    .json({
+                    status: 'success',
+                    code: 200,
+                    message: 'Ok'
+                });
+            }
+            else {
+                /* Send failed data. */
+                return response
+                    .status(400)
+                    .json({
+                    status: 'failed',
+                    code: 400,
+                    message: 'Bad Request'
+                });
+            }
         }
         catch (error) {
             /* Send failed data. */
