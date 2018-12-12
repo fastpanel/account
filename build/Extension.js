@@ -150,6 +150,33 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                         password: 'Qwerty123456'
                     });
                     await adminUser.save();
+                    let managerUser = new UserModel({
+                        group: managerGroup,
+                        name: {
+                            displayName: 'Manager'
+                        },
+                        nickname: 'manager',
+                        password: 'Qwerty123456'
+                    });
+                    await managerUser.save();
+                    let terminalUser = new UserModel({
+                        group: terminalGroup,
+                        name: {
+                            displayName: 'Terminal'
+                        },
+                        nickname: 'terminal',
+                        password: 'Qwerty123456'
+                    });
+                    await terminalUser.save();
+                    let clientUser = new UserModel({
+                        group: clientGroup,
+                        name: {
+                            displayName: 'Client'
+                        },
+                        nickname: 'client',
+                        password: 'Qwerty123456'
+                    });
+                    await clientUser.save();
                     /* --------------------------------------------------------------- */
                     let postmenToken = new TokenModel({
                         _id: '5b6ac09242f5024d308a6bd9',
