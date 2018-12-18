@@ -116,9 +116,11 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 const GroupModel = mongoose_1.default.model('Account.Group');
                 const UserModel = mongoose_1.default.model('Account.User');
                 const TokenModel = mongoose_1.default.model('Account.Token');
+                const LabelModel = mongoose_1.default.model('Account.Label');
                 await TokenModel.deleteMany({});
                 await UserModel.deleteMany({});
                 await GroupModel.deleteMany({});
+                await LabelModel.deleteMany({});
                 try {
                     let adminGroup = new GroupModel({
                         alias: 'admin',
@@ -185,6 +187,43 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                         user: adminUser
                     });
                     await postmenToken.save();
+                    /* --------------------------------------------------------------- */
+                    let labels = [
+                        {
+                            alias: 'HOME',
+                            title: '',
+                            target: [
+                                Models_1.LabelTarget.PHONE,
+                                Models_1.LabelTarget.EMAIL,
+                                Models_1.LabelTarget.POSTAL,
+                                Models_1.LabelTarget.URL
+                            ]
+                        },
+                        {
+                            alias: 'WORK',
+                            title: '',
+                            target: [
+                                Models_1.LabelTarget.PHONE,
+                                Models_1.LabelTarget.EMAIL,
+                                Models_1.LabelTarget.POSTAL,
+                                Models_1.LabelTarget.URL
+                            ]
+                        },
+                        {
+                            alias: 'OTHER',
+                            title: '',
+                            target: [
+                                Models_1.LabelTarget.PHONE,
+                                Models_1.LabelTarget.EMAIL,
+                                Models_1.LabelTarget.POSTAL,
+                                Models_1.LabelTarget.URL
+                            ]
+                        }
+                    ];
+                    for (const label of labels) {
+                        let lm = new LabelModel(label);
+                        await lm.save();
+                    }
                 }
                 catch (error) {
                     reject(error);

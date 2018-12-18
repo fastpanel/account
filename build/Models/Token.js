@@ -21,6 +21,7 @@ var TokenType;
     TokenType["USER"] = "USER";
 })(TokenType = exports.TokenType || (exports.TokenType = {}));
 ;
+;
 /**
  *
  */

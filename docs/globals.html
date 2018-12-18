@@ -922,6 +922,173 @@ img { max-width: 100%; }
 			<pre><code class="language-typescript">  <span class="hljs-keyword">this</span>.events.on(<span class="hljs-string">'account:login'</span>, <span class="hljs-keyword">async</span> (user: IUser) =&gt; {});</code></pre>
 			<h3 id="account-logout">account:logout</h3>
 			<pre><code class="language-typescript">  <span class="hljs-keyword">this</span>.events.on(<span class="hljs-string">'account:logout'</span>, <span class="hljs-keyword">async</span> (user: IUser) =&gt; {});</code></pre>
+			<h3 id="account-create">account:create</h3>
+			<pre><code class="language-typescript"></code></pre>
+			<h3 id="account-delete">account:delete</h3>
+			<pre><code class="language-typescript"></code></pre>
+			<h3 id="account-restore">account:restore</h3>
+			<pre><code class="language-typescript"></code></pre>
+			<hr>
+			<h2 id="models">Models</h2>
+			<h3 id="account-group">Account.Group</h3>
+			<pre><code class="language-typescript">  <span class="hljs-keyword">interface</span> IGroup <span class="hljs-keyword">extends</span> Mongoose.Document {
+    alias: <span class="hljs-built_in">string</span>;
+    label: <span class="hljs-built_in">string</span>;
+    enabled?: <span class="hljs-built_in">boolean</span>;
+    readonly users: <span class="hljs-built_in">Array</span>&lt;IUser&gt;;
+    createdAt?: <span class="hljs-built_in">Date</span>;
+    updatedAt?: <span class="hljs-built_in">Date</span>;
+    version?: <span class="hljs-built_in">number</span>;
+  };</code></pre>
+			<pre><code class="language-typescript">  <span class="hljs-keyword">import</span> Mongoose <span class="hljs-keyword">from</span> <span class="hljs-string">'mongoose'</span>;
+  <span class="hljs-keyword">const</span> GroupModel = Mongoose.model&lt;IGroup&gt;(<span class="hljs-string">'Account.Group'</span>);</code></pre>
+			<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> Mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>);
+  <span class="hljs-keyword">const</span> GroupModel = Mongoose.model(<span class="hljs-string">'Account.Group'</span>);</code></pre>
+			<h3 id="account-user">Account.User</h3>
+			<pre><code class="language-typescript">  <span class="hljs-keyword">interface</span> IUser <span class="hljs-keyword">extends</span> Mongoose.Document {
+    <span class="hljs-comment">/**
+     * 
+     */</span>
+    group: IGroup;
+
+    <span class="hljs-comment">/**
+     * User full name fields.
+     */</span>
+    name: {
+      <span class="hljs-comment">/**
+       * The given name of the contact.
+       */</span>
+      given?: <span class="hljs-built_in">string</span>,
+
+      <span class="hljs-comment">/**
+       * The middle name of the contact.
+       */</span>
+      middle?: <span class="hljs-built_in">string</span>,
+
+      <span class="hljs-comment">/**
+       * The family name of the contact.
+       */</span>
+      family?: <span class="hljs-built_in">string</span>,
+
+      <span class="hljs-comment">/**
+       * The name prefix of the contact.
+       */</span>
+      prefix?: <span class="hljs-built_in">string</span>,
+
+      <span class="hljs-comment">/**
+       * The name suffix of the contact.
+       */</span>
+      suffix?: <span class="hljs-built_in">string</span>,
+
+      <span class="hljs-comment">/**
+       * 
+       */</span>
+      displayName: <span class="hljs-built_in">string</span>,
+
+      <span class="hljs-comment">/**
+       * 
+       */</span>
+      phonetic?: {
+        <span class="hljs-comment">/**
+         * The phonetic given name of the contact.
+         */</span>
+        given?: <span class="hljs-built_in">string</span>,
+
+        <span class="hljs-comment">/**
+         * The phonetic middle name of the contact.
+         */</span>
+        middle?: <span class="hljs-built_in">string</span>,
+
+        <span class="hljs-comment">/**
+         * A string for the phonetic family name of the contact.
+         */</span>
+        family?: <span class="hljs-built_in">string</span>
+      }
+    };
+
+    <span class="hljs-comment">/**
+     * The nickname of the contact.
+     */</span>
+    nickname?: <span class="hljs-built_in">string</span>;
+
+    <span class="hljs-comment">/**
+     * Password for login.
+     */</span>
+    password?: <span class="hljs-built_in">string</span>;
+
+    <span class="hljs-comment">/**
+     * A string containing notes for the contact.
+     */</span>
+    notes?: <span class="hljs-built_in">string</span>;
+
+    <span class="hljs-comment">/**
+     * A users who is directly or indirectly related to this account.
+     */</span>
+    parents?: <span class="hljs-built_in">Array</span>&lt;IUser&gt;;
+
+    <span class="hljs-comment">/**
+     * n array of labeled phone numbers for a contact.
+     */</span>
+    phoneNumbers: <span class="hljs-built_in">Array</span>&lt;IPhoneNumber&gt;;
+
+    <span class="hljs-comment">/**
+     * An array of labeled email addresses for the contact.
+     */</span>
+    emailAddresses: <span class="hljs-built_in">Array</span>&lt;IEmailAddress&gt;;
+
+    <span class="hljs-comment">/**
+     * An array of labeled postal addresses for a contact.
+     */</span>
+    postalAddresses: <span class="hljs-built_in">Array</span>&lt;IPostalAddress&gt;;
+
+    <span class="hljs-comment">/**
+     * An array of labeled URL addresses for a contact.
+     */</span>
+    urls: <span class="hljs-built_in">Array</span>&lt;IUrl&gt;;
+
+    <span class="hljs-comment">/**
+     * Status of the enabled record.
+     */</span>
+    enabled?: <span class="hljs-built_in">boolean</span>;
+
+    <span class="hljs-comment">/* ----------------------------------------------------------------------- */</span>
+
+    <span class="hljs-comment">/**
+     * 
+     */</span>
+    createdAt?: <span class="hljs-built_in">Date</span>;
+
+    <span class="hljs-comment">/**
+     * 
+     */</span>
+    updatedAt?: <span class="hljs-built_in">Date</span>;
+
+    <span class="hljs-comment">/**
+     * Current version of the record.
+     */</span>
+    version?: <span class="hljs-built_in">number</span>;
+
+    <span class="hljs-comment">/* ----------------------------------------------------------------------- */</span>
+
+    <span class="hljs-comment">/**
+     * Async password verification function.
+     * 
+     * @param password Password in clear text.
+     */</span>
+    verifyPassword(password: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Promise</span>&lt;<span class="hljs-built_in">boolean</span>&gt;;
+
+    <span class="hljs-comment">/**
+     * Sync password verification function.
+     * 
+     * @param password Password in clear text.
+     */</span>
+    verifyPasswordSync(password: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">boolean</span>;
+
+  };</code></pre>
+			<pre><code class="language-typescript">  <span class="hljs-keyword">import</span> Mongoose <span class="hljs-keyword">from</span> <span class="hljs-string">'mongoose'</span>;
+  <span class="hljs-keyword">const</span> UserModel = Mongoose.model&lt;IUser&gt;(<span class="hljs-string">'Account.User'</span>);</code></pre>
+			<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> Mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>);
+  <span class="hljs-keyword">const</span> UserModel = Mongoose.model(<span class="hljs-string">'Account.User'</span>);</code></pre>
 			<hr>
 			<h2 id="license">License</h2>
 			<p>The MIT License (MIT)</p>
@@ -939,14 +1106,15 @@ img { max-width: 100%; }
 							<li class="tsd-kind-external-module"><a href="modules/_extension_.html" class="tsd-kind-icon">"<wbr>Extension"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_middleware_auth_.html" class="tsd-kind-icon">"<wbr>Middleware/<wbr>Auth"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_middleware_index_.html" class="tsd-kind-icon">"<wbr>Middleware/index"</a></li>
+							<li class="tsd-kind-external-module"><a href="modules/_models_emailaddress_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Email<wbr>Address"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_models_group_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Group"</a></li>
+							<li class="tsd-kind-external-module"><a href="modules/_models_label_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Label"</a></li>
+							<li class="tsd-kind-external-module"><a href="modules/_models_organization_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Organization"</a></li>
+							<li class="tsd-kind-external-module"><a href="modules/_models_phonenumber_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Phone<wbr>Number"</a></li>
+							<li class="tsd-kind-external-module"><a href="modules/_models_postaladdress_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Postal<wbr>Address"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_models_token_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Token"</a></li>
+							<li class="tsd-kind-external-module"><a href="modules/_models_url_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>Url"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_models_user_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>User"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_models_user_emailaddress_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>User/<wbr>Email<wbr>Address"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_models_user_organization_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>User/<wbr>Organization"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_models_user_phonenumber_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>User/<wbr>Phone<wbr>Number"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_models_user_postaladdress_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>User/<wbr>Postal<wbr>Address"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_models_user_url_.html" class="tsd-kind-icon">"<wbr>Models/<wbr>User/<wbr>Url"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_models_index_.html" class="tsd-kind-icon">"<wbr>Models/index"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_routes_api_auth_.html" class="tsd-kind-icon">"<wbr>Routes/<wbr>Api/<wbr>Auth"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_index_.html" class="tsd-kind-icon">"index"</a></li>

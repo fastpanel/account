@@ -8,6 +8,10 @@
 
 import Mongoose from 'mongoose';
 import { IGroup } from './Group';
+import { IPhoneNumber } from './PhoneNumber';
+import { IEmailAddress } from './EmailAddress';
+import { IPostalAddress } from './PostalAddress';
+import { IUrl } from './Url';
 
 /**
  * 
@@ -23,27 +27,27 @@ export interface IUser extends Mongoose.Document {
    */
   name: {
     /**
-     * 
+     * The given name of the contact.
      */
     given?: string,
 
     /**
-     * 
+     * The middle name of the contact.
      */
     middle?: string,
 
     /**
-     * 
+     * The family name of the contact.
      */
     family?: string,
 
     /**
-     * 
+     * The name prefix of the contact.
      */
     prefix?: string,
 
     /**
-     * 
+     * The name suffix of the contact.
      */
     suffix?: string,
 
@@ -57,24 +61,24 @@ export interface IUser extends Mongoose.Document {
      */
     phonetic?: {
       /**
-       * 
+       * The phonetic given name of the contact.
        */
       given?: string,
 
       /**
-       * 
+       * The phonetic middle name of the contact.
        */
       middle?: string,
 
       /**
-       * 
+       * A string for the phonetic family name of the contact.
        */
       family?: string
     }
   };
   
   /**
-   * 
+   * The nickname of the contact.
    */
   nickname?: string;
 
@@ -84,7 +88,7 @@ export interface IUser extends Mongoose.Document {
   password?: string;
 
   /**
-   * 
+   * A string containing notes for the contact.
    */
   notes?: string;
   
@@ -92,6 +96,26 @@ export interface IUser extends Mongoose.Document {
    * A users who is directly or indirectly related to this account.
    */
   parents?: Array<IUser>;
+
+  /**
+   * n array of labeled phone numbers for a contact.
+   */
+  phoneNumbers: Array<IPhoneNumber>;
+
+  /**
+   * An array of labeled email addresses for the contact.
+   */
+  emailAddresses: Array<IEmailAddress>;
+
+  /**
+   * An array of labeled postal addresses for a contact.
+   */
+  postalAddresses: Array<IPostalAddress>;
+
+  /**
+   * An array of labeled URL addresses for a contact.
+   */
+  urls: Array<IUrl>;
 
   /**
    * Status of the enabled record.
@@ -233,8 +257,7 @@ export const UserSchema = new Mongoose.Schema({
   parents: [
     {
       type: Mongoose.Schema.Types.ObjectId,
-      ref: 'Account.User',
-      autopopulate: true
+      ref: 'Account.User'
     }
   ],
   
@@ -264,6 +287,42 @@ export const UserSchema = new Mongoose.Schema({
     getters: true,
     virtuals: true
   }
+});
+
+/**
+ * 
+ */
+UserSchema.virtual('phoneNumbers', {
+  ref: 'Account.PhoneNumber',
+  localField: '_id',
+  foreignField: 'user'
+});
+
+/**
+ * 
+ */
+UserSchema.virtual('emailAddresses', {
+  ref: 'Account.EmailAddress',
+  localField: '_id',
+  foreignField: 'user'
+});
+
+/**
+ * 
+ */
+UserSchema.virtual('postalAddresses', {
+  ref: 'Account.PostalAddress',
+  localField: '_id',
+  foreignField: 'user'
+});
+
+/**
+ * 
+ */
+UserSchema.virtual('urls', {
+  ref: 'Account.Url',
+  localField: '_id',
+  foreignField: 'user'
 });
 
 /* Init plugins. */

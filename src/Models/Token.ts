@@ -16,7 +16,7 @@ export enum TokenType {
   APPLICATION = 'APPLICATION',
   DEVICE = 'DEVICE',
   USER = 'USER'
-}
+};
 
 /**
  * 

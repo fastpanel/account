@@ -107,8 +107,7 @@ exports.UserSchema = new mongoose_1.default.Schema({
     parents: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: 'Account.User',
-            autopopulate: true
+            ref: 'Account.User'
         }
     ],
     /**
@@ -137,6 +136,38 @@ exports.UserSchema = new mongoose_1.default.Schema({
         getters: true,
         virtuals: true
     }
+});
+/**
+ *
+ */
+exports.UserSchema.virtual('phoneNumbers', {
+    ref: 'Account.PhoneNumber',
+    localField: '_id',
+    foreignField: 'user'
+});
+/**
+ *
+ */
+exports.UserSchema.virtual('emailAddresses', {
+    ref: 'Account.EmailAddress',
+    localField: '_id',
+    foreignField: 'user'
+});
+/**
+ *
+ */
+exports.UserSchema.virtual('postalAddresses', {
+    ref: 'Account.PostalAddress',
+    localField: '_id',
+    foreignField: 'user'
+});
+/**
+ *
+ */
+exports.UserSchema.virtual('urls', {
+    ref: 'Account.Url',
+    localField: '_id',
+    foreignField: 'user'
 });
 /* Init plugins. */
 exports.UserSchema.plugin(require('mongoose-autopopulate'));

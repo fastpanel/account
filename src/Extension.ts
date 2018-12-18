@@ -12,7 +12,7 @@ import Mongoose from 'mongoose';
 import Passport from 'passport';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
-import { IUser, IToken, IGroup, TokenType } from './Models';
+import { IUser, IToken, IGroup, TokenType, LabelTarget, ILabel } from './Models';
 import { Extensions } from '@fastpanel/core';
 import { SetupTaskDefinesMethod } from '@fastpanel/core/build/Commands';
 
@@ -128,11 +128,13 @@ export class Extension extends Extensions.ExtensionDefines {
         const GroupModel = Mongoose.model<IGroup>('Account.Group');
         const UserModel = Mongoose.model<IUser>('Account.User');
         const TokenModel = Mongoose.model<IToken>('Account.Token');
+        const LabelModel = Mongoose.model<ILabel>('Account.Label');
         
         await TokenModel.deleteMany({});
         await UserModel.deleteMany({});
         await GroupModel.deleteMany({});
-
+        await LabelModel.deleteMany({});
+        
         try {
           
           let adminGroup = new GroupModel({
@@ -210,6 +212,46 @@ export class Extension extends Extensions.ExtensionDefines {
             user: adminUser
           });
           await postmenToken.save();
+
+          /* --------------------------------------------------------------- */
+          
+          let labels = [
+            {
+              alias: 'HOME',
+              title: '',
+              target: [
+                LabelTarget.PHONE,
+                LabelTarget.EMAIL,
+                LabelTarget.POSTAL,
+                LabelTarget.URL
+              ]
+            },
+            {
+              alias: 'WORK',
+              title: '',
+              target: [
+                LabelTarget.PHONE,
+                LabelTarget.EMAIL,
+                LabelTarget.POSTAL,
+                LabelTarget.URL
+              ]
+            },
+            {
+              alias: 'OTHER',
+              title: '',
+              target: [
+                LabelTarget.PHONE,
+                LabelTarget.EMAIL,
+                LabelTarget.POSTAL,
+                LabelTarget.URL
+              ]
+            }
+          ];
+
+          for (const label of labels) {
+            let lm = new LabelModel(label);
+            await lm.save();
+          }
 
         } catch (error) {
           reject(error);
