@@ -21,7 +21,8 @@ exports.UserSchema = new mongoose_1.default.Schema({
      */
     group: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.Group'
+        ref: 'Account.Group',
+        autopopulate: true
     },
     /**
      * User full name fields.
