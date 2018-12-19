@@ -125,13 +125,14 @@ export class Auth extends RoutDefines {
 
       let expiresAt = (new Date((new Date().getTime() + this.config.get('Extensions/Http.session.expires', (1000 * 60 * 60 * 24 * 15)))));
 
-      let token = new TokenModel({
+      let token: IToken = new TokenModel({
         name: 'session',
         type: TokenType.USER,
         user: user,
         expiresAt: expiresAt,
         enabled: true
       });
+
       token.save((error, token) => {
         if (error) return next(error);
         
@@ -163,7 +164,8 @@ export class Auth extends RoutDefines {
     const TokenModel = Mongoose.model<IToken>('Account.Token');
 
     try {
-      let token: IToken = await TokenModel.findOne({
+      let token: IToken = await TokenModel
+      .findOne({
         _id: request.headers.authorization.split(' ')[1],
         type: {
           $nin: [
@@ -172,7 +174,12 @@ export class Auth extends RoutDefines {
           ]
         }
       })
-      .populate('user')
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'group'
+        }
+      })
       .exec();
 
       if (token) {

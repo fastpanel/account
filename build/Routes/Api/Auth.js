@@ -156,7 +156,8 @@ class Auth extends http_1.RoutDefines {
     async logOutAction(request, response) {
         const TokenModel = mongoose_1.default.model('Account.Token');
         try {
-            let token = await TokenModel.findOne({
+            let token = await TokenModel
+                .findOne({
                 _id: request.headers.authorization.split(' ')[1],
                 type: {
                     $nin: [
@@ -165,7 +166,12 @@ class Auth extends http_1.RoutDefines {
                     ]
                 }
             })
-                .populate('user')
+                .populate({
+                path: 'user',
+                populate: {
+                    path: 'group'
+                }
+            })
                 .exec();
             if (token) {
                 /* Fire event. */

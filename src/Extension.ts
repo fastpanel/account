@@ -30,19 +30,21 @@ export class Extension extends Extensions.ExtensionDefines {
    */
   async register () : Promise<any> {
     /* Registration local strategy. */
-    Passport.use(new PassportLocalStrategy((username, password, done) => {
+    Passport.use(new PassportLocalStrategy(async (username, password, done) => {
       /* Get model. */
       const User = Mongoose.model<IUser>('Account.User');
 
-      /* Find user by credentials. */
-      User
-      .findOne({
-        nickname: username
-      })
-      .exec((error, user) => {
-        /* Check db errors. */
-        if (error) { return done(error); }
-
+      try {
+        /* Find user by credentials. */
+        let user = await User
+        .findOne({
+          nickname: username
+        })
+        .populate({
+          path: 'group'
+        })
+        .exec();
+        
         /* Check user. */
         if (!user) {
           return done(null, false, { message: 'Incorrect username or password.' });
@@ -53,13 +55,14 @@ export class Extension extends Extensions.ExtensionDefines {
           return done(null, false, { message: 'Incorrect username or password.' });
         }
         
-        /* Auth success. */
-        return done(null, user);
-      });
+        done(null, user);
+      } catch (error) {
+        done(error, false);
+      }
     }));
     
     /* Registration bearer strategy. */
-    Passport.use(new PassportBearerStrategy(function(token, done) {
+    Passport.use(new PassportBearerStrategy(async (token, done) => {
       /* Check token. */
       if (!Mongoose.Types.ObjectId.isValid(token)) {
         return done(null, false, 'Incorrect token.');
@@ -68,47 +71,65 @@ export class Extension extends Extensions.ExtensionDefines {
       /* Get model. */
       const TokenModel = Mongoose.model<IToken>('Account.Token');
 
-      /* Find user bu token. */
-      TokenModel
-      .findOne({
-        _id: token,
-        enabled: true,
-        $or: [
-          {
-            expiresAt: {
-              $gt: (new Date())
+      try {
+        /* Find user bu token. */
+        let record: IToken = await TokenModel
+        .findOne({
+          _id: token,
+          enabled: true,
+          $or: [
+            {
+              expiresAt: {
+                $gt: (new Date())
+              }
+            },
+            {
+              expiresAt: {
+                $type: 10
+              }
             }
-          },
-          {
-            expiresAt: {
-              $type: 10
-            }
+          ]
+        })
+        .populate({
+          path: 'user',
+          populate: {
+            path: 'group'
           }
-        ]
-      })
-      .exec(function (error, token) {
-        /* Check db errors. */
-        if (error) { return done(error); }
+        })
+        .exec();
         
         /* Check token record. */
-        if (!token) { return done(null, false, 'Incorrect token.'); }
+        if (!record) {
+          done(null, false, 'Incorrect token.');
+        }
         
         /* Auth success. */
-        return done(null, token.user);
-      });
+        done(null, record.user);
+      } catch (error) {
+        done(error, false);
+      }
     }));
 
     /* Registration serialization. */
-    Passport.serializeUser(function(user: IUser, done) {
+    Passport.serializeUser(async (user: IUser, done) => {
       done(null, user.id);
     });
 
     /* Registration deserialization. */
-    Passport.deserializeUser(function(id, done) {
+    Passport.deserializeUser(async (id, done) => {
+      /* Get model. */
       const User = Mongoose.model<IUser>('Account.User');
-      User.findById(id, function(err, user: IUser) {
-        done(err, user);
-      });
+
+      try {
+        let user = await User
+        .findById(id)
+        .populate('group')
+        .exec();
+
+        done(null, user);
+      } catch (error) {
+        done(error, false);
+      }
     });
 
     /* --------------------------------------------------------------------- */

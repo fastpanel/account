@@ -95,8 +95,7 @@ export const TokenSchema = new Mongoose.Schema({
    */
   user: {
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.User',
-    autopopulate: true
+    ref: 'Account.User'
   },
 
   /**

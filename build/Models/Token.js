@@ -50,8 +50,7 @@ exports.TokenSchema = new mongoose_1.default.Schema({
      */
     user: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.User',
-        autopopulate: true
+        ref: 'Account.User'
     },
     /**
      * The token expiration time.

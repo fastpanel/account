@@ -166,8 +166,7 @@ export const UserSchema = new Mongoose.Schema({
    */
   group: {
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.Group',
-    autopopulate: true
+    ref: 'Account.Group'
   },
 
   /**
