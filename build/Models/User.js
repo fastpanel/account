@@ -89,7 +89,6 @@ exports.UserSchema = new mongoose_1.default.Schema({
      */
     password: {
         type: mongoose_1.default.Schema.Types.String,
-        required: true,
         bcrypt: true,
         hide: true
     },
@@ -109,6 +108,27 @@ exports.UserSchema = new mongoose_1.default.Schema({
             ref: 'Account.User'
         }
     ],
+    /**
+     *
+     */
+    birthday: {
+        type: mongoose_1.default.Schema.Types.Date,
+        default: null
+    },
+    /**
+     *
+     */
+    company: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'Account.Organization'
+    },
+    /**
+     *
+     */
+    position: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: ''
+    },
     /**
      * Status of the enabled record.
      */

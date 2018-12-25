@@ -10,6 +10,7 @@ import { IGroup } from './Group';
 import { IPhoneNumber } from './PhoneNumber';
 import { IEmailAddress } from './EmailAddress';
 import { IPostalAddress } from './PostalAddress';
+import { IOrganization } from './Organization';
 import { IUrl } from './Url';
 /**
  *
@@ -81,6 +82,18 @@ export interface IUser extends Mongoose.Document {
      * A users who is directly or indirectly related to this account.
      */
     parents?: Array<IUser>;
+    /**
+     *
+     */
+    birthday?: Date;
+    /**
+     *
+     */
+    company?: IOrganization;
+    /**
+     *
+     */
+    position?: string;
     /**
      * n array of labeled phone numbers for a contact.
      */

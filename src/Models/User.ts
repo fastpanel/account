@@ -11,6 +11,7 @@ import { IGroup } from './Group';
 import { IPhoneNumber } from './PhoneNumber';
 import { IEmailAddress } from './EmailAddress';
 import { IPostalAddress } from './PostalAddress';
+import { IOrganization } from './Organization';
 import { IUrl } from './Url';
 
 /**
@@ -97,6 +98,21 @@ export interface IUser extends Mongoose.Document {
    */
   parents?: Array<IUser>;
 
+  /**
+   * 
+   */
+  birthday?: Date;
+
+  /**
+   * 
+   */
+  company?: IOrganization;
+  
+  /**
+   * 
+   */
+  position?: string;
+  
   /**
    * n array of labeled phone numbers for a contact.
    */
@@ -236,8 +252,7 @@ export const UserSchema = new Mongoose.Schema({
    * Password for login.
    */
   password: {
-    type: Mongoose.Schema.Types.String, 
-    required: true, 
+    type: Mongoose.Schema.Types.String,
     bcrypt: true,
     hide: true
   },
@@ -260,6 +275,30 @@ export const UserSchema = new Mongoose.Schema({
     }
   ],
   
+  /**
+   * 
+   */
+  birthday: {
+    type: Mongoose.Schema.Types.Date,
+    default: null
+  },
+
+  /**
+   * 
+   */
+  company: {
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Account.Organization'
+  },
+  
+  /**
+   * 
+   */
+  position: {
+    type: Mongoose.Schema.Types.String,
+    default: ''
+  },
+
   /**
    * Status of the enabled record.
    */
