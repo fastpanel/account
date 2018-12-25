@@ -243,9 +243,7 @@ export const UserSchema = new Mongoose.Schema({
    */
   nickname: {
     type: Mongoose.Schema.Types.String,
-    sparse: true,
-    unique: true,
-    uniqueCaseInsensitive: true
+    default: null
   },
   
   /**
@@ -361,6 +359,25 @@ UserSchema.virtual('urls', {
   ref: 'Account.Url',
   localField: '_id',
   foreignField: 'user'
+});
+
+/**
+ * 
+ */
+UserSchema.index({
+  nickname: 1
+}, {
+  name: "nickname_idx",
+  unique: true,
+  collation: {
+    locale: "en",
+    strength: 2
+  },
+  partialFilterExpression: {
+    nickname: {
+      $type: "string" 
+    }
+  }
 });
 
 /* Init plugins. */

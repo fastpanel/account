@@ -80,9 +80,7 @@ exports.UserSchema = new mongoose_1.default.Schema({
      */
     nickname: {
         type: mongoose_1.default.Schema.Types.String,
-        sparse: true,
-        unique: true,
-        uniqueCaseInsensitive: true
+        default: null
     },
     /**
      * Password for login.
@@ -187,6 +185,24 @@ exports.UserSchema.virtual('urls', {
     ref: 'Account.Url',
     localField: '_id',
     foreignField: 'user'
+});
+/**
+ *
+ */
+exports.UserSchema.index({
+    nickname: 1
+}, {
+    name: "nickname_idx",
+    unique: true,
+    collation: {
+        locale: "en",
+        strength: 2
+    },
+    partialFilterExpression: {
+        nickname: {
+            $type: "string"
+        }
+    }
 });
 /* Init plugins. */
 exports.UserSchema.plugin(require('mongoose-autopopulate'));
