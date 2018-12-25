@@ -95,8 +95,7 @@ export const PostalAddressSchema = new Mongoose.Schema({
   label: {
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Account.Label',
-    autopopulate: true
+    ref: 'Account.Label'
   },
   
   /**

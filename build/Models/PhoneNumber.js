@@ -27,8 +27,7 @@ exports.PhoneNumberSchema = new mongoose_1.default.Schema({
     label: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         required: true,
-        ref: 'Account.Label',
-        autopopulate: true
+        ref: 'Account.Label'
     },
     /**
      *
