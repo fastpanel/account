@@ -142,33 +142,43 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 await LabelModel.deleteMany({});
                 /* --------------------------------------------------------------- */
                 let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
-                    alias: 'admin',
-                    label: 'Administrators'
+                    $set: {
+                        alias: 'admin',
+                        label: 'Administrators'
+                    }
                 }, { new: true, upsert: true })
                     .exec();
                 let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
-                    alias: 'manager',
-                    label: 'Managers'
+                    $set: {
+                        alias: 'manager',
+                        label: 'Managers'
+                    }
                 }, { new: true, upsert: true })
                     .exec();
                 let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
-                    alias: 'terminal',
-                    label: 'Terminals'
+                    $set: {
+                        alias: 'terminal',
+                        label: 'Terminals'
+                    }
                 }, { new: true, upsert: true })
                     .exec();
                 let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
-                    alias: 'client',
-                    label: 'Clients'
+                    $set: {
+                        alias: 'client',
+                        label: 'Clients'
+                    }
                 }, { new: true, upsert: true })
                     .exec();
                 /* --------------------------------------------------------------- */
                 let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
-                    group: adminGroup.id,
-                    name: {
-                        displayName: 'Administrator'
-                    },
-                    nickname: 'admin',
-                    password: 'Qwerty123456'
+                    $set: {
+                        group: adminGroup.id,
+                        name: {
+                            displayName: 'Administrator'
+                        },
+                        nickname: 'admin',
+                        password: 'Qwerty123456'
+                    }
                 }, { new: true, upsert: true })
                     .exec();
                 adminUser.password = 'Qwerty123456';
@@ -179,12 +189,12 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                         _id: '5b6ac09242f5024d308a6bd9',
                         name: 'Postman develop',
                         type: Models_1.TokenType.APPLICATION,
-                        user: adminUser
+                        user: adminUser.id
                     }
                 ];
                 for (const token of tokens) {
                     await TokenModel
-                        .findOneAndUpdate({ _id: token._id }, token, { new: true, upsert: true })
+                        .findOneAndUpdate({ _id: token._id }, { $set: token }, { new: true, upsert: true })
                         .exec();
                 }
                 /* --------------------------------------------------------------- */
@@ -222,7 +232,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 ];
                 for (const label of labels) {
                     await LabelModel
-                        .findOneAndUpdate({ alias: label.alias }, label, { new: true, upsert: true })
+                        .findOneAndUpdate({ alias: label.alias }, { $set: label }, { new: true, upsert: true })
                         .exec();
                 }
             });
