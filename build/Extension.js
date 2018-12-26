@@ -171,6 +171,8 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                     password: 'Qwerty123456'
                 }, { upsert: true })
                     .exec();
+                adminUser.password = 'Qwerty123456';
+                await adminUser.save();
                 /* --------------------------------------------------------------- */
                 let tokens = [
                     {

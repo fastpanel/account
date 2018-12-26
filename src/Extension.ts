@@ -198,6 +198,9 @@ export class Extension extends Extensions.ExtensionDefines {
           password: 'Qwerty123456'
         }, { upsert: true })
         .exec();
+        
+        adminUser.password = 'Qwerty123456';
+        await adminUser.save();
 
         /* --------------------------------------------------------------- */
         
