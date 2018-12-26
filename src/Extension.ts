@@ -15,6 +15,7 @@ import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
 import { IUser, IToken, IGroup, TokenType, LabelTarget, ILabel } from './Models';
 import { Extensions } from '@fastpanel/core';
 import { SetupTaskDefinesMethod } from '@fastpanel/core/build/Commands';
+import { SeedsTaskDefinesMethod } from '@fastpanel/mongodb/build/Commands';
 
 /**
  * Class Extension
@@ -135,7 +136,7 @@ export class Extension extends Extensions.ExtensionDefines {
     /* --------------------------------------------------------------------- */
     
     this.events.on('app:getSetupTasks', async (list: Array<SetupTaskDefinesMethod>) => {
-      list.push(async (command: Vorpal.CommandInstance, argv?: any) => {});
+      list.push(async (command: Vorpal.CommandInstance, args?: any) => {});
     });
     
     this.events.once('cli:getCommands', async (cli: Vorpal) => {});
@@ -146,142 +147,116 @@ export class Extension extends Extensions.ExtensionDefines {
       require('./Models/');
     });
 
-    this.events.on('db:getSeedsTasks', async (list: Array<Promise<any>>) => {
-      list.push(new Promise(async (resolve, reject) => {
+    this.events.on('db:getSeedsTasks', async (list: Array<SeedsTaskDefinesMethod>) => {
+      list.push(async (command: Vorpal.CommandInstance, args?: any) => {
         const GroupModel = Mongoose.model<IGroup>('Account.Group');
         const UserModel = Mongoose.model<IUser>('Account.User');
         const TokenModel = Mongoose.model<IToken>('Account.Token');
         const LabelModel = Mongoose.model<ILabel>('Account.Label');
+        
+        /* --------------------------------------------------------------- */
         
         await TokenModel.deleteMany({});
         await UserModel.deleteMany({});
         await GroupModel.deleteMany({});
         await LabelModel.deleteMany({});
         
-        try {
-          
-          let adminGroup = new GroupModel({
-            alias: 'admin',
-            label: 'Administrators'
-          });
-          await adminGroup.save();
+        /* --------------------------------------------------------------- */
 
-          let managerGroup = new GroupModel({
-            alias: 'manager',
-            label: 'Managers'
-          });
-          await managerGroup.save();
+        let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
+          alias: 'admin',
+          label: 'Administrators'
+        }, { upsert: true })
+        .exec();
 
-          let terminalGroup = new GroupModel({
-            alias: 'terminal',
-            label: 'Terminals'
-          });
-          await terminalGroup.save();
+        let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
+          alias: 'manager',
+          label: 'Managers'
+        }, { upsert: true })
+        .exec();
 
-          let clientGroup = new GroupModel({
-            alias: 'client',
-            label: 'Clients'
-          });
-          await clientGroup.save();
+        let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
+          alias: 'terminal',
+          label: 'Terminals'
+        }, { upsert: true })
+        .exec();
 
-          /* --------------------------------------------------------------- */
+        let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
+          alias: 'client',
+          label: 'Clients'
+        }, { upsert: true })
+        .exec();
 
-          let adminUser = new UserModel({
-            group: adminGroup,
-            name: {
-              displayName: 'Administrator'
-            },
-            nickname: 'admin',
-            password: 'Qwerty123456'
-          });
-          await adminUser.save();
+        /* --------------------------------------------------------------- */
 
-          let managerUser = new UserModel({
-            group: managerGroup,
-            name: {
-              displayName: 'Manager'
-            },
-            nickname: 'manager',
-            password: 'Qwerty123456'
-          });
-          await managerUser.save();
+        let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
+          group: adminGroup,
+          name: {
+            displayName: 'Administrator'
+          },
+          nickname: 'admin',
+          password: 'Qwerty123456'
+        }, { upsert: true })
+        .exec();
 
-          let terminalUser = new UserModel({
-            group: terminalGroup,
-            name: {
-              displayName: 'Terminal'
-            },
-            nickname: 'terminal',
-            password: 'Qwerty123456'
-          });
-          await terminalUser.save();
-
-          let clientUser = new UserModel({
-            group: clientGroup,
-            name: {
-              displayName: 'Client'
-            },
-            nickname: 'client',
-            password: 'Qwerty123456'
-          });
-          await clientUser.save();
-
-          /* --------------------------------------------------------------- */
-          
-          let postmenToken = new TokenModel({
+        /* --------------------------------------------------------------- */
+        
+        let tokens = [
+          {
             _id: '5b6ac09242f5024d308a6bd9',
             name: 'Postman develop',
             type: TokenType.APPLICATION,
             user: adminUser
-          });
-          await postmenToken.save();
-
-          /* --------------------------------------------------------------- */
-          
-          let labels = [
-            {
-              alias: 'HOME',
-              title: '',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL,
-                LabelTarget.POSTAL,
-                LabelTarget.URL
-              ]
-            },
-            {
-              alias: 'WORK',
-              title: '',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL,
-                LabelTarget.POSTAL,
-                LabelTarget.URL
-              ]
-            },
-            {
-              alias: 'OTHER',
-              title: '',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL,
-                LabelTarget.POSTAL,
-                LabelTarget.URL
-              ]
-            }
-          ];
-
-          for (const label of labels) {
-            let lm = new LabelModel(label);
-            await lm.save();
           }
+        ];
 
-        } catch (error) {
-          reject(error);
+        for (const token of tokens) {
+          await TokenModel
+          .findOneAndUpdate({ _id: token._id }, token, { upsert: true })
+          .exec();
         }
 
-        resolve();
-      }));
+        /* --------------------------------------------------------------- */
+        
+        let labels = [
+          {
+            alias: 'HOME',
+            title: '',
+            target: [
+              LabelTarget.PHONE,
+              LabelTarget.EMAIL,
+              LabelTarget.POSTAL,
+              LabelTarget.URL
+            ]
+          },
+          {
+            alias: 'WORK',
+            title: '',
+            target: [
+              LabelTarget.PHONE,
+              LabelTarget.EMAIL,
+              LabelTarget.POSTAL,
+              LabelTarget.URL
+            ]
+          },
+          {
+            alias: 'OTHER',
+            title: '',
+            target: [
+              LabelTarget.PHONE,
+              LabelTarget.EMAIL,
+              LabelTarget.POSTAL,
+              LabelTarget.URL
+            ]
+          }
+        ];
+
+        for (const label of labels) {
+          await LabelModel
+          .findOneAndUpdate({ alias: label.alias }, label, { upsert: true })
+          .exec();
+        }
+      });
     });
 
     /* --------------------------------------------------------------------- */

@@ -122,7 +122,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
         });
         /* --------------------------------------------------------------------- */
         this.events.on('app:getSetupTasks', async (list) => {
-            list.push(async (command, argv) => { });
+            list.push(async (command, args) => { });
         });
         this.events.once('cli:getCommands', async (cli) => { });
         /* --------------------------------------------------------------------- */
@@ -130,124 +130,100 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             require('./Models/');
         });
         this.events.on('db:getSeedsTasks', async (list) => {
-            list.push(new Promise(async (resolve, reject) => {
+            list.push(async (command, args) => {
                 const GroupModel = mongoose_1.default.model('Account.Group');
                 const UserModel = mongoose_1.default.model('Account.User');
                 const TokenModel = mongoose_1.default.model('Account.Token');
                 const LabelModel = mongoose_1.default.model('Account.Label');
+                /* --------------------------------------------------------------- */
                 await TokenModel.deleteMany({});
                 await UserModel.deleteMany({});
                 await GroupModel.deleteMany({});
                 await LabelModel.deleteMany({});
-                try {
-                    let adminGroup = new GroupModel({
-                        alias: 'admin',
-                        label: 'Administrators'
-                    });
-                    await adminGroup.save();
-                    let managerGroup = new GroupModel({
-                        alias: 'manager',
-                        label: 'Managers'
-                    });
-                    await managerGroup.save();
-                    let terminalGroup = new GroupModel({
-                        alias: 'terminal',
-                        label: 'Terminals'
-                    });
-                    await terminalGroup.save();
-                    let clientGroup = new GroupModel({
-                        alias: 'client',
-                        label: 'Clients'
-                    });
-                    await clientGroup.save();
-                    /* --------------------------------------------------------------- */
-                    let adminUser = new UserModel({
-                        group: adminGroup,
-                        name: {
-                            displayName: 'Administrator'
-                        },
-                        nickname: 'admin',
-                        password: 'Qwerty123456'
-                    });
-                    await adminUser.save();
-                    let managerUser = new UserModel({
-                        group: managerGroup,
-                        name: {
-                            displayName: 'Manager'
-                        },
-                        nickname: 'manager',
-                        password: 'Qwerty123456'
-                    });
-                    await managerUser.save();
-                    let terminalUser = new UserModel({
-                        group: terminalGroup,
-                        name: {
-                            displayName: 'Terminal'
-                        },
-                        nickname: 'terminal',
-                        password: 'Qwerty123456'
-                    });
-                    await terminalUser.save();
-                    let clientUser = new UserModel({
-                        group: clientGroup,
-                        name: {
-                            displayName: 'Client'
-                        },
-                        nickname: 'client',
-                        password: 'Qwerty123456'
-                    });
-                    await clientUser.save();
-                    /* --------------------------------------------------------------- */
-                    let postmenToken = new TokenModel({
+                /* --------------------------------------------------------------- */
+                let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
+                    alias: 'admin',
+                    label: 'Administrators'
+                }, { upsert: true })
+                    .exec();
+                let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
+                    alias: 'manager',
+                    label: 'Managers'
+                }, { upsert: true })
+                    .exec();
+                let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
+                    alias: 'terminal',
+                    label: 'Terminals'
+                }, { upsert: true })
+                    .exec();
+                let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
+                    alias: 'client',
+                    label: 'Clients'
+                }, { upsert: true })
+                    .exec();
+                /* --------------------------------------------------------------- */
+                let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
+                    group: adminGroup,
+                    name: {
+                        displayName: 'Administrator'
+                    },
+                    nickname: 'admin',
+                    password: 'Qwerty123456'
+                }, { upsert: true })
+                    .exec();
+                /* --------------------------------------------------------------- */
+                let tokens = [
+                    {
                         _id: '5b6ac09242f5024d308a6bd9',
                         name: 'Postman develop',
                         type: Models_1.TokenType.APPLICATION,
                         user: adminUser
-                    });
-                    await postmenToken.save();
-                    /* --------------------------------------------------------------- */
-                    let labels = [
-                        {
-                            alias: 'HOME',
-                            title: '',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL,
-                                Models_1.LabelTarget.POSTAL,
-                                Models_1.LabelTarget.URL
-                            ]
-                        },
-                        {
-                            alias: 'WORK',
-                            title: '',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL,
-                                Models_1.LabelTarget.POSTAL,
-                                Models_1.LabelTarget.URL
-                            ]
-                        },
-                        {
-                            alias: 'OTHER',
-                            title: '',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL,
-                                Models_1.LabelTarget.POSTAL,
-                                Models_1.LabelTarget.URL
-                            ]
-                        }
-                    ];
-                    for (const label of labels) {
-                        let lm = new LabelModel(label);
-                        await lm.save();
                     }
+                ];
+                for (const token of tokens) {
+                    await TokenModel
+                        .findOneAndUpdate({ _id: token._id }, token, { upsert: true })
+                        .exec();
                 }
-                catch (error) {
-                    reject(error);
+                /* --------------------------------------------------------------- */
+                let labels = [
+                    {
+                        alias: 'HOME',
+                        title: '',
+                        target: [
+                            Models_1.LabelTarget.PHONE,
+                            Models_1.LabelTarget.EMAIL,
+                            Models_1.LabelTarget.POSTAL,
+                            Models_1.LabelTarget.URL
+                        ]
+                    },
+                    {
+                        alias: 'WORK',
+                        title: '',
+                        target: [
+                            Models_1.LabelTarget.PHONE,
+                            Models_1.LabelTarget.EMAIL,
+                            Models_1.LabelTarget.POSTAL,
+                            Models_1.LabelTarget.URL
+                        ]
+                    },
+                    {
+                        alias: 'OTHER',
+                        title: '',
+                        target: [
+                            Models_1.LabelTarget.PHONE,
+                            Models_1.LabelTarget.EMAIL,
+                            Models_1.LabelTarget.POSTAL,
+                            Models_1.LabelTarget.URL
+                        ]
+                    }
+                ];
+                for (const label of labels) {
+                    await LabelModel
+                        .findOneAndUpdate({ alias: label.alias }, label, { upsert: true })
+                        .exec();
                 }
-                resolve();
-            }));
+            });
         });
         /* --------------------------------------------------------------------- */
         this.events.once('web:getMiddleware', async (web) => {
