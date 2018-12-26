@@ -163,7 +163,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                     .exec();
                 /* --------------------------------------------------------------- */
                 let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
-                    group: adminGroup,
+                    group: adminGroup.id,
                     name: {
                         displayName: 'Administrator'
                     },

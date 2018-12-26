@@ -190,7 +190,7 @@ export class Extension extends Extensions.ExtensionDefines {
         /* --------------------------------------------------------------- */
 
         let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
-          group: adminGroup,
+          group: adminGroup.id,
           name: {
             displayName: 'Administrator'
           },
