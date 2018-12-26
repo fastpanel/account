@@ -209,9 +209,6 @@ export class Extension extends Extensions.ExtensionDefines {
         }, { new: true, upsert: true })
         .exec();
         
-        adminUser.password = 'Qwerty123456';
-        await adminUser.save();
-
         /* --------------------------------------------------------------- */
         
         let tokens = [
