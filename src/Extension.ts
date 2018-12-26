@@ -134,7 +134,9 @@ export class Extension extends Extensions.ExtensionDefines {
 
     /* --------------------------------------------------------------------- */
     
-    this.events.on('app:getSetupTasks', async (list: Array<SetupTaskDefinesMethod>) => {});
+    this.events.on('app:getSetupTasks', async (list: Array<SetupTaskDefinesMethod>) => {
+      list.push(async (command: Vorpal.CommandInstance, argv?: any) => {});
+    });
     
     this.events.once('cli:getCommands', async (cli: Vorpal) => {});
 

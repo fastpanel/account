@@ -121,7 +121,9 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             }
         });
         /* --------------------------------------------------------------------- */
-        this.events.on('app:getSetupTasks', async (list) => { });
+        this.events.on('app:getSetupTasks', async (list) => {
+            list.push(async (command, argv) => { });
+        });
         this.events.once('cli:getCommands', async (cli) => { });
         /* --------------------------------------------------------------------- */
         this.events.once('db:getModels', async (db) => {
