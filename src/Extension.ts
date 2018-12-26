@@ -166,25 +166,25 @@ export class Extension extends Extensions.ExtensionDefines {
         let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
           alias: 'admin',
           label: 'Administrators'
-        }, { upsert: true })
+        }, { new: true, upsert: true })
         .exec();
 
         let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
           alias: 'manager',
           label: 'Managers'
-        }, { upsert: true })
+        }, { new: true, upsert: true })
         .exec();
 
         let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
           alias: 'terminal',
           label: 'Terminals'
-        }, { upsert: true })
+        }, { new: true, upsert: true })
         .exec();
 
         let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
           alias: 'client',
           label: 'Clients'
-        }, { upsert: true })
+        }, { new: true, upsert: true })
         .exec();
 
         /* --------------------------------------------------------------- */
@@ -196,7 +196,7 @@ export class Extension extends Extensions.ExtensionDefines {
           },
           nickname: 'admin',
           password: 'Qwerty123456'
-        }, { upsert: true })
+        }, { new: true, upsert: true })
         .exec();
         
         adminUser.password = 'Qwerty123456';
@@ -215,7 +215,7 @@ export class Extension extends Extensions.ExtensionDefines {
 
         for (const token of tokens) {
           await TokenModel
-          .findOneAndUpdate({ _id: token._id }, token, { upsert: true })
+          .findOneAndUpdate({ _id: token._id }, token, { new: true, upsert: true })
           .exec();
         }
 
@@ -256,7 +256,7 @@ export class Extension extends Extensions.ExtensionDefines {
 
         for (const label of labels) {
           await LabelModel
-          .findOneAndUpdate({ alias: label.alias }, label, { upsert: true })
+          .findOneAndUpdate({ alias: label.alias }, label, { new: true, upsert: true })
           .exec();
         }
       });
