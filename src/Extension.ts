@@ -13,9 +13,7 @@ import Passport from 'passport';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
 import { IUser, IToken, IGroup, TokenType, LabelTarget, ILabel } from './Models';
-import { Extensions } from '@fastpanel/core';
-import { SetupTaskDefinesMethod } from '@fastpanel/core/build/Commands';
-import { SeedsTaskDefinesMethod } from '@fastpanel/mongodb/build/Commands';
+import { Cli, Extensions } from '@fastpanel/core';
 
 /**
  * Class Extension
@@ -102,6 +100,8 @@ export class Extension extends Extensions.ExtensionDefines {
         /* Check token record. */
         if (!record) {
           done(null, false, 'Incorrect token.');
+        } else if (!record.user) {
+          done(null, false, 'Incorrect token.');
         }
         
         /* Auth success. */
@@ -135,19 +135,19 @@ export class Extension extends Extensions.ExtensionDefines {
 
     /* --------------------------------------------------------------------- */
     
-    this.events.on('app:getSetupTasks', async (list: Array<SetupTaskDefinesMethod>) => {
+    this.events.once('cli:getCommands', async (cli: Vorpal) => {});
+
+    this.events.on('app:getSetupSubscriptions', (list: Array<Cli.CommandSubscriptionDefines>) => {
       list.push(async (command: Vorpal.CommandInstance, args?: any) => {});
     });
     
-    this.events.once('cli:getCommands', async (cli: Vorpal) => {});
-
     /* --------------------------------------------------------------------- */
 
     this.events.once('db:getModels', async (db: Mongoose.Connection) => {
       require('./Models/');
     });
 
-    this.events.on('db:getSeedsTasks', async (list: Array<SeedsTaskDefinesMethod>) => {
+    this.events.on('db:getSeedsSubscriptions', (list: Array<Cli.CommandSubscriptionDefines>) => {
       list.push(async (command: Vorpal.CommandInstance, args?: any) => {
         const GroupModel = Mongoose.model<IGroup>('Account.Group');
         const UserModel = Mongoose.model<IUser>('Account.User');
@@ -168,7 +168,7 @@ export class Extension extends Extensions.ExtensionDefines {
             alias: 'admin',
             label: 'Administrators'
           }
-        }, { new: true, upsert: true })
+        }, { new: true, upsert: true, setDefaultsOnInsert: true })
         .exec();
 
         let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
@@ -176,7 +176,7 @@ export class Extension extends Extensions.ExtensionDefines {
             alias: 'manager',
             label: 'Managers'
           }
-        }, { new: true, upsert: true })
+        }, { new: true, upsert: true, setDefaultsOnInsert: true })
         .exec();
 
         let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
@@ -184,7 +184,7 @@ export class Extension extends Extensions.ExtensionDefines {
             alias: 'terminal',
             label: 'Terminals'
           }
-        }, { new: true, upsert: true })
+        }, { new: true, upsert: true, setDefaultsOnInsert: true })
         .exec();
 
         let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
@@ -192,7 +192,7 @@ export class Extension extends Extensions.ExtensionDefines {
             alias: 'client',
             label: 'Clients'
           }
-        }, { new: true, upsert: true })
+        }, { new: true, upsert: true, setDefaultsOnInsert: true })
         .exec();
 
         /* --------------------------------------------------------------- */
@@ -206,7 +206,7 @@ export class Extension extends Extensions.ExtensionDefines {
             nickname: 'admin',
             password: 'Qwerty123456'
           }
-        }, { new: true, upsert: true })
+        }, { new: true, upsert: true, setDefaultsOnInsert: true })
         .exec();
         
         /* --------------------------------------------------------------- */
@@ -222,7 +222,9 @@ export class Extension extends Extensions.ExtensionDefines {
 
         for (const token of tokens) {
           await TokenModel
-          .findOneAndUpdate({ _id: token._id }, { $set: token }, { new: true, upsert: true })
+          .findOneAndUpdate({ _id: token._id }, { 
+            $set: token
+          }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();
         }
 
@@ -263,7 +265,9 @@ export class Extension extends Extensions.ExtensionDefines {
 
         for (const label of labels) {
           await LabelModel
-          .findOneAndUpdate({ alias: label.alias }, { $set: label }, { new: true, upsert: true })
+          .findOneAndUpdate({ alias: label.alias }, { 
+            $set: label
+          }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();
         }
       });

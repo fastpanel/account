@@ -94,6 +94,9 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 if (!record) {
                     done(null, false, 'Incorrect token.');
                 }
+                else if (!record.user) {
+                    done(null, false, 'Incorrect token.');
+                }
                 /* Auth success. */
                 done(null, record.user);
             }
@@ -121,15 +124,15 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             }
         });
         /* --------------------------------------------------------------------- */
-        this.events.on('app:getSetupTasks', async (list) => {
+        this.events.once('cli:getCommands', async (cli) => { });
+        this.events.on('app:getSetupSubscriptions', (list) => {
             list.push(async (command, args) => { });
         });
-        this.events.once('cli:getCommands', async (cli) => { });
         /* --------------------------------------------------------------------- */
         this.events.once('db:getModels', async (db) => {
             require('./Models/');
         });
-        this.events.on('db:getSeedsTasks', async (list) => {
+        this.events.on('db:getSeedsSubscriptions', (list) => {
             list.push(async (command, args) => {
                 const GroupModel = mongoose_1.default.model('Account.Group');
                 const UserModel = mongoose_1.default.model('Account.User');
@@ -146,28 +149,28 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                         alias: 'admin',
                         label: 'Administrators'
                     }
-                }, { new: true, upsert: true })
+                }, { new: true, upsert: true, setDefaultsOnInsert: true })
                     .exec();
                 let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
                     $set: {
                         alias: 'manager',
                         label: 'Managers'
                     }
-                }, { new: true, upsert: true })
+                }, { new: true, upsert: true, setDefaultsOnInsert: true })
                     .exec();
                 let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
                     $set: {
                         alias: 'terminal',
                         label: 'Terminals'
                     }
-                }, { new: true, upsert: true })
+                }, { new: true, upsert: true, setDefaultsOnInsert: true })
                     .exec();
                 let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
                     $set: {
                         alias: 'client',
                         label: 'Clients'
                     }
-                }, { new: true, upsert: true })
+                }, { new: true, upsert: true, setDefaultsOnInsert: true })
                     .exec();
                 /* --------------------------------------------------------------- */
                 let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
@@ -179,7 +182,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                         nickname: 'admin',
                         password: 'Qwerty123456'
                     }
-                }, { new: true, upsert: true })
+                }, { new: true, upsert: true, setDefaultsOnInsert: true })
                     .exec();
                 /* --------------------------------------------------------------- */
                 let tokens = [
@@ -192,7 +195,9 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 ];
                 for (const token of tokens) {
                     await TokenModel
-                        .findOneAndUpdate({ _id: token._id }, { $set: token }, { new: true, upsert: true })
+                        .findOneAndUpdate({ _id: token._id }, {
+                        $set: token
+                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
                         .exec();
                 }
                 /* --------------------------------------------------------------- */
@@ -230,7 +235,9 @@ class Extension extends core_1.Extensions.ExtensionDefines {
                 ];
                 for (const label of labels) {
                     await LabelModel
-                        .findOneAndUpdate({ alias: label.alias }, { $set: label }, { new: true, upsert: true })
+                        .findOneAndUpdate({ alias: label.alias }, {
+                        $set: label
+                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
                         .exec();
                 }
             });
