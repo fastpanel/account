@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/desionlab/fastpanel-extension-account.git"
+    "url": "git+https://github.com/fastpanel/account.git"
   },
   "bugs": {
-    "url": "https://github.com/desionlab/fastpanel-extension-account/issues"
+    "url": "https://github.com/fastpanel/account/issues"
   },
-  "homepage": "https://github.com/desionlab/fastpanel-extension-account#readme",
+  "homepage": "https://github.com/fastpanel/account#readme",
   "keywords": [
     "nodejs",
     "typescript"
@@ -34,15 +34,15 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@fastpanel/core": "github:desionlab/fastpanel-core#develop",
-    "@fastpanel/http": "github:desionlab/fastpanel-extension-httpx#develop",
-    "@fastpanel/mongodb": "github:desionlab/fastpanel-extension-mongodb#develop",
-    "@fastpanel/socket.io": "github:desionlab/fastpanel-extension-socket.io#develop",
+    "@fastpanel/core": "github:fastpanel/core#develop",
+    "@fastpanel/http": "github:fastpanel/http#develop",
+    "@fastpanel/mongo": "github:fastpanel/mongo#develop",
+    "@fastpanel/socket.io": "github:fastpanel/socket.io#develop",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
-    "@types/mongoose": "^5.3.5",
+    "@types/mongoose": "^5.3.7",
     "@types/node": "^10.12.18",
-    "@types/passport": "^0.4.7",
+    "@types/passport": "^1.0.0",
     "@types/passport-http-bearer": "^1.0.33",
     "@types/passport-local": "^1.0.33",
     "@types/socket.io": "^2.1.2",
@@ -50,7 +50,7 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.1",
-    "typedoc": "^0.13.0",
+    "typedoc": "^0.14.0",
     "typescript": "^3.2.2"
   },
   "license": "MIT"
