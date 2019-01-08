@@ -21,7 +21,8 @@ exports.UserSchema = new mongoose_1.default.Schema({
      */
     group: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.Group'
+        ref: 'Account.Group',
+        default: null
     },
     /**
      * User full name fields.
@@ -88,7 +89,8 @@ exports.UserSchema = new mongoose_1.default.Schema({
     password: {
         type: mongoose_1.default.Schema.Types.String,
         bcrypt: true,
-        hide: true
+        hide: true,
+        default: null
     },
     /**
      *
@@ -118,7 +120,8 @@ exports.UserSchema = new mongoose_1.default.Schema({
      */
     company: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.Organization'
+        ref: 'Account.Organization',
+        default: null
     },
     /**
      *

@@ -10,12 +10,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
 const passport_1 = __importDefault(require("passport"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const core_1 = require("@fastpanel/core");
 const passport_local_1 = require("passport-local");
 const passport_http_bearer_1 = require("passport-http-bearer");
 const Models_1 = require("./Models");
-const core_1 = require("@fastpanel/core");
 /**
  * Class Extension
  *

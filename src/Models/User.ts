@@ -182,7 +182,8 @@ export const UserSchema = new Mongoose.Schema({
    */
   group: {
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.Group'
+    ref: 'Account.Group',
+    default: null
   },
 
   /**
@@ -252,7 +253,8 @@ export const UserSchema = new Mongoose.Schema({
   password: {
     type: Mongoose.Schema.Types.String,
     bcrypt: true,
-    hide: true
+    hide: true,
+    default: null
   },
   
   /**
@@ -286,7 +288,8 @@ export const UserSchema = new Mongoose.Schema({
    */
   company: {
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.Organization'
+    ref: 'Account.Organization',
+    default: null
   },
   
   /**

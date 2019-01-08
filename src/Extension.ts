@@ -8,12 +8,12 @@
 
 import Vorpal from 'vorpal';
 import Express from 'express';
-import Mongoose from 'mongoose';
 import Passport from 'passport';
+import Mongoose from 'mongoose';
+import { Cli, Extensions } from '@fastpanel/core';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
 import { IUser, IToken, IGroup, TokenType, LabelTarget, ILabel } from './Models';
-import { Cli, Extensions } from '@fastpanel/core';
 
 /**
  * Class Extension
