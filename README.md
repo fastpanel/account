@@ -3,6 +3,14 @@ Add-on to work with users of the system.
 
 ---
 
+## Env
+
+``` dotenv
+
+```
+
+---
+
 ## Events
 
 ### account:login
