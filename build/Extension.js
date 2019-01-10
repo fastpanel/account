@@ -15,7 +15,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const core_1 = require("@fastpanel/core");
 const passport_local_1 = require("passport-local");
 const passport_http_bearer_1 = require("passport-http-bearer");
-const Models_1 = require("./Models");
 /**
  * Class Extension
  *
@@ -124,123 +123,14 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             }
         });
         /* --------------------------------------------------------------------- */
-        this.events.once('cli:getCommands', async (cli) => { });
-        this.events.on('app:getSetupSubscriptions', (list) => {
-            list.push(async (command, args) => { });
+        /* Registered cli commands. */
+        this.events.once('cli:getCommands', async (cli) => {
+            const { Setup } = require('./Commands/Setup');
+            await (new Setup(this.di)).initialize();
         });
         /* --------------------------------------------------------------------- */
         this.events.once('db:getModels', async (db) => {
             require('./Models/');
-        });
-        this.events.on('db:getSeedsSubscriptions', (list) => {
-            list.push(async (command, args) => {
-                const GroupModel = mongoose_1.default.model('Account.Group');
-                const UserModel = mongoose_1.default.model('Account.User');
-                const TokenModel = mongoose_1.default.model('Account.Token');
-                const LabelModel = mongoose_1.default.model('Account.Label');
-                /* --------------------------------------------------------------- */
-                await TokenModel.deleteMany({});
-                await UserModel.deleteMany({});
-                await GroupModel.deleteMany({});
-                await LabelModel.deleteMany({});
-                /* --------------------------------------------------------------- */
-                let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
-                    $set: {
-                        alias: 'admin',
-                        label: 'Administrators'
-                    }
-                }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                    .exec();
-                let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
-                    $set: {
-                        alias: 'manager',
-                        label: 'Managers'
-                    }
-                }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                    .exec();
-                let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
-                    $set: {
-                        alias: 'terminal',
-                        label: 'Terminals'
-                    }
-                }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                    .exec();
-                let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
-                    $set: {
-                        alias: 'client',
-                        label: 'Clients'
-                    }
-                }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                    .exec();
-                /* --------------------------------------------------------------- */
-                let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
-                    $set: {
-                        group: adminGroup.id,
-                        name: {
-                            displayName: 'Administrator'
-                        },
-                        nickname: 'admin',
-                        password: 'Qwerty123456'
-                    }
-                }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                    .exec();
-                /* --------------------------------------------------------------- */
-                let tokens = [
-                    {
-                        _id: '5b6ac09242f5024d308a6bd9',
-                        name: 'Postman develop',
-                        type: Models_1.TokenType.APPLICATION,
-                        user: adminUser.id
-                    }
-                ];
-                for (const token of tokens) {
-                    await TokenModel
-                        .findOneAndUpdate({ _id: token._id }, {
-                        $set: token
-                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                        .exec();
-                }
-                /* --------------------------------------------------------------- */
-                let labels = [
-                    {
-                        alias: 'HOME',
-                        title: '',
-                        target: [
-                            Models_1.LabelTarget.PHONE,
-                            Models_1.LabelTarget.EMAIL,
-                            Models_1.LabelTarget.POSTAL,
-                            Models_1.LabelTarget.URL
-                        ]
-                    },
-                    {
-                        alias: 'WORK',
-                        title: '',
-                        target: [
-                            Models_1.LabelTarget.PHONE,
-                            Models_1.LabelTarget.EMAIL,
-                            Models_1.LabelTarget.POSTAL,
-                            Models_1.LabelTarget.URL
-                        ]
-                    },
-                    {
-                        alias: 'OTHER',
-                        title: '',
-                        target: [
-                            Models_1.LabelTarget.PHONE,
-                            Models_1.LabelTarget.EMAIL,
-                            Models_1.LabelTarget.POSTAL,
-                            Models_1.LabelTarget.URL
-                        ]
-                    }
-                ];
-                for (const label of labels) {
-                    await LabelModel
-                        .findOneAndUpdate({ alias: label.alias }, {
-                        $set: label
-                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                        .exec();
-                }
-            });
         });
         /* --------------------------------------------------------------------- */
         this.events.once('web:getMiddleware', async (web) => {

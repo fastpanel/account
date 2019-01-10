@@ -6,7 +6,7 @@
  * @license   MIT
  */
 
-import Vorpal from 'vorpal';
+import Caporal from 'caporal';
 import Express from 'express';
 import Passport from 'passport';
 import Mongoose from 'mongoose';
@@ -135,142 +135,16 @@ export class Extension extends Extensions.ExtensionDefines {
 
     /* --------------------------------------------------------------------- */
     
-    this.events.once('cli:getCommands', async (cli: Vorpal) => {});
-
-    this.events.on('app:getSetupSubscriptions', (list: Array<Cli.CommandSubscriptionDefines>) => {
-      list.push(async (command: Vorpal.CommandInstance, args?: any) => {});
+    /* Registered cli commands. */
+    this.events.once('cli:getCommands', async (cli: Caporal) => {
+      const { Setup } = require('./Commands/Setup');
+      await (new Setup(this.di)).initialize();
     });
-    
+
     /* --------------------------------------------------------------------- */
 
     this.events.once('db:getModels', async (db: Mongoose.Connection) => {
       require('./Models/');
-    });
-
-    this.events.on('db:getSeedsSubscriptions', (list: Array<Cli.CommandSubscriptionDefines>) => {
-      list.push(async (command: Vorpal.CommandInstance, args?: any) => {
-        const GroupModel = Mongoose.model<IGroup>('Account.Group');
-        const UserModel = Mongoose.model<IUser>('Account.User');
-        const TokenModel = Mongoose.model<IToken>('Account.Token');
-        const LabelModel = Mongoose.model<ILabel>('Account.Label');
-        
-        /* --------------------------------------------------------------- */
-        
-        await TokenModel.deleteMany({});
-        await UserModel.deleteMany({});
-        await GroupModel.deleteMany({});
-        await LabelModel.deleteMany({});
-        
-        /* --------------------------------------------------------------- */
-
-        let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
-          $set: {
-            alias: 'admin',
-            label: 'Administrators'
-          }
-        }, { new: true, upsert: true, setDefaultsOnInsert: true })
-        .exec();
-
-        let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
-          $set: {
-            alias: 'manager',
-            label: 'Managers'
-          }
-        }, { new: true, upsert: true, setDefaultsOnInsert: true })
-        .exec();
-
-        let terminalGroup = await GroupModel.findOneAndUpdate({ alias: 'terminal' }, {
-          $set: {
-            alias: 'terminal',
-            label: 'Terminals'
-          }
-        }, { new: true, upsert: true, setDefaultsOnInsert: true })
-        .exec();
-
-        let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
-          $set: {
-            alias: 'client',
-            label: 'Clients'
-          }
-        }, { new: true, upsert: true, setDefaultsOnInsert: true })
-        .exec();
-
-        /* --------------------------------------------------------------- */
-
-        let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
-          $set: {
-            group: adminGroup.id,
-            name: {
-              displayName: 'Administrator'
-            },
-            nickname: 'admin',
-            password: 'Qwerty123456'
-          }
-        }, { new: true, upsert: true, setDefaultsOnInsert: true })
-        .exec();
-        
-        /* --------------------------------------------------------------- */
-        
-        let tokens = [
-          {
-            _id: '5b6ac09242f5024d308a6bd9',
-            name: 'Postman develop',
-            type: TokenType.APPLICATION,
-            user: adminUser.id
-          }
-        ];
-
-        for (const token of tokens) {
-          await TokenModel
-          .findOneAndUpdate({ _id: token._id }, { 
-            $set: token
-          }, { new: true, upsert: true, setDefaultsOnInsert: true })
-          .exec();
-        }
-
-        /* --------------------------------------------------------------- */
-        
-        let labels = [
-          {
-            alias: 'HOME',
-            title: '',
-            target: [
-              LabelTarget.PHONE,
-              LabelTarget.EMAIL,
-              LabelTarget.POSTAL,
-              LabelTarget.URL
-            ]
-          },
-          {
-            alias: 'WORK',
-            title: '',
-            target: [
-              LabelTarget.PHONE,
-              LabelTarget.EMAIL,
-              LabelTarget.POSTAL,
-              LabelTarget.URL
-            ]
-          },
-          {
-            alias: 'OTHER',
-            title: '',
-            target: [
-              LabelTarget.PHONE,
-              LabelTarget.EMAIL,
-              LabelTarget.POSTAL,
-              LabelTarget.URL
-            ]
-          }
-        ];
-
-        for (const label of labels) {
-          await LabelModel
-          .findOneAndUpdate({ alias: label.alias }, { 
-            $set: label
-          }, { new: true, upsert: true, setDefaultsOnInsert: true })
-          .exec();
-        }
-      });
     });
 
     /* --------------------------------------------------------------------- */
