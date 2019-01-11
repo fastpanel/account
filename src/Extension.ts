@@ -136,9 +136,9 @@ export class Extension extends Extensions.ExtensionDefines {
     /* --------------------------------------------------------------------- */
     
     /* Registered cli commands. */
-    this.events.once('cli:getCommands', async (cli: Caporal) => {
+    this.events.once('cli:getCommands', (cli: Caporal) => {
       const { Setup } = require('./Commands/Setup');
-      await (new Setup(this.di)).initialize();
+      (new Setup(this.di)).initialize();
     });
 
     /* --------------------------------------------------------------------- */

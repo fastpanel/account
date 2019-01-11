@@ -19,12 +19,13 @@ export class Setup extends Cli.CommandDefines {
   /**
    * Initialize a commands provider.
    */
-  public async initialize () : Promise<any> {
+  public initialize () {
     this.cli
-    .command('@fastpanel/account setup', 'Install account components.')
-    .option('-f, --force', 'Forced reconfiguration of components.')
+    .command('@fastpanel/account setup', 'Configure account components.')
     .option('-e, --env', 'Save as current environment settings.')
+    .option('-f, --force', 'Forced command running.')
     .option('-y, --yes', 'Assume yes if prompted.')
+    .visible(false)
     .action((args: {[k: string]: any}, options: {[k: string]: any}, logger: Winston.Logger) => {
       return new Promise(async (resolve, reject) => {
         logger.debug('@fastpanel/account setup');
