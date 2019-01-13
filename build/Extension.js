@@ -3,7 +3,7 @@
  * Extension.ts
  *
  * @author    Desionlab <fenixphp@gmail.com>
- * @copyright 2014 - 2018 Desionlab
+ * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -129,21 +129,21 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             (new Setup(this.di)).initialize();
         });
         /* --------------------------------------------------------------------- */
-        this.events.once('db:getModels', async (db) => {
+        this.events.once('db:getModels', (db) => {
             require('./Models/');
         });
         /* --------------------------------------------------------------------- */
-        this.events.once('web:getMiddleware', async (web) => {
+        this.events.once('web:getMiddleware', (web) => {
             web.use(passport_1.default.initialize());
             web.use(passport_1.default.session());
         });
-        this.events.once('web:getRoutes', async (web) => {
-            const { Auth } = require('./Routes/Api/Auth');
-            await (new Auth(this.di)).initialize();
+        this.events.once('web:getRoutes', (web) => {
+            const { Auth } = require('./Web/Routes/Api/Auth');
+            (new Auth(this.di)).initialize();
         });
         /* --------------------------------------------------------------------- */
-        this.events.once('socket:getMiddleware', async (socket) => { });
-        this.events.once('socket:getActions', async (socket) => { });
+        this.events.once('socket:getMiddleware', (socket) => { });
+        this.events.once('socket:getActions', (socket) => { });
     }
     /**
      * Startup a service provider.

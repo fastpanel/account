@@ -2,7 +2,7 @@
  * Auth.ts
  *
  * @author    Desionlab <fenixphp@gmail.com>
- * @copyright 2014 - 2018 Desionlab
+ * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
 import { RoutDefines } from '@fastpanel/http';
@@ -18,7 +18,7 @@ export declare class Auth extends RoutDefines {
     /**
      * Initialize command.
      */
-    initialize(): Promise<any>;
+    initialize(): void;
     /**
      *
      * @param request

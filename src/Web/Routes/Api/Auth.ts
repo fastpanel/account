@@ -2,7 +2,7 @@
  * Auth.ts
  * 
  * @author    Desionlab <fenixphp@gmail.com>
- * @copyright 2014 - 2018 Desionlab
+ * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
 
@@ -11,7 +11,7 @@ import Mongoose from 'mongoose';
 import * as Middleware from '../../Middleware';
 import { RoutDefines } from '@fastpanel/http';
 import { Request, Response, NextFunction } from 'express';
-import { IToken, TokenType } from '../../Models';
+import { IToken, TokenType } from '../../../Models';
 
 /**
  * Class Auth
@@ -25,8 +25,8 @@ export class Auth extends RoutDefines {
   /**
    * Initialize command.
    */
-  async initialize () : Promise<any> {
-    await super.initialize();
+  initialize () {
+    super.initialize();
     
     this.router.get(
       /* Path. */

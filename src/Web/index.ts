@@ -6,9 +6,7 @@
  * @license   MIT
  */
 
-import * as Web from './Web';
-
-export { Web };
-export * from './Extension';
+import * as Middleware from './Middleware';
+export { Middleware };
 
 /* End of file index.ts */

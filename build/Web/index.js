@@ -6,9 +6,6 @@
  * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -17,7 +14,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Web = __importStar(require("./Web"));
-exports.Web = Web;
-__export(require("./Extension"));
+const Middleware = __importStar(require("./Middleware"));
+exports.Middleware = Middleware;
 /* End of file index.ts */ 

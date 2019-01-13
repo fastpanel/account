@@ -3,7 +3,7 @@
  * Auth.ts
  *
  * @author    Desionlab <fenixphp@gmail.com>
- * @copyright 2014 - 2018 Desionlab
+ * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -21,7 +21,7 @@ const passport_1 = __importDefault(require("passport"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Middleware = __importStar(require("../../Middleware"));
 const http_1 = require("@fastpanel/http");
-const Models_1 = require("../../Models");
+const Models_1 = require("../../../Models");
 /**
  * Class Auth
  *
@@ -33,8 +33,8 @@ class Auth extends http_1.RoutDefines {
     /**
      * Initialize command.
      */
-    async initialize() {
-        await super.initialize();
+    initialize() {
+        super.initialize();
         this.router.get(
         /* Path. */
         '/', 

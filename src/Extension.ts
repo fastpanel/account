@@ -2,7 +2,7 @@
  * Extension.ts
  * 
  * @author    Desionlab <fenixphp@gmail.com>
- * @copyright 2014 - 2018 Desionlab
+ * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
 
@@ -143,27 +143,27 @@ export class Extension extends Extensions.ExtensionDefines {
 
     /* --------------------------------------------------------------------- */
 
-    this.events.once('db:getModels', async (db: Mongoose.Connection) => {
+    this.events.once('db:getModels', (db: Mongoose.Connection) => {
       require('./Models/');
     });
 
     /* --------------------------------------------------------------------- */
 
-    this.events.once('web:getMiddleware', async (web: Express.Application) => {
+    this.events.once('web:getMiddleware', (web: Express.Application) => {
       web.use(Passport.initialize());
       web.use(Passport.session());
     });
 
-    this.events.once('web:getRoutes', async (web: Express.Application) => {
-      const { Auth } = require('./Routes/Api/Auth');
-      await (new Auth(this.di)).initialize();
+    this.events.once('web:getRoutes', (web: Express.Application) => {
+      const { Auth } = require('./Web/Routes/Api/Auth');
+      (new Auth(this.di)).initialize();
     });
 
     /* --------------------------------------------------------------------- */
 
-    this.events.once('socket:getMiddleware', async (socket: SocketIO.Server) => {});
+    this.events.once('socket:getMiddleware', (socket: SocketIO.Server) => {});
 
-    this.events.once('socket:getActions', async (socket: SocketIO.Server) => {});
+    this.events.once('socket:getActions', (socket: SocketIO.Server) => {});
   }
   
   /**

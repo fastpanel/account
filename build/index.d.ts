@@ -2,9 +2,9 @@
  * index.ts
  *
  * @author    Desionlab <fenixphp@gmail.com>
- * @copyright 2014 - 2018 Desionlab
+ * @copyright 2014 - 2019 Desionlab
  * @license   MIT
  */
-import * as Middleware from './Middleware';
-export { Middleware };
+import * as Web from './Web';
+export { Web };
 export * from './Extension';
