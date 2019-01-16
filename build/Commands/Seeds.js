@@ -20,7 +20,7 @@ class Seeds extends core_1.Cli.CommandDefines {
      */
     initialize() {
         this.cli
-            .command('@fastpanel/account seeds', 'Seeding account database data.')
+            .command('fastpanel/account seeds', 'Seeding account database data.')
             .option('-f, --fresh', 'Clear the base before filling.')
             .visible(false)
             .action((args, options, logger) => {

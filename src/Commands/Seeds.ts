@@ -22,7 +22,7 @@ export class Seeds extends Cli.CommandDefines {
    */
   public initialize () {
     this.cli
-    .command('@fastpanel/account seeds', 'Seeding account database data.')
+    .command('fastpanel/account seeds', 'Seeding account database data.')
     .option('-f, --fresh', 'Clear the base before filling.')
     .visible(false)
     .action((args: {[k: string]: any}, options: {[k: string]: any}, logger: Winston.Logger) => {

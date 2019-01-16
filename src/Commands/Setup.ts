@@ -22,7 +22,7 @@ export class Setup extends Cli.CommandDefines {
    */
   public initialize () {
     this.cli
-    .command('@fastpanel/account setup', 'Configure account components.')
+    .command('fastpanel/account setup', 'Configure account components.')
     .option('-e, --env', 'Save as current environment settings.')
     .option('-f, --force', 'Forced reconfiguration of components.')
     .visible(false)
