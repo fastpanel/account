@@ -49,7 +49,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                 }
                 /* Fill default data. ---------------------------------------------- */
                 let labelList = await Models_1.LabelModel
-                    .find({ select: '_id' })
+                    .find()
+                    .select('_id')
                     .exec();
                 if (!labelList.length) {
                     let labels = [
@@ -129,7 +130,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                 }
                 /* ----------------------------------------------------------------- */
                 let groupList = await Models_1.GroupModel
-                    .find({ select: '_id' })
+                    .find()
+                    .select('_id')
                     .exec();
                 if (!groupList.length) {
                     await Models_1.GroupModel
@@ -167,7 +169,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                 }
                 /* ----------------------------------------------------------------- */
                 let usersList = await Models_1.UserModel
-                    .find({ select: '_id' })
+                    .find()
+                    .select('_id')
                     .exec();
                 if (!usersList.length) {
                     let adminGroup = await Models_1.GroupModel
@@ -190,7 +193,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                 }
                 /* ----------------------------------------------------------------- */
                 let tokensList = await Models_1.TokenModel
-                    .find({ select: '_id' })
+                    .find()
+                    .select('_id')
                     .exec();
                 if (!tokensList.length) {
                     let adminUser = await Models_1.UserModel

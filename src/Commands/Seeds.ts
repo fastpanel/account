@@ -76,7 +76,8 @@ export class Seeds extends Cli.CommandDefines {
         /* Fill default data. ---------------------------------------------- */
 
         let labelList = await LabelModel
-        .find({select: '_id'})
+        .find()
+        .select('_id')
         .exec();
 
         if (!labelList.length) {
@@ -160,7 +161,8 @@ export class Seeds extends Cli.CommandDefines {
         /* ----------------------------------------------------------------- */
 
         let groupList = await GroupModel
-        .find({select: '_id'})
+        .find()
+        .select('_id')
         .exec();
 
         if (!groupList.length) {
@@ -204,7 +206,8 @@ export class Seeds extends Cli.CommandDefines {
         /* ----------------------------------------------------------------- */
 
         let usersList = await UserModel
-        .find({select: '_id'})
+        .find()
+        .select('_id')
         .exec();
 
         if (!usersList.length) {
@@ -231,7 +234,8 @@ export class Seeds extends Cli.CommandDefines {
         /* ----------------------------------------------------------------- */
 
         let tokensList = await TokenModel
-        .find({select: '_id'})
+        .find()
+        .select('_id')
         .exec();
 
         if (!tokensList.length) {
