@@ -7,6 +7,7 @@
  * @license   MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+const os_1 = require("os");
 const core_1 = require("@fastpanel/core");
 /**
  * Class Setup
@@ -21,14 +22,19 @@ class Setup extends core_1.Cli.CommandDefines {
         this.cli
             .command('@fastpanel/account setup', 'Configure account components.')
             .option('-e, --env', 'Save as current environment settings.')
-            .option('-f, --force', 'Forced command running.')
-            .option('-y, --yes', 'Assume yes if prompted.')
+            .option('-f, --force', 'Forced reconfiguration of components.')
             .visible(false)
             .action((args, options, logger) => {
             return new Promise(async (resolve, reject) => {
-                logger.debug('@fastpanel/account setup');
-                logger.debug(args);
-                logger.debug(options);
+                /* Info message. */
+                logger.info(`${os_1.EOL}Configure account components.`);
+                if (!this.config.get('Ext/Account', false) || options.force) {
+                }
+                else {
+                    /* Info message. */
+                    logger.info(` Everything is already configured. ${os_1.EOL}`);
+                }
+                /* Command complete. */
                 resolve();
             });
         });

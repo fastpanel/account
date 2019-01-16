@@ -1,6 +1,6 @@
 {
   "name": "@fastpanel/account",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.1",
   "description": "Add-on to work with users of the system.",
   "author": "Desionlab <fenixphp@gmail.com>",
   "main": "build/index.js",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@fastpanel/apollo": "github:fastpanel/apollo#develop",
-    "@fastpanel/core": "github:fastpanel/core#develop",
+    "@fastpanel/core": "^0.1.0-alpha.1",
     "@fastpanel/http": "github:fastpanel/http#develop",
     "@fastpanel/mongo": "github:fastpanel/mongo#develop",
     "@fastpanel/mqtt": "github:fastpanel/mqtt#develop",
