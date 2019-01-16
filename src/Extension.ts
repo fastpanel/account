@@ -137,6 +137,9 @@ export class Extension extends Extensions.ExtensionDefines {
     
     /* Registered cli commands. */
     this.events.once('cli:getCommands', (cli: Caporal) => {
+      const { Seeds } = require('./Commands/Seeds');
+      (new Seeds(this.di)).initialize();
+
       const { Setup } = require('./Commands/Setup');
       (new Setup(this.di)).initialize();
     });

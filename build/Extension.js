@@ -125,6 +125,8 @@ class Extension extends core_1.Extensions.ExtensionDefines {
         /* --------------------------------------------------------------------- */
         /* Registered cli commands. */
         this.events.once('cli:getCommands', (cli) => {
+            const { Seeds } = require('./Commands/Seeds');
+            (new Seeds(this.di)).initialize();
             const { Setup } = require('./Commands/Setup');
             (new Setup(this.di)).initialize();
         });
