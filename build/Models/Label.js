@@ -16,22 +16,25 @@ const mongoose_1 = __importDefault(require("mongoose"));
  */
 var LabelTarget;
 (function (LabelTarget) {
-    LabelTarget[LabelTarget["PHONE"] = 0] = "PHONE";
-    LabelTarget[LabelTarget["EMAIL"] = 1] = "EMAIL";
-    LabelTarget[LabelTarget["POSTAL"] = 2] = "POSTAL";
-    LabelTarget[LabelTarget["URL"] = 3] = "URL";
+    LabelTarget["PHONE"] = "PHONE";
+    LabelTarget["EMAIL"] = "EMAIL";
+    LabelTarget["POSTAL"] = "POSTAL";
+    LabelTarget["URL"] = "URL";
 })(LabelTarget = exports.LabelTarget || (exports.LabelTarget = {}));
 ;
 ;
+/**
+ *
+ */
 exports.LabelSchema = new mongoose_1.default.Schema({
     /**
      *
      */
     alias: {
         type: mongoose_1.default.Schema.Types.String,
-        required: true,
         sparse: true,
         unique: true,
+        required: true,
         uniqueCaseInsensitive: true
     },
     /**

@@ -950,17 +950,17 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Organization<wbr>Model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Model</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_organization_.iorganization.html" class="tsd-signature-type">IOrganization</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">__type</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;Mongoose.model&lt;IOrganization&gt;(&#x27;Account.Organization&#x27;, OrganizationSchema)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in Models/Organization.ts:28</li>
+						<li>Defined in Models/Organization.ts:79</li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
 				<a name="organizationschema" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> Organization<wbr>Schema</h3>
-				<div class="tsd-signature tsd-kind-icon">Organization<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol"> =&nbsp;new Mongoose.Schema({}, {})</span></div>
+				<div class="tsd-signature tsd-kind-icon">Organization<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol"> =&nbsp;new Mongoose.Schema({/*** Status of the enabled record.*/enabled: {type: Mongoose.Schema.Types.Boolean,default: true}}, {/* Set (collection) table name. */collection: &#x27;accountOrganization&#x27;,/* Logger date. */timestamps: {createdAt: &#x27;createdAt&#x27;,updatedAt: &#x27;updatedAt&#x27;},/* Current version of the record. */versionKey: &#x27;version&#x27;,/* Converts the mongoose document into a plain javascript object. */toObject: {getters: true,virtuals: true},toJSON: {getters: true,virtuals: true}})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in Models/Organization.ts:15</li>
+						<li>Defined in Models/Organization.ts:42</li>
 					</ul>
 				</aside>
 			</section>

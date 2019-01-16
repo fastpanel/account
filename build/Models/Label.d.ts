@@ -10,11 +10,14 @@ import Mongoose from 'mongoose';
  * A set of label target definitions.
  */
 export declare enum LabelTarget {
-    PHONE = 0,
-    EMAIL = 1,
-    POSTAL = 2,
-    URL = 3
+    PHONE = "PHONE",
+    EMAIL = "EMAIL",
+    POSTAL = "POSTAL",
+    URL = "URL"
 }
+/**
+ *
+ */
 export interface ILabel extends Mongoose.Document {
     /**
      *
@@ -45,5 +48,8 @@ export interface ILabel extends Mongoose.Document {
      */
     version?: number;
 }
+/**
+ *
+ */
 export declare const LabelSchema: Mongoose.Schema;
 export declare const LabelModel: Mongoose.Model<ILabel, {}>;

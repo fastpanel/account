@@ -12,12 +12,15 @@ import Mongoose from 'mongoose';
  * A set of label target definitions.
  */
 export enum LabelTarget {
-  PHONE,
-  EMAIL,
-  POSTAL,
-  URL
+  PHONE  = 'PHONE',
+  EMAIL  = 'EMAIL',
+  POSTAL = 'POSTAL',
+  URL    = 'URL'
 };
 
+/**
+ * 
+ */
 export interface ILabel extends Mongoose.Document {
   /**
    * 
@@ -57,15 +60,18 @@ export interface ILabel extends Mongoose.Document {
   version?: number;
 };
 
+/**
+ * 
+ */
 export const LabelSchema = new Mongoose.Schema({
   /**
    * 
    */
   alias: {
     type: Mongoose.Schema.Types.String,
-    required: true,
     sparse: true,
     unique: true,
+    required: true,
     uniqueCaseInsensitive: true
   },
   
