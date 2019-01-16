@@ -6,8 +6,8 @@
  * @license   MIT
  */
 
-import { EOL } from 'os';
 import Winston from 'winston';
+import { EOL } from 'os';
 import { Cli } from '@fastpanel/core';
 
 /**

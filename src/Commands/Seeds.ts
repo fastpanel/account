@@ -6,8 +6,8 @@
  * @license   MIT
  */
 
-import { EOL } from 'os';
 import Winston from 'winston';
+import { EOL } from 'os';
 import { Cli } from '@fastpanel/core';
 
 /**
@@ -27,9 +27,6 @@ export class Seeds extends Cli.CommandDefines {
     .visible(false)
     .action((args: {[k: string]: any}, options: {[k: string]: any}, logger: Winston.Logger) => {
       return new Promise(async (resolve, reject) => {
-        /* Info message. */
-        logger.info(`${EOL}Seeding account database data.`);
-        
         /* Command complete. */
         resolve();
       });
