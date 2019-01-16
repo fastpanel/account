@@ -7,7 +7,6 @@
  * @license   MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-const os_1 = require("os");
 const core_1 = require("@fastpanel/core");
 /**
  * Class Seeds
@@ -22,11 +21,10 @@ class Seeds extends core_1.Cli.CommandDefines {
         this.cli
             .command('fastpanel/account seeds', 'Seeding account database data.')
             .option('-f, --fresh', 'Clear the base before filling.')
+            .option('-d, --demo', 'Fill demo data.')
             .visible(false)
             .action((args, options, logger) => {
             return new Promise(async (resolve, reject) => {
-                /* Info message. */
-                logger.info(`${os_1.EOL}Seeding account database data.`);
                 /* Command complete. */
                 resolve();
             });

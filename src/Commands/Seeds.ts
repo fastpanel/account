@@ -24,6 +24,7 @@ export class Seeds extends Cli.CommandDefines {
     this.cli
     .command('fastpanel/account seeds', 'Seeding account database data.')
     .option('-f, --fresh', 'Clear the base before filling.')
+    .option('-d, --demo', 'Fill demo data.')
     .visible(false)
     .action((args: {[k: string]: any}, options: {[k: string]: any}, logger: Winston.Logger) => {
       return new Promise(async (resolve, reject) => {
