@@ -45,20 +45,39 @@ export class Seeds extends Cli.CommandDefines {
         /* Clear collections. ---------------------------------------------- */
 
         if (options.fresh) {
-          await EmailAddressModel.deleteMany({});
-          await GroupModel.deleteMany({});
-          await LabelModel.deleteMany({});
-          await OrganizationModel.deleteMany({});
-          await PhoneNumberModel.deleteMany({});
-          await PostalAddressModel.deleteMany({});
-          await TokenModel.deleteMany({});
-          await UrlModel.deleteMany({});
-          await UserModel.deleteMany({});
+          await EmailAddressModel
+          .deleteMany({});
+
+          await GroupModel
+          .deleteMany({});
+
+          await LabelModel
+          .deleteMany({});
+
+          await OrganizationModel
+          .deleteMany({});
+
+          await PhoneNumberModel
+          .deleteMany({});
+
+          await PostalAddressModel
+          .deleteMany({});
+
+          await TokenModel
+          .deleteMany({});
+
+          await UrlModel
+          .deleteMany({});
+
+          await UserModel
+          .deleteMany({});
         }
         
         /* Fill default data. ---------------------------------------------- */
 
-        let labelList = await LabelModel.find({select: '_id'}).exec();
+        let labelList = await LabelModel
+        .find({select: '_id'})
+        .exec();
 
         if (!labelList.length) {
           let labels = [
@@ -140,10 +159,13 @@ export class Seeds extends Cli.CommandDefines {
 
         /* ----------------------------------------------------------------- */
 
-        let groupList = await GroupModel.find({select: '_id'}).exec();
+        let groupList = await GroupModel
+        .find({select: '_id'})
+        .exec();
 
         if (!groupList.length) {
-          let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
+          await GroupModel
+          .findOneAndUpdate({ alias: 'admin' }, {
             $set: {
               alias: 'admin',
               label: 'Administrators'
@@ -151,7 +173,8 @@ export class Seeds extends Cli.CommandDefines {
           }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();
 
-          let managerGroup = await GroupModel.findOneAndUpdate({ alias: 'manager' }, {
+          await GroupModel
+          .findOneAndUpdate({ alias: 'manager' }, {
             $set: {
               alias: 'manager',
               label: 'Managers'
@@ -159,7 +182,8 @@ export class Seeds extends Cli.CommandDefines {
           }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();
 
-          let deviceGroup = await GroupModel.findOneAndUpdate({ alias: 'device' }, {
+          await GroupModel
+          .findOneAndUpdate({ alias: 'device' }, {
             $set: {
               alias: 'device',
               label: 'Devices'
@@ -167,20 +191,30 @@ export class Seeds extends Cli.CommandDefines {
           }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();
 
-          let clientGroup = await GroupModel.findOneAndUpdate({ alias: 'client' }, {
+          await GroupModel
+          .findOneAndUpdate({ alias: 'client' }, {
             $set: {
               alias: 'client',
               label: 'Clients'
             }
           }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();
-          
-          /* --------------------------------------------------------------- */
+        }
+        
+        /* ----------------------------------------------------------------- */
 
-          let usersList = await UserModel.find({select: '_id'}).exec();
+        let usersList = await UserModel
+        .find({select: '_id'})
+        .exec();
 
-          if (!usersList.length) {
-            let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
+        if (!usersList.length) {
+          let adminGroup = await GroupModel
+          .findOne({ alias: 'admin' })
+          .exec();
+
+          if (adminGroup) {
+            await UserModel
+            .findOneAndUpdate({ nickname: 'admin' }, {
               $set: {
                 group: adminGroup.id,
                 name: {
@@ -191,28 +225,35 @@ export class Seeds extends Cli.CommandDefines {
               }
             }, { new: true, upsert: true, setDefaultsOnInsert: true })
             .exec();
-            
-            /* ------------------------------------------------------------- */
+          }
+        }
+        
+        /* ----------------------------------------------------------------- */
 
-            let tokensList = await TokenModel.find({select: '_id'}).exec();
+        let tokensList = await TokenModel
+        .find({select: '_id'})
+        .exec();
 
-            if (!tokensList.length) {
-              let tokens = [
-                {
-                  _id: '5b6ac09242f5024d308a6bd9',
-                  name: 'Postman develop',
-                  type: TokenType.APPLICATION,
-                  user: adminUser.id
-                }
-              ];
+        if (!tokensList.length) {
+          let adminUser = await UserModel
+          .findOne({ nickname: 'admin' })
+          .exec();
 
-              for (const token of tokens) {
-                await TokenModel
-                .findOneAndUpdate({ _id: token._id }, { 
-                  $set: token
-                }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                .exec();
+          if (adminUser) {
+            let tokens = [
+              {
+                name: 'Postman develop',
+                type: TokenType.APPLICATION,
+                user: adminUser.id
               }
+            ];
+
+            for (const token of tokens) {
+              await TokenModel
+              .findOneAndUpdate({ name: token.name }, { 
+                $set: token
+              }, { new: true, upsert: true, setDefaultsOnInsert: true })
+              .exec();
             }
           }
         }
