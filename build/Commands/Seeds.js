@@ -39,7 +39,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                     await Models_1.UserModel.deleteMany({});
                 }
                 /* Fill default data. ---------------------------------------------- */
-                if (!await Models_1.LabelModel.find().exec()) {
+                let labelList = await Models_1.LabelModel.find({ select: '_id' }).exec();
+                if (!labelList.length) {
                     let labels = [
                         {
                             alias: 'HOME',
@@ -116,7 +117,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                     }
                 }
                 /* ----------------------------------------------------------------- */
-                if (!await Models_1.GroupModel.find().exec()) {
+                let groupList = await Models_1.GroupModel.find({ select: '_id' }).exec();
+                if (!groupList.length) {
                     let adminGroup = await Models_1.GroupModel.findOneAndUpdate({ alias: 'admin' }, {
                         $set: {
                             alias: 'admin',
@@ -146,7 +148,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                     }, { new: true, upsert: true, setDefaultsOnInsert: true })
                         .exec();
                     /* --------------------------------------------------------------- */
-                    if (!await Models_1.UserModel.find().exec()) {
+                    let usersList = await Models_1.UserModel.find({ select: '_id' }).exec();
+                    if (!usersList.length) {
                         let adminUser = await Models_1.UserModel.findOneAndUpdate({ nickname: 'admin' }, {
                             $set: {
                                 group: adminGroup.id,
@@ -159,7 +162,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                         }, { new: true, upsert: true, setDefaultsOnInsert: true })
                             .exec();
                         /* ------------------------------------------------------------- */
-                        if (!await Models_1.TokenModel.find().exec()) {
+                        let tokensList = await Models_1.TokenModel.find({ select: '_id' }).exec();
+                        if (!tokensList.length) {
                             let tokens = [
                                 {
                                     _id: '5b6ac09242f5024d308a6bd9',

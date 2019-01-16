@@ -58,7 +58,9 @@ export class Seeds extends Cli.CommandDefines {
         
         /* Fill default data. ---------------------------------------------- */
 
-        if (!await LabelModel.find().exec()) {
+        let labelList = await LabelModel.find({select: '_id'}).exec();
+
+        if (!labelList.length) {
           let labels = [
             {
               alias: 'HOME',
@@ -138,7 +140,9 @@ export class Seeds extends Cli.CommandDefines {
 
         /* ----------------------------------------------------------------- */
 
-        if (!await GroupModel.find().exec()) {
+        let groupList = await GroupModel.find({select: '_id'}).exec();
+
+        if (!groupList.length) {
           let adminGroup = await GroupModel.findOneAndUpdate({ alias: 'admin' }, {
             $set: {
               alias: 'admin',
@@ -173,7 +177,9 @@ export class Seeds extends Cli.CommandDefines {
           
           /* --------------------------------------------------------------- */
 
-          if (!await UserModel.find().exec()) {
+          let usersList = await UserModel.find({select: '_id'}).exec();
+
+          if (!usersList.length) {
             let adminUser = await UserModel.findOneAndUpdate({ nickname: 'admin' }, {
               $set: {
                 group: adminGroup.id,
@@ -188,7 +194,9 @@ export class Seeds extends Cli.CommandDefines {
             
             /* ------------------------------------------------------------- */
 
-            if (!await TokenModel.find().exec()) {
+            let tokensList = await TokenModel.find({select: '_id'}).exec();
+
+            if (!tokensList.length) {
               let tokens = [
                 {
                   _id: '5b6ac09242f5024d308a6bd9',
