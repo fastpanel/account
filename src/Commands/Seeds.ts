@@ -13,7 +13,6 @@ import {
   EmailAddressModel,
   GroupModel,
   LabelModel,
-  OrganizationModel,
   PhoneNumberModel,
   PostalAddressModel,
   TokenModel,
@@ -45,32 +44,14 @@ export class Seeds extends Cli.CommandDefines {
         /* Clear collections. ---------------------------------------------- */
 
         if (options.fresh) {
-          await EmailAddressModel
-          .deleteMany({});
-
-          await GroupModel
-          .deleteMany({});
-
-          await LabelModel
-          .deleteMany({});
-
-          await OrganizationModel
-          .deleteMany({});
-
-          await PhoneNumberModel
-          .deleteMany({});
-
-          await PostalAddressModel
-          .deleteMany({});
-
-          await TokenModel
-          .deleteMany({});
-
-          await UrlModel
-          .deleteMany({});
-
-          await UserModel
-          .deleteMany({});
+          await EmailAddressModel.deleteMany({});
+          await GroupModel.deleteMany({});
+          await LabelModel.deleteMany({});
+          await PhoneNumberModel.deleteMany({});
+          await PostalAddressModel.deleteMany({});
+          await TokenModel.deleteMany({});
+          await UrlModel.deleteMany({});
+          await UserModel.deleteMany({});
         }
         
         /* Fill default data. ---------------------------------------------- */
@@ -189,6 +170,15 @@ export class Seeds extends Cli.CommandDefines {
             $set: {
               alias: 'device',
               label: 'Devices'
+            }
+          }, { new: true, upsert: true, setDefaultsOnInsert: true })
+          .exec();
+
+          await GroupModel
+          .findOneAndUpdate({ alias: 'organization' }, {
+            $set: {
+              alias: 'organization',
+              label: 'Organizations'
             }
           }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();

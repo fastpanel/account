@@ -118,15 +118,22 @@ exports.UserSchema = new mongoose_1.default.Schema({
     /**
      *
      */
-    company: {
+    organization: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.Organization',
+        ref: 'Account.User',
         default: null
     },
     /**
      *
      */
     position: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: ''
+    },
+    /**
+     *
+     */
+    department: {
         type: mongoose_1.default.Schema.Types.String,
         default: ''
     },

@@ -11,7 +11,6 @@ import { IGroup } from './Group';
 import { IPhoneNumber } from './PhoneNumber';
 import { IEmailAddress } from './EmailAddress';
 import { IPostalAddress } from './PostalAddress';
-import { IOrganization } from './Organization';
 import { IUrl } from './Url';
 
 /**
@@ -106,12 +105,17 @@ export interface IUser extends Mongoose.Document {
   /**
    * 
    */
-  company?: IOrganization;
+  organization?: IUser;
   
   /**
    * 
    */
   position?: string;
+  
+  /**
+   * 
+   */
+  department?: string;
   
   /**
    * n array of labeled phone numbers for a contact.
@@ -286,9 +290,9 @@ export const UserSchema = new Mongoose.Schema({
   /**
    * 
    */
-  company: {
+  organization: {
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.Organization',
+    ref: 'Account.User',
     default: null
   },
   
@@ -296,6 +300,14 @@ export const UserSchema = new Mongoose.Schema({
    * 
    */
   position: {
+    type: Mongoose.Schema.Types.String,
+    default: ''
+  },
+
+  /**
+   * 
+   */
+  department: {
     type: Mongoose.Schema.Types.String,
     default: ''
   },

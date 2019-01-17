@@ -28,24 +28,14 @@ class Seeds extends core_1.Cli.CommandDefines {
             return new Promise(async (resolve, reject) => {
                 /* Clear collections. ---------------------------------------------- */
                 if (options.fresh) {
-                    await Models_1.EmailAddressModel
-                        .deleteMany({});
-                    await Models_1.GroupModel
-                        .deleteMany({});
-                    await Models_1.LabelModel
-                        .deleteMany({});
-                    await Models_1.OrganizationModel
-                        .deleteMany({});
-                    await Models_1.PhoneNumberModel
-                        .deleteMany({});
-                    await Models_1.PostalAddressModel
-                        .deleteMany({});
-                    await Models_1.TokenModel
-                        .deleteMany({});
-                    await Models_1.UrlModel
-                        .deleteMany({});
-                    await Models_1.UserModel
-                        .deleteMany({});
+                    await Models_1.EmailAddressModel.deleteMany({});
+                    await Models_1.GroupModel.deleteMany({});
+                    await Models_1.LabelModel.deleteMany({});
+                    await Models_1.PhoneNumberModel.deleteMany({});
+                    await Models_1.PostalAddressModel.deleteMany({});
+                    await Models_1.TokenModel.deleteMany({});
+                    await Models_1.UrlModel.deleteMany({});
+                    await Models_1.UserModel.deleteMany({});
                 }
                 /* Fill default data. ---------------------------------------------- */
                 let labelList = await Models_1.LabelModel
@@ -155,6 +145,14 @@ class Seeds extends core_1.Cli.CommandDefines {
                         $set: {
                             alias: 'device',
                             label: 'Devices'
+                        }
+                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
+                        .exec();
+                    await Models_1.GroupModel
+                        .findOneAndUpdate({ alias: 'organization' }, {
+                        $set: {
+                            alias: 'organization',
+                            label: 'Organizations'
                         }
                     }, { new: true, upsert: true, setDefaultsOnInsert: true })
                         .exec();
