@@ -20,13 +20,21 @@ export interface IGroup extends Mongoose.Document {
      */
     label: string;
     /**
-     * Status of the enabled record.
+     * Icon for visual group definition.
      */
-    enabled?: boolean;
+    icon?: string;
     /**
      *
      */
     readonly users: Array<IUser>;
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
+    /**
+     * Status of the enabled record.
+     */
+    enabled?: boolean;
     /**
      *
      */
@@ -43,7 +51,7 @@ export interface IGroup extends Mongoose.Document {
 /**
  *
  */
-export declare const GroupSchema: Mongoose.Schema;
+export declare const GroupSchema: Mongoose.Schema<any>;
 /**
  *
  */

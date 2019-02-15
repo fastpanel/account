@@ -32,6 +32,10 @@ export interface ILabel extends Mongoose.Document {
      */
     target: Array<LabelTarget>;
     /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
+    /**
      * Status of the enabled record.
      */
     enabled?: boolean;
@@ -51,5 +55,5 @@ export interface ILabel extends Mongoose.Document {
 /**
  *
  */
-export declare const LabelSchema: Mongoose.Schema;
+export declare const LabelSchema: Mongoose.Schema<any>;
 export declare const LabelModel: Mongoose.Model<ILabel, {}>;

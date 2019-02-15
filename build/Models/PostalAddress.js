@@ -30,39 +30,98 @@ exports.PostalAddressSchema = new mongoose_1.default.Schema({
         ref: 'Account.Label'
     },
     /**
-     *
+     * The name of the country.
+     */
+    country: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * Postal code. Usually country-wide,
+     * but sometimes specific to the city
+     * (e.g. "2" in "Dublin 2, Ireland" addresses).
+     */
+    postalCode: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * Covers actual P.O. boxes, drawers, locked bags, etc.
+     * This is usually but not always mutually exclusive with street.
+     */
+    postalBox: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * A state, province, county (in Ireland),
+     * Land (in Germany), departement (in France), etc.
+     */
+    region: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * Handles administrative districts such as U.S. or U.K.
+     * counties that are not used for mail addressing purposes.
+     * Subregion is not intended for delivery addresses.
+     */
+    subRegion: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * Can be city, village, town, borough, etc.
+     * This is the postal town and not necessarily
+     * the place of residence or place of business.
+     */
+    city: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * Can be street, avenue, road, etc.
+     * This element also includes the house number
+     * and room/apartment/flat/floor number.
+     */
+    street: {
+        type: mongoose_1.default.Schema.Types.String,
+        trim: true,
+        default: ''
+    },
+    /**
+     * Geolocation, point on the map.
      */
     location: {
-        street: {
+        type: {
             type: mongoose_1.default.Schema.Types.String,
-            trim: true,
-            default: ''
+            enum: ['Point'],
+            required: true
         },
-        city: {
-            type: mongoose_1.default.Schema.Types.String,
-            trim: true,
-            default: ''
-        },
-        state: {
-            type: mongoose_1.default.Schema.Types.String,
-            trim: true,
-            default: ''
-        },
-        postalCode: {
-            type: mongoose_1.default.Schema.Types.String,
-            trim: true,
-            default: ''
-        },
-        country: {
-            type: mongoose_1.default.Schema.Types.String,
-            trim: true,
-            default: ''
-        },
-        countryCode: {
-            type: mongoose_1.default.Schema.Types.String,
-            trim: true,
-            default: ''
+        coordinates: {
+            type: [mongoose_1.default.Schema.Types.Number],
+            required: true
         }
+    },
+    /**
+     * Specifies the address as primary.
+     */
+    primary: {
+        type: mongoose_1.default.Schema.Types.Boolean,
+        default: false
+    },
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs: {
+        type: mongoose_1.default.Schema.Types.Mixed,
+        default: {}
     },
     /**
      * Status of the enabled record.

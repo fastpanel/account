@@ -36,7 +36,7 @@ class Auth {
                             return response.redirect('/');
                         },
                         'default': function () {
-                            return response.status(406).send('Not Acceptable');
+                            return response.status(401).send('Unauthorized');
                         }
                     });
                 }

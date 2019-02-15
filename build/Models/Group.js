@@ -33,6 +33,20 @@ exports.GroupSchema = new mongoose_1.default.Schema({
         default: ''
     },
     /**
+     * Icon for visual group definition.
+     */
+    icon: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: ''
+    },
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs: {
+        type: mongoose_1.default.Schema.Types.Mixed,
+        default: {}
+    },
+    /**
      * Status of the enabled record.
      */
     enabled: {

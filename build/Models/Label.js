@@ -51,6 +51,13 @@ exports.LabelSchema = new mongoose_1.default.Schema({
         type: [mongoose_1.default.Schema.Types.String],
     },
     /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs: {
+        type: mongoose_1.default.Schema.Types.Mixed,
+        default: {}
+    },
+    /**
      * Status of the enabled record.
      */
     enabled: {

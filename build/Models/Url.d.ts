@@ -22,6 +22,14 @@ export interface IUrl extends Mongoose.Document {
      */
     value?: string;
     /**
+     * Specifies the url as primary.
+     */
+    primary: boolean;
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
+    /**
      * Status of the enabled record.
      */
     enabled?: boolean;
@@ -38,5 +46,5 @@ export interface IUrl extends Mongoose.Document {
      */
     version?: number;
 }
-export declare const UrlSchema: Mongoose.Schema;
+export declare const UrlSchema: Mongoose.Schema<any>;
 export declare const UrlModel: Mongoose.Model<IUrl, {}>;

@@ -66,7 +66,7 @@ export interface IUser extends Mongoose.Document {
         };
     };
     /**
-     * The nickname of the contact.
+     * The nickname (login) of the contact.
      */
     nickname?: string;
     /**
@@ -78,9 +78,15 @@ export interface IUser extends Mongoose.Document {
      */
     notes?: string;
     /**
-     * A users who is directly or indirectly related to this account.
+     * A users who is related to this account.
      */
     parents?: Array<IUser>;
+    /**
+     * The list of users who look after this account.
+     * This can be either sales managers or supervisors or accountants,
+     * depending on the conditions of use.
+     */
+    managers?: Array<IUser>;
     /**
      *
      */
@@ -98,21 +104,25 @@ export interface IUser extends Mongoose.Document {
      */
     department?: string;
     /**
-     * n array of labeled phone numbers for a contact.
+     * An array of labeled phone numbers for a contact.
      */
-    phoneNumbers: Array<IPhoneNumber>;
+    readonly phoneNumbers: Array<IPhoneNumber>;
     /**
      * An array of labeled email addresses for the contact.
      */
-    emailAddresses: Array<IEmailAddress>;
+    readonly emailAddresses: Array<IEmailAddress>;
     /**
      * An array of labeled postal addresses for a contact.
      */
-    postalAddresses: Array<IPostalAddress>;
+    readonly postalAddresses: Array<IPostalAddress>;
     /**
      * An array of labeled URL addresses for a contact.
      */
-    urls: Array<IUrl>;
+    readonly urls: Array<IUrl>;
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
     /**
      * Status of the enabled record.
      */
@@ -145,7 +155,7 @@ export interface IUser extends Mongoose.Document {
 /**
  *
  */
-export declare const UserSchema: Mongoose.Schema;
+export declare const UserSchema: Mongoose.Schema<any>;
 /**
  *
  */

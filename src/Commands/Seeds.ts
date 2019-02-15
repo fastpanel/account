@@ -127,6 +127,15 @@ export class Seeds extends Cli.CommandDefines {
               target: [
                 LabelTarget.URL
               ]
+            },
+            /* ------------------------------------------------------------- */
+            {
+              alias: 'FEEDBACK',
+              title: 'Обратная связь',
+              target: [
+                LabelTarget.PHONE,
+                LabelTarget.EMAIL
+              ]
             }
           ];
 
@@ -179,6 +188,15 @@ export class Seeds extends Cli.CommandDefines {
             $set: {
               alias: 'organization',
               label: 'Organizations'
+            }
+          }, { new: true, upsert: true, setDefaultsOnInsert: true })
+          .exec();
+
+          await GroupModel
+          .findOneAndUpdate({ alias: 'office' }, {
+            $set: {
+              alias: 'office',
+              label: 'Office'
             }
           }, { new: true, upsert: true, setDefaultsOnInsert: true })
           .exec();

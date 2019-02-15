@@ -40,6 +40,20 @@ exports.PhoneNumberSchema = new mongoose_1.default.Schema({
         uniqueCaseInsensitive: true
     },
     /**
+     * Specifies the phone as primary.
+     */
+    primary: {
+        type: mongoose_1.default.Schema.Types.Boolean,
+        default: false
+    },
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs: {
+        type: mongoose_1.default.Schema.Types.Mixed,
+        default: {}
+    },
+    /**
      * Status of the enabled record.
      */
     enabled: {

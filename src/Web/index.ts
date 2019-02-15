@@ -7,6 +7,9 @@
  */
 
 import * as Middleware from './Middleware';
+import * as Mixins from './Mixins';
+
 export { Middleware };
+export { Mixins };
 
 /* End of file index.ts */

@@ -35,12 +35,13 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@fastpanel/apollo": "github:fastpanel/apollo#develop",
     "@fastpanel/core": "^0.1.0-alpha.1",
-    "@fastpanel/http": "github:fastpanel/http#develop",
-    "@fastpanel/mongo": "github:fastpanel/mongo#develop",
+    "@fastpanel/http": "^0.1.0-alpha.1",
+    "@fastpanel/mongo": "^0.1.0-alpha.1",
+    "@fastpanel/redis": "^0.1.0-alpha.2",
     "@fastpanel/mqtt": "github:fastpanel/mqtt#develop",
     "@fastpanel/socket.io": "github:fastpanel/socket.io#develop",
+    "@fastpanel/apollo": "github:fastpanel/apollo#develop",
     "@types/chai": "^4.1.7",
     "@types/inquirer": "0.0.43",
     "@types/mocha": "^5.2.5",
@@ -56,5 +57,6 @@
     "typedoc": "^0.14.2",
     "typescript": "^3.2.2"
   },
+  "optionalDependencies": {},
   "license": "MIT"
 }

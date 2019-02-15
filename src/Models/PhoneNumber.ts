@@ -27,6 +27,18 @@ export interface IPhoneNumber extends Mongoose.Document {
   value: string;
   
   /**
+   * Specifies the phone as primary.
+   */
+  primary: boolean,
+
+  /* ----------------------------------------------------------------------- */
+
+  /**
+   * Any parameters in any form but preferably an object.
+   */
+  attrs?: any,
+
+  /**
    * Status of the enabled record.
    */
   enabled?: boolean;
@@ -79,6 +91,22 @@ export const PhoneNumberSchema = new Mongoose.Schema({
     uniqueCaseInsensitive: true
   },
   
+  /**
+   * Specifies the phone as primary.
+   */
+  primary: {
+    type: Mongoose.Schema.Types.Boolean,
+    default: false
+  },
+
+  /**
+   * Any parameters in any form but preferably an object.
+   */
+  attrs: {
+    type: Mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+
   /**
    * Status of the enabled record.
    */

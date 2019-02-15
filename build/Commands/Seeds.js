@@ -108,6 +108,15 @@ class Seeds extends core_1.Cli.CommandDefines {
                             target: [
                                 Models_1.LabelTarget.URL
                             ]
+                        },
+                        /* ------------------------------------------------------------- */
+                        {
+                            alias: 'FEEDBACK',
+                            title: 'Обратная связь',
+                            target: [
+                                Models_1.LabelTarget.PHONE,
+                                Models_1.LabelTarget.EMAIL
+                            ]
                         }
                     ];
                     for (const label of labels) {
@@ -153,6 +162,14 @@ class Seeds extends core_1.Cli.CommandDefines {
                         $set: {
                             alias: 'organization',
                             label: 'Organizations'
+                        }
+                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
+                        .exec();
+                    await Models_1.GroupModel
+                        .findOneAndUpdate({ alias: 'office' }, {
+                        $set: {
+                            alias: 'office',
+                            label: 'Office'
                         }
                     }, { new: true, upsert: true, setDefaultsOnInsert: true })
                         .exec();

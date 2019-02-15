@@ -22,6 +22,14 @@ export interface IEmailAddress extends Mongoose.Document {
      */
     value: string;
     /**
+     * Specifies the email as primary.
+     */
+    primary: boolean;
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
+    /**
      * Status of the enabled record.
      */
     enabled?: boolean;
@@ -38,5 +46,5 @@ export interface IEmailAddress extends Mongoose.Document {
      */
     version?: number;
 }
-export declare const EmailAddressSchema: Mongoose.Schema;
+export declare const EmailAddressSchema: Mongoose.Schema<any>;
 export declare const EmailAddressModel: Mongoose.Model<IEmailAddress, {}>;

@@ -36,6 +36,10 @@ export interface IToken extends Mongoose.Document {
      */
     expiresAt: Date;
     /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
+    /**
      * Status of the enabled record.
      */
     enabled?: boolean;
@@ -55,7 +59,7 @@ export interface IToken extends Mongoose.Document {
 /**
  *
  */
-export declare const TokenSchema: Mongoose.Schema;
+export declare const TokenSchema: Mongoose.Schema<any>;
 /**
  *
  */

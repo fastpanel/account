@@ -34,13 +34,13 @@ export class Auth {
               return response.redirect('/');
             },
             'default': function () {
-              return response.status(406).send('Not Acceptable');
+              return response.status(401).send('Unauthorized');
             }
           });
         }
 
         /* Set user data. */
-        request.logIn(user, {session: false}, function (error) {
+        request.logIn(user, { session: false }, function (error) {
           /* Forward error. */
           if (error) { return next(error); }
 

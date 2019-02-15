@@ -43,12 +43,53 @@ Add-on to work with users of the system.
 
 ``` typescript
   interface IGroup extends Mongoose.Document {
+    /**
+     * 
+     */
     alias: string;
+
+    /**
+     * 
+     */
     label: string;
-    enabled?: boolean;
+    
+    /**
+     * Icon for visual group definition.
+     */
+    icon?: string;
+
+    /**
+     * 
+     */
     readonly users: Array<IUser>;
+
+    /* ----------------------------------------------------------------------- */
+
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any;
+
+    /**
+     * Status of the enabled record.
+     */
+    enabled?: boolean;
+
+    /* ----------------------------------------------------------------------- */
+
+    /**
+     * 
+     */
     createdAt?: Date;
+
+    /**
+     * 
+     */
     updatedAt?: Date;
+
+    /**
+     * Current version of the record.
+     */
     version?: number;
   };
 ```
@@ -128,7 +169,7 @@ Add-on to work with users of the system.
     };
     
     /**
-     * The nickname of the contact.
+     * The nickname (login) of the contact.
      */
     nickname?: string;
 
@@ -143,29 +184,63 @@ Add-on to work with users of the system.
     notes?: string;
     
     /**
-     * A users who is directly or indirectly related to this account.
+     * A users who is related to this account.
      */
     parents?: Array<IUser>;
 
     /**
-     * n array of labeled phone numbers for a contact.
+     * The list of users who look after this account. 
+     * This can be either sales managers or supervisors or accountants, 
+     * depending on the conditions of use.
      */
-    phoneNumbers: Array<IPhoneNumber>;
+    managers?: Array<IUser>;
+
+    /**
+     * 
+     */
+    birthday?: Date;
+
+    /**
+     * 
+     */
+    organization?: IUser;
+    
+    /**
+     * 
+     */
+    position?: string;
+    
+    /**
+     * 
+     */
+    department?: string;
+    
+    /**
+     * An array of labeled phone numbers for a contact.
+     */
+    readonly phoneNumbers: Array<IPhoneNumber>;
 
     /**
      * An array of labeled email addresses for the contact.
      */
-    emailAddresses: Array<IEmailAddress>;
+    readonly emailAddresses: Array<IEmailAddress>;
 
     /**
      * An array of labeled postal addresses for a contact.
      */
-    postalAddresses: Array<IPostalAddress>;
+    readonly postalAddresses: Array<IPostalAddress>;
 
     /**
      * An array of labeled URL addresses for a contact.
      */
-    urls: Array<IUrl>;
+    readonly urls: Array<IUrl>;
+    
+    /* ----------------------------------------------------------------------- */
+
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs?: any,
 
     /**
      * Status of the enabled record.
@@ -204,7 +279,6 @@ Add-on to work with users of the system.
      * @param password Password in clear text.
      */
     verifyPasswordSync(password: string): boolean;
-
   };
 ```
 

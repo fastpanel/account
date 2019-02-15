@@ -16,4 +16,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Middleware = __importStar(require("./Middleware"));
 exports.Middleware = Middleware;
+const Mixins = __importStar(require("./Mixins"));
+exports.Mixins = Mixins;
 /* End of file index.ts */ 

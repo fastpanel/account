@@ -17,45 +17,77 @@ export interface IPostalAddress extends Mongoose.Document {
   user: IUser;
   
   /**
-   * 
+   * A general label for the address.
    */
   label: ILabel;
   
+  /* ----------------------------------------------------------------------- */
+
   /**
-   * 
+   * The name of the country.
+   */
+  country: string;
+  
+  /**
+   * Postal code. Usually country-wide, 
+   * but sometimes specific to the city 
+   * (e.g. "2" in "Dublin 2, Ireland" addresses).
+   */
+  postalCode: string;
+  
+  /**
+   * Covers actual P.O. boxes, drawers, locked bags, etc. 
+   * This is usually but not always mutually exclusive with street.
+   */
+  postalBox?: string;
+
+  /**
+   * A state, province, county (in Ireland), 
+   * Land (in Germany), departement (in France), etc.
+   */
+  region: string;
+
+  /**
+   * Handles administrative districts such as U.S. or U.K. 
+   * counties that are not used for mail addressing purposes. 
+   * Subregion is not intended for delivery addresses.
+   */
+  subRegion?: string;
+  
+  /**
+   * Can be city, village, town, borough, etc. 
+   * This is the postal town and not necessarily 
+   * the place of residence or place of business.
+   */
+  city: string;
+
+  /**
+   * Can be street, avenue, road, etc. 
+   * This element also includes the house number 
+   * and room/apartment/flat/floor number.
+   */
+  street: string;
+  
+  /**
+   * Geolocation, point on the map.
    */
   location: {
-    /**
-     * 
-     */
-    street: string,
-    
-    /**
-     * 
-     */
-    city: string,
-    
-    /**
-     * 
-     */
-    state: string,
-    
-    /**
-     * 
-     */
-    postalCode: string,
-    
-    /**
-     * 
-     */
-    country: string,
-    
-    /**
-     * 
-     */
-    countryCode: string,
+    type: string,
+    coordinates: Array<Number>
   };
-  
+
+  /**
+   * Specifies the address as primary.
+   */
+  primary: boolean;
+
+  /* ----------------------------------------------------------------------- */
+
+  /**
+   * Any parameters in any form but preferably an object.
+   */
+  attrs?: any;
+
   /**
    * Status of the enabled record.
    */
@@ -97,41 +129,109 @@ export const PostalAddressSchema = new Mongoose.Schema({
     required: true,
     ref: 'Account.Label'
   },
-  
+
   /**
-   * 
+   * The name of the country.
+   */
+  country: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * Postal code. Usually country-wide, 
+   * but sometimes specific to the city 
+   * (e.g. "2" in "Dublin 2, Ireland" addresses).
+   */
+  postalCode: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * Covers actual P.O. boxes, drawers, locked bags, etc. 
+   * This is usually but not always mutually exclusive with street.
+   */
+  postalBox: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * A state, province, county (in Ireland), 
+   * Land (in Germany), departement (in France), etc.
+   */
+  region: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * Handles administrative districts such as U.S. or U.K. 
+   * counties that are not used for mail addressing purposes. 
+   * Subregion is not intended for delivery addresses.
+   */
+  subRegion: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * Can be city, village, town, borough, etc. 
+   * This is the postal town and not necessarily 
+   * the place of residence or place of business.
+   */
+  city: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * Can be street, avenue, road, etc. 
+   * This element also includes the house number 
+   * and room/apartment/flat/floor number.
+   */
+  street: {
+    type: Mongoose.Schema.Types.String,
+    trim: true,
+    default: ''
+  },
+
+  /**
+   * Geolocation, point on the map.
    */
   location: {
-    street: {
+    type: {
       type: Mongoose.Schema.Types.String,
-      trim: true,
-      default: ''
+      enum: ['Point'],
+      required: true
     },
-    city: {
-      type: Mongoose.Schema.Types.String,
-      trim: true,
-      default: ''
-    },
-    state: {
-      type: Mongoose.Schema.Types.String,
-      trim: true,
-      default: ''
-    },
-    postalCode: {
-      type: Mongoose.Schema.Types.String,
-      trim: true,
-      default: ''
-    },
-    country: {
-      type: Mongoose.Schema.Types.String,
-      trim: true,
-      default: ''
-    },
-    countryCode: {
-      type: Mongoose.Schema.Types.String,
-      trim: true,
-      default: ''
+    coordinates: {
+      type: [Mongoose.Schema.Types.Number],
+      required: true
     }
+  },
+  
+  /**
+   * Specifies the address as primary.
+   */
+  primary: {
+    type: Mongoose.Schema.Types.Boolean,
+    default: false
+  },
+
+  /**
+   * Any parameters in any form but preferably an object.
+   */
+  attrs: {
+    type: Mongoose.Schema.Types.Mixed,
+    default: {}
   },
 
   /**

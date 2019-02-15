@@ -77,7 +77,7 @@ exports.UserSchema = new mongoose_1.default.Schema({
         }
     },
     /**
-     *
+     * The nickname (login) of the contact.
      */
     nickname: {
         type: mongoose_1.default.Schema.Types.String,
@@ -100,9 +100,20 @@ exports.UserSchema = new mongoose_1.default.Schema({
         default: ''
     },
     /**
-     * A users who is directly or indirectly related to this account.
+     * A users who is related to this account.
      */
     parents: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: 'Account.User'
+        }
+    ],
+    /**
+     * The list of users who look after this account.
+     * This can be either sales managers or supervisors or accountants,
+     * depending on the conditions of use.
+     */
+    managers: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
             ref: 'Account.User'
@@ -136,6 +147,13 @@ exports.UserSchema = new mongoose_1.default.Schema({
     department: {
         type: mongoose_1.default.Schema.Types.String,
         default: ''
+    },
+    /**
+     * Any parameters in any form but preferably an object.
+     */
+    attrs: {
+        type: mongoose_1.default.Schema.Types.Mixed,
+        default: {}
     },
     /**
      * Status of the enabled record.

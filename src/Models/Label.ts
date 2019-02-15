@@ -37,6 +37,13 @@ export interface ILabel extends Mongoose.Document {
    */
   target: Array<LabelTarget>;
   
+  /* ----------------------------------------------------------------------- */
+
+  /**
+   * Any parameters in any form but preferably an object.
+   */
+  attrs?: any,
+
   /**
    * Status of the enabled record.
    */
@@ -88,6 +95,14 @@ export const LabelSchema = new Mongoose.Schema({
    */
   target: {
     type: [Mongoose.Schema.Types.String],
+  },
+  
+  /**
+   * Any parameters in any form but preferably an object.
+   */
+  attrs: {
+    type: Mongoose.Schema.Types.Mixed,
+    default: {}
   },
 
   /**
