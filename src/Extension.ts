@@ -157,10 +157,7 @@ export class Extension extends Extensions.ExtensionDefines {
       web.use(Passport.session());
     });
 
-    this.events.once('web:getRoutes', (web: Express.Application) => {
-      const { Auth } = require('./Web/Routes/Api/Auth');
-      (new Auth(this.di)).initialize();
-    });
+    this.events.once('web:getRoutes', (web: Express.Application) => {});
 
     /* --------------------------------------------------------------------- */
 

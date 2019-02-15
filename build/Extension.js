@@ -139,10 +139,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             web.use(passport_1.default.initialize());
             web.use(passport_1.default.session());
         });
-        this.events.once('web:getRoutes', (web) => {
-            const { Auth } = require('./Web/Routes/Api/Auth');
-            (new Auth(this.di)).initialize();
-        });
+        this.events.once('web:getRoutes', (web) => { });
         /* --------------------------------------------------------------------- */
         this.events.once('socket:getMiddleware', (socket) => { });
         this.events.once('socket:getActions', (socket) => { });

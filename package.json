@@ -1,6 +1,6 @@
 {
   "name": "@fastpanel/account",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Add-on to work with users of the system.",
   "author": "Desionlab <fenixphp@gmail.com>",
   "main": "build/index.js",
