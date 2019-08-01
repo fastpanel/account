@@ -274,28 +274,6 @@ export const UserSchema = new Mongoose.Schema({
   },
   
   /**
-   * A users who is related to this account.
-   */
-  parents: [
-    {
-      type: Mongoose.Schema.Types.ObjectId,
-      ref: 'Account.User'
-    }
-  ],
-  
-  /**
-   * The list of users who look after this account. 
-   * This can be either sales managers or supervisors or accountants, 
-   * depending on the conditions of use.
-   */
-  managers: [
-    {
-      type: Mongoose.Schema.Types.ObjectId,
-      ref: 'Account.User'
-    }
-  ],
-  
-  /**
    * 
    */
   birthday: {
