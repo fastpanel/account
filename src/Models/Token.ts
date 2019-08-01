@@ -150,7 +150,6 @@ export const TokenSchema = new Mongoose.Schema({
 });
 
 /* Init plugins. */
-TokenSchema.plugin(require('mongoose-autopopulate'));
 TokenSchema.plugin(require('mongoose-hidden')(), {
   hidden: {
     version: false

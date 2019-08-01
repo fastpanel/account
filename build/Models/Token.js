@@ -94,7 +94,6 @@ exports.TokenSchema = new mongoose_1.default.Schema({
     }
 });
 /* Init plugins. */
-exports.TokenSchema.plugin(require('mongoose-autopopulate'));
 exports.TokenSchema.plugin(require('mongoose-hidden')(), {
     hidden: {
         version: false

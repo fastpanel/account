@@ -82,7 +82,6 @@ exports.GroupSchema.virtual('users', {
     foreignField: 'group'
 });
 /* Init plugins. */
-exports.GroupSchema.plugin(require('mongoose-autopopulate'));
 exports.GroupSchema.plugin(require('mongoose-hidden')(), {
     hidden: {
         version: false

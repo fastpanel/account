@@ -8,10 +8,6 @@
 
 import Mongoose from 'mongoose';
 import { IGroup } from './Group';
-import { IPhoneNumber } from './PhoneNumber';
-import { IEmailAddress } from './EmailAddress';
-import { IPostalAddress } from './PostalAddress';
-import { IUrl } from './Url';
 
 /**
  * 
@@ -83,6 +79,16 @@ export interface IUser extends Mongoose.Document {
   nickname?: string;
 
   /**
+   * The email of the contact.
+   */
+  email?: string;
+
+  /**
+   * The phone number of the contact.
+   */
+  phone?: string;
+
+  /**
    * Password for login.
    */
   password?: string;
@@ -93,18 +99,6 @@ export interface IUser extends Mongoose.Document {
   notes?: string;
   
   /**
-   * A users who is related to this account.
-   */
-  parents?: Array<IUser>;
-
-  /**
-   * The list of users who look after this account. 
-   * This can be either sales managers or supervisors or accountants, 
-   * depending on the conditions of use.
-   */
-  managers?: Array<IUser>;
-
-  /**
    * 
    */
   birthday?: Date;
@@ -112,7 +106,7 @@ export interface IUser extends Mongoose.Document {
   /**
    * 
    */
-  organization?: IUser;
+  organization?: string;
   
   /**
    * 
@@ -123,26 +117,6 @@ export interface IUser extends Mongoose.Document {
    * 
    */
   department?: string;
-  
-  /**
-   * An array of labeled phone numbers for a contact.
-   */
-  readonly phoneNumbers: Array<IPhoneNumber>;
-
-  /**
-   * An array of labeled email addresses for the contact.
-   */
-  readonly emailAddresses: Array<IEmailAddress>;
-
-  /**
-   * An array of labeled postal addresses for a contact.
-   */
-  readonly postalAddresses: Array<IPostalAddress>;
-
-  /**
-   * An array of labeled URL addresses for a contact.
-   */
-  readonly urls: Array<IUrl>;
   
   /* ----------------------------------------------------------------------- */
 
@@ -266,6 +240,22 @@ export const UserSchema = new Mongoose.Schema({
   },
   
   /**
+   * The email of the contact.
+   */
+  email: {
+    type: Mongoose.Schema.Types.String,
+    default: null
+  },
+  
+  /**
+   * The phone number of the contact.
+   */
+  phone: {
+    type: Mongoose.Schema.Types.String,
+    default: null
+  },
+  
+  /**
    * Password for login.
    */
   password: {
@@ -317,9 +307,8 @@ export const UserSchema = new Mongoose.Schema({
    * 
    */
   organization: {
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Account.User',
-    default: null
+    type: Mongoose.Schema.Types.String,
+    default: ''
   },
   
   /**
@@ -377,42 +366,6 @@ export const UserSchema = new Mongoose.Schema({
 /**
  * 
  */
-UserSchema.virtual('phoneNumbers', {
-  ref: 'Account.PhoneNumber',
-  localField: '_id',
-  foreignField: 'user'
-});
-
-/**
- * 
- */
-UserSchema.virtual('emailAddresses', {
-  ref: 'Account.EmailAddress',
-  localField: '_id',
-  foreignField: 'user'
-});
-
-/**
- * 
- */
-UserSchema.virtual('postalAddresses', {
-  ref: 'Account.PostalAddress',
-  localField: '_id',
-  foreignField: 'user'
-});
-
-/**
- * 
- */
-UserSchema.virtual('urls', {
-  ref: 'Account.Url',
-  localField: '_id',
-  foreignField: 'user'
-});
-
-/**
- * 
- */
 UserSchema.index({
   nickname: 1
 }, {
@@ -429,8 +382,45 @@ UserSchema.index({
   }
 });
 
+/**
+ * 
+ */
+UserSchema.index({
+  email: 1
+}, {
+  name: "email_idx",
+  unique: true,
+  collation: {
+    locale: "en",
+    strength: 2
+  },
+  partialFilterExpression: {
+    email: {
+      $type: "string" 
+    }
+  }
+});
+
+/**
+ * 
+ */
+UserSchema.index({
+  phone: 1
+}, {
+  name: "phone_idx",
+  unique: true,
+  collation: {
+    locale: "en",
+    strength: 2
+  },
+  partialFilterExpression: {
+    phone: {
+      $type: "string" 
+    }
+  }
+});
+
 /* Init plugins. */
-UserSchema.plugin(require('mongoose-autopopulate'));
 UserSchema.plugin(require('mongoose-hidden')(), {
   hidden: {
     version: false

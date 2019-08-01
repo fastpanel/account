@@ -28,106 +28,11 @@ class Seeds extends core_1.Cli.CommandDefines {
             return new Promise(async (resolve, reject) => {
                 /* Clear collections. ---------------------------------------------- */
                 if (options.fresh) {
-                    await Models_1.EmailAddressModel.deleteMany({});
                     await Models_1.GroupModel.deleteMany({});
-                    await Models_1.LabelModel.deleteMany({});
-                    await Models_1.PhoneNumberModel.deleteMany({});
-                    await Models_1.PostalAddressModel.deleteMany({});
                     await Models_1.TokenModel.deleteMany({});
-                    await Models_1.UrlModel.deleteMany({});
                     await Models_1.UserModel.deleteMany({});
                 }
                 /* Fill default data. ---------------------------------------------- */
-                let labelList = await Models_1.LabelModel
-                    .find()
-                    .select('_id')
-                    .exec();
-                if (!labelList.length) {
-                    let labels = [
-                        {
-                            alias: 'HOME',
-                            title: 'Домашний',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL,
-                                Models_1.LabelTarget.POSTAL,
-                                Models_1.LabelTarget.URL
-                            ]
-                        },
-                        {
-                            alias: 'WORK',
-                            title: 'Рабочий',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL,
-                                Models_1.LabelTarget.POSTAL,
-                                Models_1.LabelTarget.URL
-                            ]
-                        },
-                        {
-                            alias: 'OTHER',
-                            title: 'Другой',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL,
-                                Models_1.LabelTarget.POSTAL,
-                                Models_1.LabelTarget.URL
-                            ]
-                        },
-                        {
-                            alias: 'FAX_HOME',
-                            title: 'Факс домашний',
-                            target: [
-                                Models_1.LabelTarget.PHONE
-                            ]
-                        },
-                        {
-                            alias: 'FAX_WORK',
-                            title: 'Факс рабочий',
-                            target: [
-                                Models_1.LabelTarget.PHONE
-                            ]
-                        },
-                        {
-                            alias: 'PAGER',
-                            title: 'Пейджер',
-                            target: [
-                                Models_1.LabelTarget.PHONE
-                            ]
-                        },
-                        {
-                            alias: 'MAIN',
-                            title: 'Основной',
-                            target: [
-                                Models_1.LabelTarget.PHONE
-                            ]
-                        },
-                        {
-                            alias: 'HOMEPAGE',
-                            title: 'Домашняя страница',
-                            target: [
-                                Models_1.LabelTarget.URL
-                            ]
-                        },
-                        /* ------------------------------------------------------------- */
-                        {
-                            alias: 'FEEDBACK',
-                            title: 'Обратная связь',
-                            target: [
-                                Models_1.LabelTarget.PHONE,
-                                Models_1.LabelTarget.EMAIL
-                            ]
-                        }
-                    ];
-                    for (const label of labels) {
-                        await Models_1.LabelModel
-                            .findOneAndUpdate({ alias: label.alias }, {
-                            $set: label
-                        }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                            .exec();
-                    }
-                }
-                /* ----------------------------------------------------------------- */
                 let groupList = await Models_1.GroupModel
                     .find()
                     .select('_id')
@@ -158,22 +63,6 @@ class Seeds extends core_1.Cli.CommandDefines {
                     }, { new: true, upsert: true, setDefaultsOnInsert: true })
                         .exec();
                     await Models_1.GroupModel
-                        .findOneAndUpdate({ alias: 'organization' }, {
-                        $set: {
-                            alias: 'organization',
-                            label: 'Organizations'
-                        }
-                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                        .exec();
-                    await Models_1.GroupModel
-                        .findOneAndUpdate({ alias: 'office' }, {
-                        $set: {
-                            alias: 'office',
-                            label: 'Office'
-                        }
-                    }, { new: true, upsert: true, setDefaultsOnInsert: true })
-                        .exec();
-                    await Models_1.GroupModel
                         .findOneAndUpdate({ alias: 'client' }, {
                         $set: {
                             alias: 'client',
@@ -200,6 +89,8 @@ class Seeds extends core_1.Cli.CommandDefines {
                                     displayName: 'Administrator'
                                 },
                                 nickname: 'admin',
+                                email: 'admin@system.sys',
+                                phone: '+15551234567',
                                 password: 'Qwerty123456'
                             }
                         }, { new: true, upsert: true, setDefaultsOnInsert: true })
@@ -234,7 +125,7 @@ class Seeds extends core_1.Cli.CommandDefines {
                 }
                 /* Fill demo data. ------------------------------------------------- */
                 if (options.demo) { }
-                /* Command complete. */
+                /* Command complete. ----------------------------------------------- */
                 resolve();
             });
         });

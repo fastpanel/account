@@ -84,6 +84,20 @@ exports.UserSchema = new mongoose_1.default.Schema({
         default: null
     },
     /**
+     * The email of the contact.
+     */
+    email: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: null
+    },
+    /**
+     * The phone number of the contact.
+     */
+    phone: {
+        type: mongoose_1.default.Schema.Types.String,
+        default: null
+    },
+    /**
      * Password for login.
      */
     password: {
@@ -130,9 +144,8 @@ exports.UserSchema = new mongoose_1.default.Schema({
      *
      */
     organization: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Account.User',
-        default: null
+        type: mongoose_1.default.Schema.Types.String,
+        default: ''
     },
     /**
      *
@@ -185,38 +198,6 @@ exports.UserSchema = new mongoose_1.default.Schema({
 /**
  *
  */
-exports.UserSchema.virtual('phoneNumbers', {
-    ref: 'Account.PhoneNumber',
-    localField: '_id',
-    foreignField: 'user'
-});
-/**
- *
- */
-exports.UserSchema.virtual('emailAddresses', {
-    ref: 'Account.EmailAddress',
-    localField: '_id',
-    foreignField: 'user'
-});
-/**
- *
- */
-exports.UserSchema.virtual('postalAddresses', {
-    ref: 'Account.PostalAddress',
-    localField: '_id',
-    foreignField: 'user'
-});
-/**
- *
- */
-exports.UserSchema.virtual('urls', {
-    ref: 'Account.Url',
-    localField: '_id',
-    foreignField: 'user'
-});
-/**
- *
- */
 exports.UserSchema.index({
     nickname: 1
 }, {
@@ -232,8 +213,43 @@ exports.UserSchema.index({
         }
     }
 });
+/**
+ *
+ */
+exports.UserSchema.index({
+    email: 1
+}, {
+    name: "email_idx",
+    unique: true,
+    collation: {
+        locale: "en",
+        strength: 2
+    },
+    partialFilterExpression: {
+        email: {
+            $type: "string"
+        }
+    }
+});
+/**
+ *
+ */
+exports.UserSchema.index({
+    phone: 1
+}, {
+    name: "phone_idx",
+    unique: true,
+    collation: {
+        locale: "en",
+        strength: 2
+    },
+    partialFilterExpression: {
+        phone: {
+            $type: "string"
+        }
+    }
+});
 /* Init plugins. */
-exports.UserSchema.plugin(require('mongoose-autopopulate'));
 exports.UserSchema.plugin(require('mongoose-hidden')(), {
     hidden: {
         version: false

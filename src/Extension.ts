@@ -134,15 +134,15 @@ export class Extension extends Extensions.ExtensionDefines {
     });
 
     this.events.once('cli:getCommands', (cli: Caporal) => {
-      //const { Seeds } = require('./Commands/Seeds');
-      //(new Seeds(this.di)).initialize();
+      const { Seeds } = require('./Commands/Seeds');
+      (new Seeds(this.di)).initialize();
 
       const { Setup } = require('./Commands/Setup');
       (new Setup(this.di)).initialize();
     });
 
     this.events.once('db:getModels', (db: Mongoose.Connection) => {
-      //require('./Models/');
+      require('./Models/');
     });
 
     this.events.once('web:getMiddleware', (web: Express.Application) => {
