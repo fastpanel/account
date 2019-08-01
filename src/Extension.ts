@@ -13,7 +13,7 @@ import Mongoose from 'mongoose';
 import { Cli, Extensions } from '@fastpanel/core';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
 import { Strategy as PassportBearerStrategy } from 'passport-http-bearer';
-import { IUser, IToken, IGroup, TokenType, LabelTarget, ILabel } from './Models';
+import { IUser, IToken } from './Models';
 
 /**
  * Class Extension
@@ -133,24 +133,17 @@ export class Extension extends Extensions.ExtensionDefines {
       }
     });
 
-    /* --------------------------------------------------------------------- */
-    
-    /* Registered cli commands. */
     this.events.once('cli:getCommands', (cli: Caporal) => {
-      const { Seeds } = require('./Commands/Seeds');
-      (new Seeds(this.di)).initialize();
+      //const { Seeds } = require('./Commands/Seeds');
+      //(new Seeds(this.di)).initialize();
 
       const { Setup } = require('./Commands/Setup');
       (new Setup(this.di)).initialize();
     });
 
-    /* --------------------------------------------------------------------- */
-
     this.events.once('db:getModels', (db: Mongoose.Connection) => {
-      require('./Models/');
+      //require('./Models/');
     });
-
-    /* --------------------------------------------------------------------- */
 
     this.events.once('web:getMiddleware', (web: Express.Application) => {
       web.use(Passport.initialize());
@@ -158,12 +151,6 @@ export class Extension extends Extensions.ExtensionDefines {
     });
 
     this.events.once('web:getRoutes', (web: Express.Application) => {});
-
-    /* --------------------------------------------------------------------- */
-
-    this.events.once('socket:getMiddleware', (socket: SocketIO.Server) => {});
-
-    this.events.once('socket:getActions', (socket: SocketIO.Server) => {});
   }
   
   /**
