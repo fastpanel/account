@@ -130,11 +130,3 @@ export interface IUser extends Mongoose.Document {
      */
     verifyPasswordSync(password: string): boolean;
 }
-/**
- *
- */
-export declare const UserSchema: Mongoose.Schema<any>;
-/**
- *
- */
-export declare const UserModel: Mongoose.Model<IUser, {}>;
