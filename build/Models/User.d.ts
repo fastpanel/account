@@ -43,23 +43,6 @@ export interface IUser extends Mongoose.Document {
          *
          */
         displayName: string;
-        /**
-         *
-         */
-        phonetic?: {
-            /**
-             * The phonetic given name of the contact.
-             */
-            given?: string;
-            /**
-             * The phonetic middle name of the contact.
-             */
-            middle?: string;
-            /**
-             * A string for the phonetic family name of the contact.
-             */
-            family?: string;
-        };
     };
     /**
      * The nickname (login) of the contact.
