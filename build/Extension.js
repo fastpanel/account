@@ -128,9 +128,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             const { Setup } = require('./Commands/Setup');
             (new Setup(this.di)).initialize();
         });
-        this.events.once('db:getModels', (db) => {
-            //require('./Models/');
-        });
+        this.events.once('db:getModels', (db) => { });
         this.events.once('web:getMiddleware', (web) => {
             web.use(passport_1.default.initialize());
             web.use(passport_1.default.session());

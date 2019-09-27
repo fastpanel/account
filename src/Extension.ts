@@ -141,9 +141,7 @@ export class Extension extends Extensions.ExtensionDefines {
       (new Setup(this.di)).initialize();
     });
 
-    this.events.once('db:getModels', (db: Mongoose.Connection) => {
-      //require('./Models/');
-    });
+    this.events.once('db:getModels', (db: Mongoose.Connection) => {});
 
     this.events.once('web:getMiddleware', (web: Express.Application) => {
       web.use(Passport.initialize());
