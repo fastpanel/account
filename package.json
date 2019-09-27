@@ -1,6 +1,6 @@
 {
   "name": "@fastpanel/account",
-  "version": "0.2.1-alpha.1",
+  "version": "0.2.1-alpha.4",
   "description": "Add-on to work with users of the system.",
   "author": "Desionlab <fenixphp@gmail.com>",
   "main": "build/index.js",
@@ -35,10 +35,10 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@fastpanel/core": "^0.2.1-alpha.1",
-    "@fastpanel/http": "^0.2.1-alpha.2",
-    "@fastpanel/mongo": "^0.2.1-alpha.1",
-    "@fastpanel/redis": "^0.2.1-alpha.1",
+    "@fastpanel/core": "^0.2.1-alpha.3",
+    "@fastpanel/http": "^0.2.1-alpha.3",
+    "@fastpanel/mongo": "^0.2.1-alpha.3",
+    "@fastpanel/redis": "^0.2.1-alpha.3",
     "@types/chai": "^4.1.7",
     "@types/inquirer": "^6.5.0",
     "@types/mocha": "^5.2.7",
@@ -53,6 +53,5 @@
     "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
   },
-  "optionalDependencies": {},
   "license": "MIT"
 }

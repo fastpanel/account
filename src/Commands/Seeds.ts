@@ -6,20 +6,14 @@
  * @license   MIT
  */
 
+import Mongoose from 'mongoose';
 import Winston from 'winston';
-import { EOL } from 'os';
 import { Cli } from '@fastpanel/core';
 import {
-  EmailAddressModel,
-  GroupModel,
-  LabelModel,
-  PhoneNumberModel,
-  PostalAddressModel,
-  TokenModel,
-  UrlModel,
-  UserModel,
-  LabelTarget,
-  TokenType
+  TokenType,
+  IToken,
+  IUser,
+  IGroup
 } from '../Models';
 
 /**
@@ -40,115 +34,20 @@ export class Seeds extends Cli.CommandDefines {
     .visible(false)
     .action((args: {[k: string]: any}, options: {[k: string]: any}, logger: Winston.Logger) => {
       return new Promise(async (resolve, reject) => {
+        /* Get models. */
+        const GroupModel = Mongoose.model<IGroup>('Account.Group');
+        const TokenModel = Mongoose.model<IToken>('Account.Token');
+        const UserModel = Mongoose.model<IUser>('Account.User');
 
         /* Clear collections. ---------------------------------------------- */
 
         if (options.fresh) {
-          await EmailAddressModel.deleteMany({});
           await GroupModel.deleteMany({});
-          await LabelModel.deleteMany({});
-          await PhoneNumberModel.deleteMany({});
-          await PostalAddressModel.deleteMany({});
           await TokenModel.deleteMany({});
-          await UrlModel.deleteMany({});
           await UserModel.deleteMany({});
         }
         
         /* Fill default data. ---------------------------------------------- */
-
-        let labelList = await LabelModel
-        .find()
-        .select('_id')
-        .exec();
-
-        if (!labelList.length) {
-          let labels = [
-            {
-              alias: 'HOME',
-              title: 'Домашний',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL,
-                LabelTarget.POSTAL,
-                LabelTarget.URL
-              ]
-            },
-            {
-              alias: 'WORK',
-              title: 'Рабочий',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL,
-                LabelTarget.POSTAL,
-                LabelTarget.URL
-              ]
-            },
-            {
-              alias: 'OTHER',
-              title: 'Другой',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL,
-                LabelTarget.POSTAL,
-                LabelTarget.URL
-              ]
-            },
-            {
-              alias: 'FAX_HOME',
-              title: 'Факс домашний',
-              target: [
-                LabelTarget.PHONE
-              ]
-            },
-            {
-              alias: 'FAX_WORK',
-              title: 'Факс рабочий',
-              target: [
-                LabelTarget.PHONE
-              ]
-            },
-            {
-              alias: 'PAGER',
-              title: 'Пейджер',
-              target: [
-                LabelTarget.PHONE
-              ]
-            },
-            {
-              alias: 'MAIN',
-              title: 'Основной',
-              target: [
-                LabelTarget.PHONE
-              ]
-            },
-            {
-              alias: 'HOMEPAGE',
-              title: 'Домашняя страница',
-              target: [
-                LabelTarget.URL
-              ]
-            },
-            /* ------------------------------------------------------------- */
-            {
-              alias: 'FEEDBACK',
-              title: 'Обратная связь',
-              target: [
-                LabelTarget.PHONE,
-                LabelTarget.EMAIL
-              ]
-            }
-          ];
-
-          for (const label of labels) {
-            await LabelModel
-            .findOneAndUpdate({ alias: label.alias }, { 
-              $set: label
-            }, { new: true, upsert: true, setDefaultsOnInsert: true })
-            .exec();
-          }
-        }
-
-        /* ----------------------------------------------------------------- */
 
         let groupList = await GroupModel
         .find()
@@ -184,24 +83,6 @@ export class Seeds extends Cli.CommandDefines {
           .exec();
 
           await GroupModel
-          .findOneAndUpdate({ alias: 'organization' }, {
-            $set: {
-              alias: 'organization',
-              label: 'Organizations'
-            }
-          }, { new: true, upsert: true, setDefaultsOnInsert: true })
-          .exec();
-
-          await GroupModel
-          .findOneAndUpdate({ alias: 'office' }, {
-            $set: {
-              alias: 'office',
-              label: 'Office'
-            }
-          }, { new: true, upsert: true, setDefaultsOnInsert: true })
-          .exec();
-
-          await GroupModel
           .findOneAndUpdate({ alias: 'client' }, {
             $set: {
               alias: 'client',
@@ -232,6 +113,8 @@ export class Seeds extends Cli.CommandDefines {
                   displayName: 'Administrator'
                 },
                 nickname: 'admin',
+                email: 'admin@system.sys',
+                phone: '+15551234567',
                 password: 'Qwerty123456'
               }
             }, { new: true, upsert: true, setDefaultsOnInsert: true })
@@ -274,7 +157,7 @@ export class Seeds extends Cli.CommandDefines {
 
         if (options.demo) {}
 
-        /* Command complete. */
+        /* Command complete. ----------------------------------------------- */
         resolve();
       });
     });

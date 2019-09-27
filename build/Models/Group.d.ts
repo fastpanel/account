@@ -48,11 +48,3 @@ export interface IGroup extends Mongoose.Document {
      */
     version?: number;
 }
-/**
- *
- */
-export declare const GroupSchema: Mongoose.Schema<any>;
-/**
- *
- */
-export declare const GroupModel: Mongoose.Model<IGroup, {}>;

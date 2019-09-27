@@ -7,10 +7,6 @@
  */
 import Mongoose from 'mongoose';
 import { IGroup } from './Group';
-import { IPhoneNumber } from './PhoneNumber';
-import { IEmailAddress } from './EmailAddress';
-import { IPostalAddress } from './PostalAddress';
-import { IUrl } from './Url';
 /**
  *
  */
@@ -47,28 +43,19 @@ export interface IUser extends Mongoose.Document {
          *
          */
         displayName: string;
-        /**
-         *
-         */
-        phonetic?: {
-            /**
-             * The phonetic given name of the contact.
-             */
-            given?: string;
-            /**
-             * The phonetic middle name of the contact.
-             */
-            middle?: string;
-            /**
-             * A string for the phonetic family name of the contact.
-             */
-            family?: string;
-        };
     };
     /**
      * The nickname (login) of the contact.
      */
     nickname?: string;
+    /**
+     * The email of the contact.
+     */
+    email?: string;
+    /**
+     * The phone number of the contact.
+     */
+    phone?: string;
     /**
      * Password for login.
      */
@@ -78,23 +65,13 @@ export interface IUser extends Mongoose.Document {
      */
     notes?: string;
     /**
-     * A users who is related to this account.
-     */
-    parents?: Array<IUser>;
-    /**
-     * The list of users who look after this account.
-     * This can be either sales managers or supervisors or accountants,
-     * depending on the conditions of use.
-     */
-    managers?: Array<IUser>;
-    /**
      *
      */
     birthday?: Date;
     /**
      *
      */
-    organization?: IUser;
+    organization?: string;
     /**
      *
      */
@@ -103,22 +80,6 @@ export interface IUser extends Mongoose.Document {
      *
      */
     department?: string;
-    /**
-     * An array of labeled phone numbers for a contact.
-     */
-    readonly phoneNumbers: Array<IPhoneNumber>;
-    /**
-     * An array of labeled email addresses for the contact.
-     */
-    readonly emailAddresses: Array<IEmailAddress>;
-    /**
-     * An array of labeled postal addresses for a contact.
-     */
-    readonly postalAddresses: Array<IPostalAddress>;
-    /**
-     * An array of labeled URL addresses for a contact.
-     */
-    readonly urls: Array<IUrl>;
     /**
      * Any parameters in any form but preferably an object.
      */
@@ -152,11 +113,3 @@ export interface IUser extends Mongoose.Document {
      */
     verifyPasswordSync(password: string): boolean;
 }
-/**
- *
- */
-export declare const UserSchema: Mongoose.Schema<any>;
-/**
- *
- */
-export declare const UserModel: Mongoose.Model<IUser, {}>;

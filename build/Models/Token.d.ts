@@ -56,11 +56,3 @@ export interface IToken extends Mongoose.Document {
      */
     version?: number;
 }
-/**
- *
- */
-export declare const TokenSchema: Mongoose.Schema<any>;
-/**
- *
- */
-export declare const TokenModel: Mongoose.Model<IToken, {}>;

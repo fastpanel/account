@@ -2427,7 +2427,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Token<wbr>Model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Model</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_token_.itoken.html" class="tsd-signature-type">IToken</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">__type</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;Mongoose.model&lt;IToken&gt;(&#x27;Account.Token&#x27;, TokenSchema)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/fastpanel/account/blob/5781bf4/src/Models/Token.ts#L163">Models/Token.ts:163</a></li>
+						<li>Defined in <a href="https://github.com/fastpanel/account/blob/3f0c297/src/Models/Token.ts#L162">Models/Token.ts:162</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2437,7 +2437,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Token<wbr>Schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Mongoose.Schema({/****/name: {type: Mongoose.Schema.Types.String,default: &#x27;&#x27;},/*** The type of token for whom it was issued.*/type: {type: Mongoose.Schema.Types.String,enum: [TokenType.APPLICATION,TokenType.DEVICE,TokenType.USER],default: TokenType.USER},/*** The owner of the token.*/user: {type: Mongoose.Schema.Types.ObjectId,ref: &#x27;Account.User&#x27;},/*** The token expiration time.*/expiresAt: {type: Mongoose.Schema.Types.Date,default: null},/*** Any parameters in any form but preferably an object.*/attrs: {type: Mongoose.Schema.Types.Mixed,default: {}},/*** Status of the enabled record.*/enabled: {type: Boolean,default: true}}, {/* Set (collection) table name. */collection: &#x27;accountToken&#x27;,/* Logger date. */timestamps: {createdAt: &#x27;createdAt&#x27;,updatedAt: &#x27;updatedAt&#x27;},/* Current version of the record. */versionKey: &#x27;version&#x27;,/* Converts the mongoose document into a plain javascript object. */toObject: {getters: true,virtuals: true},toJSON: {getters: true,virtuals: true}})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/fastpanel/account/blob/5781bf4/src/Models/Token.ts#L78">Models/Token.ts:78</a></li>
+						<li>Defined in <a href="https://github.com/fastpanel/account/blob/3f0c297/src/Models/Token.ts#L78">Models/Token.ts:78</a></li>
 					</ul>
 				</aside>
 			</section>
