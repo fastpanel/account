@@ -142,7 +142,7 @@ export class Extension extends Extensions.ExtensionDefines {
     });
 
     this.events.once('db:getModels', (db: Mongoose.Connection) => {
-      require('./Models/');
+      //require('./Models/');
     });
 
     this.events.once('web:getMiddleware', (web: Express.Application) => {

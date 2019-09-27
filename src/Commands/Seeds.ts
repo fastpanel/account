@@ -6,14 +6,14 @@
  * @license   MIT
  */
 
+import Mongoose from 'mongoose';
 import Winston from 'winston';
-import { EOL } from 'os';
 import { Cli } from '@fastpanel/core';
 import {
-  GroupModel,
-  TokenModel,
-  UserModel,
-  TokenType
+  TokenType,
+  IToken,
+  IUser,
+  IGroup
 } from '../Models';
 
 /**
@@ -34,6 +34,10 @@ export class Seeds extends Cli.CommandDefines {
     .visible(false)
     .action((args: {[k: string]: any}, options: {[k: string]: any}, logger: Winston.Logger) => {
       return new Promise(async (resolve, reject) => {
+        /* Get models. */
+        const GroupModel = Mongoose.model<IGroup>('Account.Group');
+        const TokenModel = Mongoose.model<IToken>('Account.Token');
+        const UserModel = Mongoose.model<IUser>('Account.User');
 
         /* Clear collections. ---------------------------------------------- */
 

@@ -129,7 +129,7 @@ class Extension extends core_1.Extensions.ExtensionDefines {
             (new Setup(this.di)).initialize();
         });
         this.events.once('db:getModels', (db) => {
-            require('./Models/');
+            //require('./Models/');
         });
         this.events.once('web:getMiddleware', (web) => {
             web.use(passport_1.default.initialize());
